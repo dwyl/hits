@@ -1,0 +1,22 @@
+{
+  "name": "hits",
+  "version": "1.0.0",
+  "description": "all the hits",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nelsonic/hits.git"
+  },
+  "keywords": [
+    "hits"
+  ],
+  "author": "this guy",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/nelsonic/hits/issues"
+  },
+  "homepage": "https://github.com/nelsonic/hits#readme"
+}
