@@ -18,5 +18,18 @@
   "bugs": {
     "url": "https://github.com/nelsonic/hits/issues"
   },
-  "homepage": "https://github.com/nelsonic/hits#readme"
+  "homepage": "https://github.com/nelsonic/hits#readme",
+  "dependencies": {
+    "hiredis": "^0.4.0",
+    "redis": "^0.12.1"
+  },
+  "devDependencies": {
+    "chalk": "^1.0.0",
+    "codeclimate-test-reporter": "0.0.4",
+    "istanbul": "^0.3.13",
+    "jshint": "^2.6.3",
+    "pre-commit": "^1.0.6",
+    "tap-spec": "^3.0.0",
+    "tape": "^4.0.0"
+  }
 }
