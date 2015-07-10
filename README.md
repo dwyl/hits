@@ -30,20 +30,45 @@ Place a Badge (*image*) in your repo `README.md` so others can
 What is the ***minimum possible*** amount of data we can store?
 
 + **date+time** the person visited the site.
-+ **useragent**
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now
++ **user-agent** the browser or crawler visiting the page
+https://en.wikipedia.org/wiki/User_agent
++ **referer** url of the page where the image is requested from?
+https://en.wikipedia.org/wiki/HTTP_referer
 
+Log entries are stored as a `String` which can be parsed and re-formatted into
+any other format:  
+```sh
+1436570536950 x7uapo9 84.91.136.21
+```
+| Timestamp     | User Agent  | IP Address   |
+| ------------- |:------------|:------------:|
+| 1436570536950 | x7uapo9     | 84.91.136.21 |
+
+We then have a user-agent hash where we can lookup the by id:
+```js
+{
+  "x7uapo9":"Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10",
+  "N03v1lz":"Googlebot/2.1 (+http://www.google.com/bot.html)"
+}
+```
 
 ## Research
 
 ### User Agents
 
-How many **user-agents** (web browsers + crawlers) are there?
-there *appear* to be fewer than a couple of thousand user agents. http://www.useragentstring.com/pages/useragentstring.php
+How many **user agents** (web browsers + crawlers) are there?
+there *appear* to be ***fewer than a couple of thousand*** user agents. http://www.useragentstring.com/pages/useragentstring.php
 which means we could store them using a numeric index; 1 - 3000
 
-But, storing the useragents using a numeric index means we
+But, storing the user agents using a numeric index means we
 need to perform a lookup on each hit which requires network IO ...
 (*expensive*!)
 What if there was a way of *deriving* a `String` representation of the
 the user-agent string ... oh, that's right, here's one I made earlier...
 https://github.com/ideaq/aguid
+
+### Log Formats
+
++ Apache Log Sample:
+http://www.monitorware.com/en/logsamples/apache.php
