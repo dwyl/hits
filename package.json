@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/nelsonic/hits#readme",
   "dependencies": {
+    "aguid": "^1.0.3",
     "hiredis": "^0.4.0",
     "redis": "^0.12.1"
   },
