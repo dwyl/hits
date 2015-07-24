@@ -53,6 +53,10 @@ We then have a user-agent hash where we can lookup the by id:
 }
 ```
 
+
+
+
+
 ## Research
 
 ### User Agents
@@ -72,3 +76,7 @@ https://github.com/ideaq/aguid
 
 + Apache Log Sample:
 http://www.monitorware.com/en/logsamples/apache.php
+
+### Node.js http module headers
+
+https://nodejs.org/api/http.html#http_message_rawheaders
