@@ -2,6 +2,10 @@
 
 What if there was a *simple+easy* way to see how many people have viewed your GitHub Repository?
 
+[![Dependency Status](https://david-dm.org/nelsonic/hits.svg)](https://david-dm.org/nelsonic/hits)
+[![devDependency Status](https://david-dm.org/nelsonic/hits/dev-status.svg)](https://david-dm.org/nelsonic/hits#info=devDependencies)
+
+
 ## Why?
 
 We have a few repos on GitHub ... but sadly, we have no idea how many people

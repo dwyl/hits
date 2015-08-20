@@ -27,18 +27,17 @@
   },
   "homepage": "https://github.com/nelsonic/hits#readme",
   "dependencies": {
-    "aguid": "^1.0.3",
+    "uniki": "^1.0.3",
     "hiredis": "^0.4.0",
     "redis": "^0.12.1"
   },
   "devDependencies": {
-    "chalk": "^1.0.0",
-    "codeclimate-test-reporter": "0.0.4",
-    "istanbul": "^0.3.13",
-    "jshint": "^2.6.3",
-    "pre-commit": "^1.0.6",
-    "tap-spec": "^3.0.0",
-    "tape": "^4.0.0"
+    "chalk": "^1.1.1",
+    "codeclimate-test-reporter": "0.1.0",
+    "istanbul": "^0.3.18",
+    "jshint": "^2.8.0",
+    "pre-commit": "^1.1.1",
+    "tape": "^4.2.0"
   },
   "pre-commit": [
     "jshint",
