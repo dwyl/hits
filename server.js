@@ -1,7 +1,7 @@
 var http = require('http');
 var fs   = require('fs');
 var path = require('path');
-var filepath = path.resolve(__dirname + '/climate.svg')
+var filepath = path.resolve(__dirname + '/lib/climate.svg')
 // console.log(filepath);
 var count = 12;
 var img  = fs.readFileSync(filepath, 'utf-8');
@@ -13,14 +13,20 @@ http.createServer(function handler(req, res) {
   var r = req.headers;
   r.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   r.url = url
-  console.log(" - - - - - - - - - - record:", r);
+
   if (url.match(/svg/)) {
     count = count + 1;
     var newurl = "https://img.shields.io/badge/hits-" + count +"-brightgreen.svg"
     res.writeHead(307, {"Location": newurl });
     res.end();
   }
+  else if(url === '/favicon.ico') {
+    var fav = 'https://www.google.com/images/google_favicon_128.png'
+    res.writeHead(301, {"Location": fav });
+    res.end();
+  }
   else {
+    console.log(" - - - - - - - - - - record:", r);
     res.writeHead(200, {"Content-Type": "text/plain"});
     res.end(JSON.stringify(r, null, "  ")); // see next line
   } // For pretty JSON in Browser see: http://stackoverflow.com/a/5523967/1148249
