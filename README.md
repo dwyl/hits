@@ -65,7 +65,11 @@ We then have a user-agent hash where we can lookup the by id:
 }
 ```
 
+### Smoke & Mirrors
 
+```sh
+/your/repo.svg >> retrieve count >> redirect to shileds.io/count.svg
+```
 
 
 
