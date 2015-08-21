@@ -2,7 +2,7 @@
 
 What if there was a *simple+easy* way to see how many people have viewed your GitHub Repository?
 
-[![Code Climate](https://hitt.herokuapp.com/htis.svg)](https://github.com/nelsonic/hits)
+[![Code Climate](https://hitt.herokuapp.com/hitz)](https://github.com/nelsonic/hits)
 
 
 [![Code Climate](https://codeclimate.com/github/nelsonic/hits/badges/gpa.svg)](https://codeclimate.com/github/nelsonic/hits)
