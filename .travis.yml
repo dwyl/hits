@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - 0.12
+services:
+  - redis-server
+  - elasticsearch
+env:
+  global:
+    - ES_HOST="127.0.0.1" ES_PORT=9200 ES_INDEX=github
+    - secure: "PkNPm66hqyWtPXCNWdSdtTQpCQculPm8sVfNChtZL2ByufUDWfAed+E8RgGI3ZT7vVr4hqFI6mi086a/8f98S+Az3vK1N3BetyQrvQBuDHDcIgXUzqCgz6HnsrWFCPPiNCq53zOgyYYiMzmVa/GTq0jPVS8wktnjPAa6i5wfnIICeiime9qrZW4e4hTojEFAdu+529ghjolGacZuIJD2tDKBxfHbm4XV4AlTbUOGFcoWRS07pz8In3ZDWw0XJEW7zh31pEzSRT/ZtXCBmzrkYLHdxaSteVByd+9aaZenjT8/6S1yhLHKgGxqyZlPELu3FWsUs80ZlsxNoD1kSwBMGeu57rg70J8Zlh120tRXcpAmd/SLz9nKjTYT3+m3SsRA5NphTt6RKamI9U30Q66L9fCYDs4ESoYACuAQgpl+v+13zbmnRhdA8vvXyJha9bD4VEN11R6ii+RPC7HRD10tRyncBBuG28SCm32ziJXi/gPGfvy76YvtuN32WkoeMCVsUUJgGHnJ8PtsZF4S5sKH5G2mr/fEnPWS3dRHoTqcRe32Efoiod5H12NAHpKpfOePdQ9A+JzsGChh2ZLwgJz2MnCvt0Syo9iDC8G+5q09ORkYc6rvpev1M2wHBiZ7Gnpau4zpQes+bpGhYOMc/5jk83W6utHmzXzDHW/Q88NehUU="

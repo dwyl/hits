@@ -37,7 +37,6 @@
     "chalk": "^1.1.1",
     "codeclimate-test-reporter": "0.1.0",
     "decache": "^3.0.3",
-    "env2": "^2.0.1",
     "istanbul": "^0.3.18",
     "jshint": "^2.8.0",
     "pre-commit": "^1.1.1",
