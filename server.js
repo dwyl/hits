@@ -17,6 +17,7 @@ http.createServer(function handler(req, res) {
   if (url.match(/svg/)) {
     hits.add(r, function(err, data){
       count = data;
+      console.log(r.url, ' >> ', count)
       var newurl = "https://img.shields.io/badge/hits-" + count +"-brightgreen.svg"
       res.writeHead(307, {"Location": newurl });
       res.end();
