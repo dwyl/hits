@@ -1,12 +1,7 @@
 var http = require('http');
-var fs   = require('fs');
-var path = require('path');
-require('env2')('config.env');
 var hits = require('./lib/hits');
-var count = 12;
-
-// console.log(img);
 var port = process.env.PORT || 8000;
+
 http.createServer(function handler(req, res) {
   var url = req.url;
   var agent = req.headers.user-agent
@@ -15,11 +10,17 @@ http.createServer(function handler(req, res) {
   r.url = url.replace('.svg', '');
 
   if (url.match(/svg/)) {
-    hits.add(r, function(err, data){
-      count = data;
+    hits.add(r, function(err, count) {
       console.log(r.url, ' >> ', count)
       var newurl = "https://img.shields.io/badge/hits-" + count +"-brightgreen.svg"
-      res.writeHead(307, {"Location": newurl });
+      // expiry headers see: http://stackoverflow.com/a/2068407/1148249
+      var head = {
+        "Cache-Control": "no-cache, no-store, must-revalidate", // HTTP 1.1
+        "Pragma": "no-cache",                                   // HTTP 1.0
+        "Expires": "0",                                         // Proxies
+        "Location": newurl
+      }
+      res.writeHead(307, head);
       res.end();
     })
 
