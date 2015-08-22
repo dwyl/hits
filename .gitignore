@@ -2,3 +2,4 @@ node_modules
 config.env
 dump.rdb
 coverage
+npm-debug.log
