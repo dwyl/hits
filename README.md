@@ -2,16 +2,12 @@
 
 What if there was a *simple+easy* way to see how many people have viewed your GitHub Repository?
 
-https://hitt.herokuapp.com/ref
-
+[![Build Status](https://travis-ci.org/nelsonic/hits.svg)](https://travis-ci.org/nelsonic/hits)
 [![Code Climate](https://hitt.herokuapp.com/hitz.svg)](https://github.com/nelsonic/hits)
-
-
 [![Code Climate](https://codeclimate.com/github/nelsonic/hits/badges/gpa.svg)](https://codeclimate.com/github/nelsonic/hits)
-[![Test Coverage](https://codeclimate.com/github/nelsonic/hits/badges/coverage.svg)](https://codeclimate.com/github/nelsonic/hits/coverage)
+[![codecov.io](http://codecov.io/github/nelsonic/hits/coverage.svg?branch=master)](http://codecov.io/github/nelsonic/hits?branch=master)
 [![Dependency Status](https://david-dm.org/nelsonic/hits.svg)](https://david-dm.org/nelsonic/hits)
 [![devDependency Status](https://david-dm.org/nelsonic/hits/dev-status.svg)](https://david-dm.org/nelsonic/hits#info=devDependencies)
-
 
 
 ## Why?
