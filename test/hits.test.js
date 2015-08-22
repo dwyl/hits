@@ -13,6 +13,19 @@ test(file+'Add a hit to the list for that url', function(t){
   }
   hits.add(req, function(err, data) {
     t.ok(data >= 0, '✓ REQ ' +req.url +' was added at a index: ' + data)
+    // hits.redisClient.end();
+    t.end();
+  })
+});
+
+test(file+'Add a hit without language', function(t){
+  var req = {
+    'url': '/my/awesome/url',
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5)',
+    'ip': '8.8.8.8'
+  }
+  hits.add(req, function(err, data) {
+    t.ok(data >= 0, '✓ REQ ' +req.url +' was added at a index: ' + data)
     hits.redisClient.end();
     t.end();
   })
