@@ -1,1 +1,1 @@
-web node lib/hits.js
+web node server.js
