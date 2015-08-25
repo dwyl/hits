@@ -1,6 +1,7 @@
-var http = require('http');
-var hits = require('./lib/hits');
-var port = process.env.PORT || 8000;
+var http  = require('http');
+var hits  = require('./lib/hits');
+var port  = process.env.PORT || 8000;
+var wreck = require('wreck');
 
 http.createServer(function handler(req, res) {
   var url = req.url;
@@ -13,15 +14,18 @@ http.createServer(function handler(req, res) {
     hits.add(r, function(err, count) {
       console.log(r.url, ' >> ', count)
       var newurl = "https://img.shields.io/badge/hits-" + count +"-brightgreen.svg"
-      // expiry headers see: http://stackoverflow.com/a/2068407/1148249
-      var head = {
-        "Cache-Control": "no-cache, no-store, must-revalidate", // HTTP 1.1
-        "Pragma": "no-cache",                                   // HTTP 1.0
-        "Expires": "0",                                         // Proxies
-        "Location": newurl
-      }
-      res.writeHead(307, head);
-      res.end();
+      wreck.get(newurl, function (error, response, html) {
+        // expiry headers see: http://stackoverflow.com/a/2068407/1148249
+        var head = {
+          "Cache-Control": "no-cache, no-store, must-revalidate", // HTTP 1.1
+          "Pragma": "no-cache",                                   // HTTP 1.0
+          "Expires": "0",                                         // Proxies
+          "Location": newurl,
+          "Content-Type":"image/svg+xml"
+        }
+        res.writeHead(200, head);
+        res.end(html);
+      });
     })
 
   }
