@@ -3,7 +3,7 @@
 What if there was a *simple+easy* way to see how many people have viewed your GitHub Repository?
 
 [![Build Status](https://travis-ci.org/nelsonic/hits.svg)](https://travis-ci.org/nelsonic/hits)
-[![Code Climate](https://hitt.herokuapp.com/nelsonic/hits.svg)](https://github.com/nelsonic/hits)
+[![HitCount](https://hitt.herokuapp.com/nelsonic/hits.svg)](https://github.com/nelsonic/hits)
 [![Code Climate](https://codeclimate.com/github/nelsonic/hits/badges/gpa.svg)](https://codeclimate.com/github/nelsonic/hits)
 [![codecov.io](http://codecov.io/github/nelsonic/hits/coverage.svg?branch=master)](http://codecov.io/github/nelsonic/hits?branch=master)
 [![Dependency Status](https://david-dm.org/nelsonic/hits.svg)](https://david-dm.org/nelsonic/hits)
@@ -29,11 +29,10 @@ of the number of times a page has been viewed ...
 
 ## How?
 
-Place a Badge (*image*) in your repo `README.md` so others can
+Place a badge (*image*) in your repo `README.md` so others can
+can see how popular the page is and you can track it.
 
 ### Implementation
-
-> Core Node.js or Hapi.js ...?
 
 What is the ***minimum possible*** amount of data we can store?
 
@@ -61,12 +60,10 @@ We then have a user-agent hash where we can lookup the by id:
 }
 ```
 
-### Smoke & Mirrors
+### Fetch SVG from shields.io and serve it just-in-time
 
-```sh
-/your/repo.svg >> retrieve count >> redirect to shileds.io/count.svg
-```
-
+Given that shields.io has a badge creation service,
+and it has acceptable latency, we are proxying the their service.
 
 
 ## Research
