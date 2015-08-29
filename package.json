@@ -11,7 +11,6 @@
     "test": "./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./test/*.js",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./test/*.js && ./node_modules/.bin/istanbul check-coverage --statements 100 --functions 100 --lines 100 --branches 100",
     "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc --exclude-path .gitignore .",
-    "codeclimate": "CODECLIMATE_REPO_TOKEN=7d6a9a77660c9a52f34d752740c30a5e1617e672ff6fdb99c92a63b2f67787d0 ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info",
     "start": "node server.js"
   },
   "repository": {
@@ -37,7 +36,6 @@
   },
   "devDependencies": {
     "chalk": "^1.1.1",
-    "codeclimate-test-reporter": "0.1.0",
     "decache": "^3.0.3",
     "istanbul": "^0.3.18",
     "jshint": "^2.8.0",
@@ -46,7 +44,6 @@
   },
   "pre-commit": [
     "jshint",
-    "coverage",
-    "codeclimate"
+    "coverage"
   ]
 }
