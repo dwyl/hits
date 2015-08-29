@@ -1,7 +1,7 @@
 var dir     = __dirname.split('/')[__dirname.split('/').length-1];
 var file    = dir + __filename.replace(__dirname, '') + " > ";
 var test    = require('tape');
-var hits     = require('../lib/hits');
+var hits    = require('../lib/hits');
 var decache = require('decache');
 
 test(file+'Add a hit to the list for that url', function(t){

@@ -1,5 +1,5 @@
 node_modules
 config.env
 dump.rdb
-#coverage
+coverage
 npm-debug.log
