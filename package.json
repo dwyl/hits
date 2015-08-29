@@ -1,6 +1,6 @@
 {
   "name": "hits",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "all the hits",
   "main": "lib/hits.js",
   "directories": {
@@ -28,14 +28,11 @@
   "homepage": "https://github.com/nelsonic/hits#readme",
   "dependencies": {
     "env2": "^2.0.1",
-    "hiredis": "^0.4.1",
-    "redis": "^0.12.1",
     "redis-connection": "^1.0.3",
     "uniki": "^1.0.3",
     "wreck": "^6.1.0"
   },
   "devDependencies": {
-    "chalk": "^1.1.1",
     "decache": "^3.0.3",
     "istanbul": "^0.3.18",
     "jshint": "^2.8.0",
