@@ -10,7 +10,7 @@ http.createServer(function handler(req, res) {
   var r = req.headers;
   r.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   r.url = url.replace('.svg', '').replace('.png', '');
-  console.log('>>'+url);
+  // console.log('>>'+url);
   if (url.match(/svg/)) {
     hits.add(r, function(err, count) {
       console.log(r.url, ' >> ', count);
@@ -32,7 +32,7 @@ http.createServer(function handler(req, res) {
   }
   else if (url.match(/png/)) {
     hits.add(r, function(err, count) {
-      console.log(r.url, ' >> ', count)
+      console.log(">> Email Open Count: ", count)
       // var newurl = "https://img.shields.io/badge/hits-" + count +"-brightgreen.png"
       // wreck.get(newurl, function (error, response, html) {
         // expiry headers see: http://stackoverflow.com/a/2068407/1148249
