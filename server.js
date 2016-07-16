@@ -36,7 +36,7 @@ var app = http.createServer(function handler(req, res) {
     })
   }
   else if(url === '/favicon.ico') {
-    var favicon = 'https://www.google.com/images/google_favicon_128.png';
+    var favicon = 'http://i.imgur.com/zBEQq4w.png'; // dwyl favicon
     res.writeHead(301, { "Location": favicon });
     res.end();
   }
@@ -68,7 +68,9 @@ var app = http.createServer(function handler(req, res) {
 var io = require('socket.io')(app);
 
 io.on('connection', function (socket) {
-  // console.log('Totes Works!', socket);
+  console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ');
+  console.log(socket.client.conn);
+  console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ');
   socket.emit('news', { msg: 'welcome to stats-ville!' });
   socket.on('my other event', function (data) {
     console.log(data);
