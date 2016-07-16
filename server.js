@@ -14,7 +14,6 @@ var HEADERS = { // headers see: http://stackoverflow.com/a/2068407/1148249
 
 http.createServer(function handler(req, res) {
   var url = req.url;
-  var agent = req.headers.user-agent;
   var r = req.headers;
   r.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   r.url = url.replace('.svg', '').replace('.png', '');
@@ -24,29 +23,45 @@ http.createServer(function handler(req, res) {
       console.log(r.url, ' >> ', count);
       var newurl = 'https://img.shields.io/badge/hits-' + count +'-brightgreen.svg';
       wreck.get(newurl, function (error, response, raw) {
-        var head = Object.assign(HEADERS, { "Location": newurl });
-        res.writeHead(200, head);
+        res.writeHead(200, Object.assign(HEADERS, {"Location": newurl}));
         res.end(raw);
       });
     });
   }
   else if (url.match(/png/)) {
     hits.add(r, function(err, count) {
-      console.log(r.url, ' >> ', count)
-      var head = Object.assign(HEADERS, { "Content-Type": "image/png" });
-      res.writeHead(200, head);
+      console.log(r.url, ' >> ', count);
+      res.writeHead(200, Object.assign(HEADERS, {"Content-Type": "image/png"}));
       res.end(png);
     })
   }
   else if(url === '/favicon.ico') {
-    var fav = 'https://www.google.com/images/google_favicon_128.png';
-    res.writeHead(301, {"Location": fav });
+    var favicon = 'https://www.google.com/images/google_favicon_128.png';
+    res.writeHead(301, { "Location": favicon });
     res.end();
   }
-  else {
+  else if(url === '/stats') {
+    fs.readFile('./lib/index.html', 'utf8', function (err, data) {
+      res.writeHead(200, {"Content-Type": "text/html"});
+      res.end(data);
+    });
+  }
+  else if(url === '/client.js') {
+    fs.readFile('./lib/client.js', 'utf8', function (err, data) {
+      res.writeHead(200, {"Content-Type": "application/javascript"});
+      res.end(data);
+    });
+  }
+  else if(url === '/style.css') {
+    fs.readFile('./lib/style.css', 'utf8', function (err, data) {
+      res.writeHead(200, {"Content-Type": "text/css"});
+      res.end(data);
+    });
+  }
+  else { // echo the record without saving it
     console.log(" - - - - - - - - - - record:", r);
     res.writeHead(200, {"Content-Type": "text/plain"});
-    res.end(JSON.stringify(r, null, "  ")); // see next line
+    res.end(JSON.stringify(r, null, "  "));
   } // pretty JSON in Browser see: http://stackoverflow.com/a/5523967/1148249
 }).listen(port);
 
