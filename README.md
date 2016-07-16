@@ -65,6 +65,25 @@ We then have a user-agent hash where we can lookup the by id:
 Given that shields.io has a badge creation service,
 and it has acceptable latency, we are proxying the their service.
 
+## Run it!
+
+Download (clone) the code to your local machine:
+```sh
+git clone https://github.com/dwyl/hits.git && cd hits
+```
+> Note: you will need to have Redis running on your localhost,
+> if you are new to Redis see: https://github.com/dwyl/learn-redis
+
+Install dependencies:
+```sh
+npm install
+```
+Run locally:
+```sh
+npm run dev
+```
+Visit: http://localhost:8000/any/url/count.svg
+
 
 ## Research
 
@@ -79,7 +98,7 @@ need to perform a lookup on each hit which requires network IO ...
 (*expensive*!)
 What if there was a way of *deriving* a `String` representation of the
 the user-agent string ... oh, that's right, here's one I made earlier...
-https://github.com/ideaq/aguid
+https://github.com/dwyl/aguid
 
 ### Log Formats
 
