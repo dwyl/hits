@@ -12,7 +12,7 @@ var HEADERS = { // headers see: http://stackoverflow.com/a/2068407/1148249
   "Content-Type":"image/svg+xml"                          // default to svg
 };
 
-http.createServer(function handler(req, res) {
+var app = http.createServer(function handler(req, res) {
   var url = req.url;
   var r = req.headers;
   r.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -64,5 +64,15 @@ http.createServer(function handler(req, res) {
     res.end(JSON.stringify(r, null, "  "));
   } // pretty JSON in Browser see: http://stackoverflow.com/a/5523967/1148249
 }).listen(port);
+
+var io = require('socket.io')(app);
+
+io.on('connection', function (socket) {
+  // console.log('Totes Works!', socket);
+  socket.emit('news', { msg: 'welcome to stats-ville!' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
 
 console.log('Visit http://localhost:' + port);

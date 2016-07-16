@@ -29,6 +29,7 @@
   "homepage": "https://github.com/dwyl/hits#readme",
   "dependencies": {
     "redis-connection": "^5.0.0",
+    "socket.io": "^1.4.8",
     "uniki": "^1.0.3",
     "wreck": "^8.0.0"
   },
