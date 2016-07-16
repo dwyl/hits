@@ -2,12 +2,12 @@
 
 What if there was a *simple+easy* way to see how many people have viewed your GitHub Repository?
 
-[![Build Status](https://travis-ci.org/nelsonic/hits.svg)](https://travis-ci.org/nelsonic/hits)
+[![Build Status](https://travis-ci.org/dwyl/hits.svg)](https://travis-ci.org/dwyl/hits)
 [![HitCount](https://hitt.herokuapp.com/nelsonic/hits.svg)](https://github.com/nelsonic/hits)
-[![Code Climate](https://codeclimate.com/github/nelsonic/hits/badges/gpa.svg)](https://codeclimate.com/github/nelsonic/hits)
-[![codecov.io](http://codecov.io/github/nelsonic/hits/coverage.svg?branch=master)](http://codecov.io/github/nelsonic/hits?branch=master)
-[![Dependency Status](https://david-dm.org/nelsonic/hits.svg)](https://david-dm.org/nelsonic/hits)
-[![devDependency Status](https://david-dm.org/nelsonic/hits/dev-status.svg)](https://david-dm.org/nelsonic/hits#info=devDependencies)
+[![Code Climate](https://codeclimate.com/github/dwyl/hits/badges/gpa.svg)](https://codeclimate.com/github/dwyl/hits)
+[![codecov.io](http://codecov.io/github/dwyl/hits/coverage.svg?branch=master)](http://codecov.io/github/dwyl/hits?branch=master)
+[![Dependency Status](https://david-dm.org/dwyl/hits.svg)](https://david-dm.org/dwyl/hits)
+[![devDependency Status](https://david-dm.org/dwyl/hits/dev-status.svg)](https://david-dm.org/dwyl/hits#info=devDependencies)
 
 
 ## Why?
@@ -23,7 +23,7 @@ to know where we need to be investing our time.
 
 A simple way to add (*very basic*) analytics to your GitHub repos.
 
-There are already *many* "Badges" available which people put in their repos: https://github.com/dwyl/repo-badges
+There are already *many* "Badges" available which people put in their repos: https://github.com/dwyl/repo-badges  
 But we haven't seen one that gives a "***hit counter***"
 of the number of times a page has been viewed ...
 
