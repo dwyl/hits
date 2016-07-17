@@ -2,12 +2,12 @@
 
 What if there was a *simple+easy* way to see how many people have viewed your GitHub Repository?
 
-[![Build Status](https://travis-ci.org/nelsonic/hits.svg)](https://travis-ci.org/nelsonic/hits)
+[![Build Status](https://travis-ci.org/dwyl/hits.svg)](https://travis-ci.org/dwyl/hits)
 [![HitCount](https://hitt.herokuapp.com/nelsonic/hits.svg)](https://github.com/nelsonic/hits)
-[![Code Climate](https://codeclimate.com/github/nelsonic/hits/badges/gpa.svg)](https://codeclimate.com/github/nelsonic/hits)
-[![codecov.io](http://codecov.io/github/nelsonic/hits/coverage.svg?branch=master)](http://codecov.io/github/nelsonic/hits?branch=master)
-[![Dependency Status](https://david-dm.org/nelsonic/hits.svg)](https://david-dm.org/nelsonic/hits)
-[![devDependency Status](https://david-dm.org/nelsonic/hits/dev-status.svg)](https://david-dm.org/nelsonic/hits#info=devDependencies)
+[![Code Climate](https://codeclimate.com/github/dwyl/hits/badges/gpa.svg)](https://codeclimate.com/github/dwyl/hits)
+[![codecov.io](http://codecov.io/github/dwyl/hits/coverage.svg?branch=master)](http://codecov.io/github/dwyl/hits?branch=master)
+[![Dependency Status](https://david-dm.org/dwyl/hits.svg)](https://david-dm.org/dwyl/hits)
+[![devDependency Status](https://david-dm.org/dwyl/hits/dev-status.svg)](https://david-dm.org/dwyl/hits#info=devDependencies)
 
 
 ## Why?
@@ -23,7 +23,7 @@ to know where we need to be investing our time.
 
 A simple way to add (*very basic*) analytics to your GitHub repos.
 
-There are already *many* "Badges" available which people put in their repos: https://github.com/dwyl/repo-badges
+There are already *many* "Badges" available which people put in their repos: https://github.com/dwyl/repo-badges  
 But we haven't seen one that gives a "***hit counter***"
 of the number of times a page has been viewed ...
 
@@ -65,6 +65,25 @@ We then have a user-agent hash where we can lookup the by id:
 Given that shields.io has a badge creation service,
 and it has acceptable latency, we are proxying the their service.
 
+## Run it!
+
+Download (clone) the code to your local machine:
+```sh
+git clone https://github.com/dwyl/hits.git && cd hits
+```
+> Note: you will need to have Redis running on your localhost,
+> if you are new to Redis see: https://github.com/dwyl/learn-redis
+
+Install dependencies:
+```sh
+npm install
+```
+Run locally:
+```sh
+npm run dev
+```
+Visit: http://localhost:8000/any/url/count.svg
+
 
 ## Research
 
@@ -79,7 +98,7 @@ need to perform a lookup on each hit which requires network IO ...
 (*expensive*!)
 What if there was a way of *deriving* a `String` representation of the
 the user-agent string ... oh, that's right, here's one I made earlier...
-https://github.com/ideaq/aguid
+https://github.com/dwyl/aguid
 
 ### Log Formats
 
