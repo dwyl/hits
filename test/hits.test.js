@@ -39,7 +39,7 @@ test(file+'Add a hit without language', function(t){
   hits.count(req.url, function(err, data) {
     console.log(data);
     t.ok(data >= 0, '✓ REQ ' +req.url +' was added at a index: ' + data)
-    hits.redisClient.end();
+    hits.redisClient.end(true);
     t.end();
   })
 });
