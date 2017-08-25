@@ -30,15 +30,5 @@ test("Consistenty check against 100 sample hashes", function(t) {
     t.true(expected === actual, 
       '✓ hash(' + k + ') >> expected: ' + expected + ' === actual: ' + actual);
   })
-  // var hash = 'H3ll0W0rld!';
-  // var obj = {};
-  // // var fixture = require('./hash_fixture.json');
-  // for(var i=0; i < 101; i++){
-  //   obj[hash] = uniki(hash, 10); 
-  //   hash = uniki(hash);
-  // }
-  // console.log(JSON.stringify(obj, null, 2))
-  // var hash = uniki("RandomGobbledygook", 100);
-  // t.true(hash.length === 78, "Full Length is " + hash.length + ' chars');
   t.end();
 });

@@ -29,3 +29,4 @@ node_modules
 config.env
 dump.rdb
 npm-debug.log
+data/
