@@ -30,6 +30,71 @@ of the number of times a page has been viewed ... <br />
 So we decided to create one.
 
 
+### What Data to Capture/Store?
+
+The _first_ question we asked ourselves was:
+What is the ***minimum possible*** amount of (_useful/unique_)
+**data** we can store ***per visit*** (_to one of our projects_)?
+
+1. **date + time** (_timestamp_) ***when*** 
+the person visited the site/page. <br />
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now
+
+2. **url** being visited.
+
+3. **user-agent** the browser/device (_or "crawler"_) visiting the site/page
+https://en.wikipedia.org/wiki/User_agent
+
+4. IP Address of the client.
+
+5. **language** of the person's web browser. 
+_Note: While not "essential", we added **Browser Language** 
+as the **5th** piece of data (when it is set/sent by the browser/device)
+because it's **insightful** to know what language people are using
+so that we can determine if we should be **translating**/"**localising**" 
+our content._
+
+
+Log entries are stored as a (_"pipe" delimited_) `String` 
+which can be parsed and re-formatted into any other format:  
+
+```sh
+1436570536950|github.com/dwyl/the-book|Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5)|88.88.88.88|EN-US
+```
+This is perhaps best viewed as a table:
+
+| Timestamp     | URL | User Agent  | IP Address   | Language |
+| ------------- |:------------|:------------|:------------:|:--------:|
+| 1436570536950 | github.com/dwyl/the-book | Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) | 84.91.136.21 | EN-GB    |
+
+
+### Reducing Storage Costs
+
+If a person views multiple pages, three pieces of data are duplicated:
+User Agent, IP Address and Language.
+Rather than storing this data multiple times, we _hash_ the data 
+and store the hash as a lookup.
+
+#### Hash Long Data
+
+If we run the following Browser|IP|Language `String`
+```sh
+'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5)|84.91.136.21|EN-US'
+```
+through a **sha512** hash function we get: `8HKg3NB5Cf` (_always_).
+
+Sample code:
+```js
+var hash = require('./lib/hash.js');
+var user_agent_string = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5)|88.88.88.88|EN-US';
+var agent_hash = hash(user_agent_string, 10); // 8HKg3NB5Cf
+```
+
+#### Hit Data With Hash
+
+```
+1436570536950|github.com/dwyl/the-book|8HKg3NB5Cf
+```
 
 
 ## How?
@@ -37,55 +102,17 @@ So we decided to create one.
 Place a badge (*image*) in your repo `README.md` so others can
 can see how popular the page is and you can track it.
 
-### Implementation
-
-What is the ***minimum possible*** amount of data we can store _per request_?
-
-1. **date+time** the person visited the site.
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now
-2. **user-agent** the browser or crawler visiting the page
-https://en.wikipedia.org/wiki/User_agent
-3. **referer** url of the page where the image is requested from?
-https://en.wikipedia.org/wiki/HTTP_referer
-
-Log entries are stored as a (_space delimited_) `String` 
-which can be parsed and re-formatted into any other format:  
-
-```sh
-1436570536950 x7uapo9 84.91.136.21 EN-GB
-```
-> _**Note: while not "essential", we added **Browser Language** 
-> as the **4th** piece of data (when it is set/sent by the browser/device)
-> because it's **insightful** to know what language people are using
-> so that we can determine if we should be **translating**/"**localising**" 
-> our content._
 
 
-| Timestamp     | User Agent  | IP Address   | Language |
-| ------------- |:------------|:------------:|:--------:|
-| 1436570536950 | x7uapo9     | 84.91.136.21 | EN-GB    |
-
-We then have a user-agent hash where we can lookup the by id:
-```js
-{
-  "x7uapo9":"Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10",
-  "N03v1lz":"Googlebot/2.1 (+http://www.google.com/bot.html)"
-}
-```
-
-### Fetch SVG from shields.io and serve it just-in-time
-
-Given that shields.io has a badge creation service,
-and it has acceptable latency, we are proxying the their service.
-
-## Run it!
+## _Run_ it Your_self_!
 
 Download (clone) the code to your local machine:
+
 ```sh
 git clone https://github.com/dwyl/hits.git && cd hits
 ```
-> Note: you will need to have Redis running on your localhost,
-> if you are new to Redis see: https://github.com/dwyl/learn-redis
+
+> Note: you will need to have Node.js running on your localhost.
 
 Install dependencies:
 ```sh
@@ -96,6 +123,20 @@ Run locally:
 npm run dev
 ```
 Visit: http://localhost:8000/any/url/count.svg
+
+
+# Data Storage
+
+Recording the "hit" data is _essential_ 
+for this app to _work_ and be _useful_.
+
+We have built it to work with _two_ "data stores": 
+Filesystem and Redis <!-- and PostgreSQL. --> <br />
+> _**Note**: you only need **one** storage option to be available_.
+
+## Filesystem
+
+
 
 
 ## Research
@@ -122,4 +163,11 @@ http://www.monitorware.com/en/logsamples/apache.php
 
 https://nodejs.org/api/http.html#http_message_rawheaders
 
-> Try: 
+## Running the Test Suite locally
+
+The test suite includes tests for 3 databases
+therefore running the tests on your `localhost` 
+requires all 3 to be running.
+
+Deploying and _using_ the app only requires _one_ 
+of the databases to be available.
