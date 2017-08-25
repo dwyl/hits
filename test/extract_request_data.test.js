@@ -38,3 +38,17 @@ test(file + 'fewer headers are set on request object', function(t){
   '✓ extracted language: ' + hit.split('|')[4])
   t.end();
 });
+
+test(file + 'no language defined', function(t){
+  var req = {
+    'url': '/my/awesome/url',
+    headers: {
+      'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5)',
+      'x-forwarded-for': '88.88.88.88'
+    }
+  }
+  var hit = extract(req);
+  t.ok(hit.split('|')[4] === '', 
+  '✓ no language defined')
+  t.end();
+});

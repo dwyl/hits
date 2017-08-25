@@ -10,3 +10,7 @@ test(file + 'Make SVG file from template & count', function(t){
   '✓ SVG created for count: ' + count)
   t.end();
 });
+
+test.onFinish(function () {
+  require('redis-connection')().end(true); // shutdown redis con
+})

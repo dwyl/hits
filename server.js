@@ -14,7 +14,7 @@ var app = http.createServer(function handler(req, res) {
 
   if (url.match(/svg/)) {
     var hit = extract(req);
-    hits.add(hit, function(err, count) {
+    hits(hit, function(err, count) {
       console.log(url, ' >> ', count);
       res.writeHead(200, HEAD);
       res.end(make_svg(count));

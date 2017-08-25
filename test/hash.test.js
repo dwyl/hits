@@ -11,7 +11,14 @@ test("Create hash for url: 1234", function(t) {
 
 test("Full Length Hash", function(t) {
   var hash = uniki("RandomGobbledygook", 100);
-  t.true(hash.length === 78, "Full Length is " + hash.length + ' chars');
+  t.true(hash.length === 78, "✓ Full Length is " + hash.length + ' chars');
+  t.end();
+});
+
+test("Browser Agent String Hash", function(t) {
+  var user_agent_string = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5)|84.91.136.21|EN-US';
+  var hash = uniki(user_agent_string, 10);
+  t.true(hash === '8HKg3NB5Cf', "Browser Data Hash: " + hash);
   t.end();
 });
 
