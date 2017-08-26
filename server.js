@@ -1,12 +1,13 @@
 var port  = process.env.PORT || 8000;
-var http  = require('http'); // plain http server (no fancy framework required)
-var fs    = require('fs'); // so we can open the file
+var fs    = require('fs'); // so we can open the HTML & JS file
 var hits  = require('./lib/hits'); // our storage interface
 var make_svg = require('./lib/make_svg.js');
 var extract = require('./lib/extract_request_data.js');
+
 var FAVICON = 'http://i.imgur.com/zBEQq4w.png'; // dwyl favicon
 var HEAD = require('./lib/headers.json'); // stackoverflow.com/a/2068407/1148249
 
+// plain node.js http server (no fancy framework required!)
 var app = require('http').createServer(handler)
 var io = require('socket.io')(app);
 
@@ -51,4 +52,4 @@ function handler (req, res) {
   }
 }
 
-console.log('Visit http://localhost:' + port);
+console.log('Visit ' + require('./lib/lanip') + ':'+ port);
