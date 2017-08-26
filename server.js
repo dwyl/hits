@@ -11,9 +11,10 @@ var HEAD = require('./lib/headers.json'); // stackoverflow.com/a/2068407/1148249
 var app = http.createServer(function handler(req, res) {
   
   var url = req.url;
-
+  console.log(url);
   if (url.match(/svg/)) {
     var hit = extract(req);
+    console.log('hit:', hit);
     hits(hit, function(err, count) {
       console.log(url, ' >> ', count);
       res.writeHead(200, HEAD);
