@@ -3,6 +3,7 @@ var fs    = require('fs'); // so we can open the HTML & JS file
 var hits  = require('./lib/hits'); // our storage interface
 var make_svg = require('./lib/make_svg.js');
 var extract = require('./lib/extract_request_data.js');
+var format = require('./lib/format_hit.js')
 
 var FAVICON = 'http://i.imgur.com/zBEQq4w.png'; // dwyl favicon
 var HEAD = require('./lib/headers.json'); // stackoverflow.com/a/2068407/1148249
@@ -18,23 +19,19 @@ io.on('connection', function (socket) {
   });
 });
 
-app.listen(port);
-
 function handler (req, res) {
   var url = req.url;
   var hit = extract(req);
   console.log(hit);
   if (url.match(/svg/)) {
     hits(hit, function(err, count) {
-      // var 
-      io.sockets.emit('hit', { 'hit': hit });
+      io.sockets.emit('hit', { 'hit': format(hit, count) });
       console.log(url, ' >> ', count);
       res.writeHead(200, HEAD);
       res.end(make_svg(count));
     });
   }
   else if(url === '/favicon.ico') {
-    console.log('favicon.ico');
     res.writeHead(301, { "Location": FAVICON });
     res.end();
   }
@@ -52,4 +49,5 @@ function handler (req, res) {
   }
 }
 
+app.listen(port);
 console.log('Visit ' + require('./lib/lanip') + ':'+ port);
