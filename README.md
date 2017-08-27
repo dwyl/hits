@@ -11,9 +11,10 @@ What if there was a *simple+easy* way to see how many people have viewed your Gi
 
 ## Why?
 
-We have a _few_ repos on GitHub ... 
+We have a _few_ projects on GitHub ... 
 but _sadly_, we ~~have~~ _had_ no idea how many people
-are looking at the repos unless they star/watch them; 
+are looking at the repos <br />
+unless they star/watch them; 
 GitHub does not share any stats with people using their site.
 
 We would like to *know* the popularity of each of our repos
