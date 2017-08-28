@@ -1,6 +1,6 @@
 # hits
 
-What if there was a *simple+easy* way to see how many people have viewed your GitHub Repository?
+A _simple + easy_ way to see how many people have _viewed_ your GitHub Repository?
 
 [![Build Status](https://travis-ci.org/dwyl/hits.svg)](https://travis-ci.org/dwyl/hits)
 [![HitCount](https://hitt.herokuapp.com/nelsonic/hits.svg)](https://github.com/nelsonic/hits)
@@ -11,14 +11,15 @@ What if there was a *simple+easy* way to see how many people have viewed your Gi
 
 ## Why?
 
-We have a _few_ projects on GitHub ... 
-but _sadly_, we ~~have~~ _had_ no idea how many people
-are looking at the repos <br />
-unless they star/watch them; 
-GitHub does not share any stats with people using their site.
+We have a _few_ projects on GitHub ... <br />
+_Sadly_, we ~~have~~ _had_ no idea how many people
+are _reading/using_ the projects 
+unless people star/watch them; 
+GitHub does not share any stats so we .
 
-We would like to *know* the popularity of each of our repos
-to know where we need to be investing our time.
+We want to *know* the popularity of each of our repos
+to know what people are finding _useful_ and help us
+decide where we need to be investing our time.
 
 ## What?
 
@@ -27,9 +28,10 @@ A simple way to add (*very basic*) analytics to your GitHub repos.
 There are already *many* "badges" that people use in their repos.
 See: [github.com/dwyl/**repo-badges**](https://github.com/dwyl/repo-badges) <br />
 But we haven't seen one that gives a "***hit counter***"
-of the number of times a page has been viewed ... <br />
-So we decided to create one.
+of the number of times a GitHub page has been viewed ... <br />
+So, in today's mini project we're going to _create_ a _basic **Web Counter**_.
 
+https://en.wikipedia.org/wiki/Web_counter
 
 ### What Data to Capture/Store?
 
@@ -55,6 +57,15 @@ because it's **insightful** to know what language people are using
 so that we can determine if we should be **translating**/"**localising**" 
 our content._
 
+### Log Format
+
+For simplicity, we are using the "Common Log Format" (CLF).
+
+An example log entry: 
+```
+127.0.0.1 user-identifier frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326
+```
+for more detail see: https://en.wikipedia.org/wiki/Common_Log_Format
 
 Log entries are stored as a (_"pipe" delimited_) `String` 
 which can be parsed and re-formatted into any other format:  
@@ -76,7 +87,7 @@ User Agent, IP Address and Language.
 Rather than storing this data multiple times, we _hash_ the data 
 and store the hash as a lookup.
 
-#### Hash Long Data
+#### Hash Long Repeating (Identical) Data
 
 If we run the following Browser|IP|Language `String`
 ```sh

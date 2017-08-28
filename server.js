@@ -13,8 +13,8 @@ var app = require('http').createServer(handler)
 var io = require('socket.io')(app);
 
 io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
+  socket.emit('news', { hello: 'world (test message)' });
+  socket.on('hello', function (data) {
     console.log(data);
   });
 });
