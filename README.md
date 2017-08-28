@@ -57,43 +57,72 @@ because it's **insightful** to know what language people are using
 so that we can determine if we should be **translating**/"**localising**" 
 our content._
 
-### Log Format
+### "Common Log Format" (CLF) ?
 
-For simplicity, we are using the "Common Log Format" (CLF).
+We initially _considered_ using the "Common Log Format" (CLF)
+because it's well-known/understood.
+see: https://en.wikipedia.org/wiki/Common_Log_Format
 
 An example log entry: 
 ```
 127.0.0.1 user-identifier frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326
 ```
-for more detail see: https://en.wikipedia.org/wiki/Common_Log_Format
+
+Real example:
+```
+84.91.136.21 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) 007 [05/Aug/2017:16:50:51 -0000] "GET github.com/dwyl/phase-two HTTP/1.0" 200 42247
+```
+
+The data makes sense when viewed as a table:
+
+| IP Address of Client | User Identifier | User ID | Date+Imte of Request | URL of Request" | HTTP Status Code | Size of Response |
+| -------------|:-----------|:--|:------------:|:--------:|:--|--|--|
+| 84.91.136.21 | Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) | 007 | [05/Aug/2017:16:50:51 -0000] | "GET github.com/dwyl/phase-two HTTP/1.0" | 200 | 42247 |
+
+On further reflection, we think the "Common Log Format" is _inneficient_ 
+as it contains a lot of _duplicate_ and some _useless_ data.
+
+We can do better.
+
+### Alternative Log Format (ALF)
+
+From the CLF we can remove: 
+
++ **IP Address**, **User Identifier** and **User ID** can be condensed into a single hash (_see below_).
++ **GET** - the word is implied by the service we are running (_we only accept GETs_)
++ **Response size** is irrelevant and will be the same for most requests.
+
+| Timestamp     | URL | User Agent  | IP Address   | Language | Hit Count |
+| ------------- |:------------|:------------|:------------:|:--------:|
+| 1436570536950 | github.com/dwyl/the-book | Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) | 84.91.136.21 | EN-GB | 42 |
+
+
+In the log entry (_example_) described above the first 3 bits of data will 
+identify the "user" requesting the page/resource, so rather than duplicating the data in an inefficient string, we can _hash_ it!
+
+Any repeating user-identifying data should be concactenated 
 
 Log entries are stored as a (_"pipe" delimited_) `String` 
 which can be parsed and re-formatted into any other format:  
 
 ```sh
-1436570536950|github.com/dwyl/the-book|Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5)|88.88.88.88|EN-US
+1436570536950|github.com/dwyl/phase-two|Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5)|88.88.88.88|EN-US|42
 ```
-This is perhaps best viewed as a table:
-
-| Timestamp     | URL | User Agent  | IP Address   | Language |
-| ------------- |:------------|:------------|:------------:|:--------:|
-| 1436570536950 | github.com/dwyl/the-book | Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) | 84.91.136.21 | EN-GB    |
-
 
 ### Reducing Storage Costs
 
-If a person views multiple pages, three pieces of data are duplicated:
+If a person views _multiple_ pages, three pieces of data are duplicated:
 User Agent, IP Address and Language.
 Rather than storing this data multiple times, we _hash_ the data 
 and store the hash as a lookup.
 
 #### Hash Long Repeating (Identical) Data
 
-If we run the following Browser|IP|Language `String`
+If we run the following `Browser|IP|Language` `String`:
 ```sh
 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5)|84.91.136.21|EN-US'
 ```
-through a **sha512** hash function we get: `8HKg3NB5Cf` (_always_).
+through a **SHA** hash function we get: `8HKg3NB5Cf` (_always_)<sup>1</sup>.
 
 Sample code:
 ```js
@@ -102,10 +131,12 @@ var user_agent_string = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5)|88.88.8
 var agent_hash = hash(user_agent_string, 10); // 8HKg3NB5Cf
 ```
 
+<sup>1</sup>Note: SHA hash is always longer than 
+
 #### Hit Data With Hash
 
 ```
-1436570536950|github.com/dwyl/the-book|8HKg3NB5Cf
+1436570536950|github.com/dwyl/the-book|8HKg3NB5Cf|42
 ```
 
 

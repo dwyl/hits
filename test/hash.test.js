@@ -3,9 +3,10 @@ var test  = require('tape');
 
 
 test("Create hash for url: 1234", function(t) {
-  var str = uniki(1234);
-  t.equal(str.length, 8, "Worked as expected "+str);
-  t.equal(str, '1ARVn2Au', "uniki is consistent. 1234 >> 1ARVn")
+  var hash = uniki(1234);
+  t.equal(hash.length, 12, "Worked as expected " + hash);
+  console.log(hash)
+  t.equal(hash, '1ARVn2Auq2WA', "Hash is consistent. 1234 >> 1ARVn2Auq2WA")
   t.end();
 });
 
