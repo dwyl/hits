@@ -1,21 +1,21 @@
 # hits
 
-A _simple + easy_ way to see how many people have _viewed_ your GitHub Repository?
+A _simple + easy_ way to see how many people have _viewed_ your GitHub Repository.
 
-[![Build Status](https://travis-ci.org/dwyl/hits.svg)](https://travis-ci.org/dwyl/hits)
-[![HitCount](https://hitt.herokuapp.com/nelsonic/hits.svg)](https://github.com/nelsonic/hits)
-[![codecov.io](http://codecov.io/github/dwyl/hits/coverage.svg?branch=master)](http://codecov.io/github/dwyl/hits?branch=master)
-[![Dependency Status](https://david-dm.org/dwyl/hits.svg)](https://david-dm.org/dwyl/hits)
-[![devDependency Status](https://david-dm.org/dwyl/hits/dev-status.svg)](https://david-dm.org/dwyl/hits#info=devDependencies)
+[![Build Status](https://img.shields.io/travis/dwyl/hits.svg?style=flat-square)](https://travis-ci.org/dwyl/hits)
+[![HitCount](http://hits.dwyl.io/dwyl/hits.svg)](https://github.com/dwyl/hits)
+[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hits/master.svg?style=flat-square)](http://codecov.io/github/dwyl/hits?branch=master)
+[![Dependency Status](https://img.shields.io/david/dwyl/hits.svg?style=flat-square)](https://david-dm.org/dwyl/hits)
+[![devDependency Status](https://img.shields.io/david/dev/dwyl/hits.svg?style=flat-square)](https://david-dm.org/dwyl/hits#info=devDependencies)
 
 
 ## Why?
 
 We have a _few_ projects on GitHub ... <br />
 _Sadly_, we ~~have~~ _had_ no idea how many people
-are _reading/using_ the projects 
-unless people star/watch them; 
-GitHub does not share any stats so we .
+are _reading/using_ the projects because GitHub only shares "[traffic](https://github.com/blog/1672-introducing-github-traffic-analytics)" stats 
+for the [_past 14 days_](https://github.com/dwyl/hits/issues/49) and not in "real time".
+(_unless people star/watch the repo_)
 
 We want to *know* the popularity of each of our repos
 to know what people are finding _useful_ and help us
