@@ -21,7 +21,7 @@
     "hits",
     "hit counter"
   ],
-  "author": "this guy",
+  "author": "some random person on the internet...",
   "license": "GPL-2.0",
   "bugs": {
     "url": "https://github.com/dwyl/hits/issues"
@@ -34,6 +34,7 @@
   "devDependencies": {
     "decache": "^4.1.0",
     "istanbul": "^0.4.4",
+    "mkdirp": "^0.5.1",
     "nodemon": "^1.11.0",
     "pre-commit": "^1.2.2",
     "rimraf": "^2.6.1",

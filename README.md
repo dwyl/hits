@@ -1,6 +1,6 @@
 # hits
 
-A _simple + easy_ way to see how many people have _viewed_ your GitHub Repository.
+A _simple & easy_ way to see how many people have _viewed_ your GitHub Repository.
 
 [![Build Status](https://img.shields.io/travis/dwyl/hits.svg?style=flat-square)](https://travis-ci.org/dwyl/hits)
 [![HitCount](http://hits.dwyl.io/dwyl/hits.svg)](https://github.com/dwyl/hits)
@@ -14,10 +14,11 @@ A _simple + easy_ way to see how many people have _viewed_ your GitHub Repositor
 We have a _few_ projects on GitHub ... <br />
 _Sadly_, we ~~have~~ _had_ no idea how many people
 are _reading/using_ the projects because GitHub only shares "[traffic](https://github.com/blog/1672-introducing-github-traffic-analytics)" stats 
-for the [_past 14 days_](https://github.com/dwyl/hits/issues/49) and not in "real time".
-(_unless people star/watch the repo_)
+for the [_past 14 days_](https://github.com/dwyl/hits/issues/49) and **not** in "***real time***".
+(_unless people star/watch the repo_) Also, _manually_ checking who has viewed a 
+project is _exceptionally_ tedious when you have more than a handful of projects.
 
-We want to *know* the popularity of each of our repos
+We want to *know* the popularity of _each_ of our repos
 to know what people are finding _useful_ and help us
 decide where we need to be investing our time.
 
@@ -37,20 +38,20 @@ https://en.wikipedia.org/wiki/Web_counter
 
 The _first_ question we asked ourselves was:
 What is the ***minimum possible*** amount of (_useful/unique_)
-**data** we can store ***per visit*** (_to one of our projects_)?
+**info** we can store ***per visit*** (_to one of our projects_)?
 
 1. **date + time** (_timestamp_) ***when*** 
 the person visited the site/page. <br />
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now
 
-2. **url** being visited.
+2. **url** being visited. i.e. which project was viewed.
 
 3. **user-agent** the browser/device (_or "crawler"_) visiting the site/page
 https://en.wikipedia.org/wiki/User_agent
 
-4. IP Address of the client.
+4. IP Address of the client. (_for checking uniqueness_)
 
-5. **language** of the person's web browser. 
+5. **Language** of the person's web browser. 
 _Note: While not "essential", we added **Browser Language** 
 as the **5th** piece of data (when it is set/sent by the browser/device)
 because it's **insightful** to know what language people are using
@@ -75,7 +76,7 @@ Real example:
 
 The data makes sense when viewed as a table:
 
-| IP Address of Client | User Identifier | User ID | Date+Imte of Request | URL of Request" | HTTP Status Code | Size of Response |
+| IP Address of Client | User Identifier | User ID | Date+Imte of Request | Request "Verb" and URL of Request | HTTP Status Code | Size of Response |
 | -------------|:-----------|:--|:------------:|:--------:|:--|--|--|
 | 84.91.136.21 | Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) | 007 | [05/Aug/2017:16:50:51 -0000] | "GET github.com/dwyl/phase-two HTTP/1.0" | 200 | 42247 |
 
@@ -84,13 +85,13 @@ as it contains a lot of _duplicate_ and some _useless_ data.
 
 We can do better.
 
-### Alternative Log Format (ALF)
+### Alternative Log Format ("ALF")
 
 From the CLF we can remove: 
 
 + **IP Address**, **User Identifier** and **User ID** can be condensed into a single hash (_see below_).
-+ **GET** - the word is implied by the service we are running (_we only accept GETs_)
-+ **Response size** is irrelevant and will be the same for most requests.
++ "**GET**"" - the word is implied by the service we are running (_we only accept GET requests_)
++ **Response size** is _irrelevant_ and will be the same for most requests.
 
 | Timestamp     | URL | User Agent  | IP Address   | Language | Hit Count |
 | ------------- |:------------|:------------|:------------:|:--------:|
@@ -109,9 +110,9 @@ which can be parsed and re-formatted into any other format:
 1436570536950|github.com/dwyl/phase-two|Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5)|88.88.88.88|EN-US|42
 ```
 
-### Reducing Storage Costs
+### Reducing Storage (_Costs_)
 
-If a person views _multiple_ pages, three pieces of data are duplicated:
+If a person views _multiple_ pages, _three_ pieces of data are duplicated:
 User Agent, IP Address and Language.
 Rather than storing this data multiple times, we _hash_ the data 
 and store the hash as a lookup.
@@ -124,14 +125,20 @@ If we run the following `Browser|IP|Language` `String`:
 ```
 through a **SHA** hash function we get: `8HKg3NB5Cf` (_always_)<sup>1</sup>.
 
-Sample code:
+_Sample_ code:
 ```js
 var hash = require('./lib/hash.js');
 var user_agent_string = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5)|88.88.88.88|EN-US';
 var agent_hash = hash(user_agent_string, 10); // 8HKg3NB5Cf
 ```
 
-<sup>1</sup>Note: SHA hash is always longer than 
+<sup>1</sup>Note: SHA hash is _always_ 40 characters,
+but we _truncate_ it because 10 alphanumeric characters (_selected from a set of 26 letters + 10 digits_)
+means there are 36<sup>10</sup> = [3,656,158,440,062,976](http://www.wolframalpha.com/input/?i=36%5E10)
+(_three and a half [**Quadrillion**](http://www.wolframalpha.com/input/?i=3,656,158,440,062,976+in+english)_) 
+possible strings which we consider "_enough_" entropy. 
+(_if you disagree, tell us why in an 
+  [issue](https://github.com/dwyl/hits/issues)_!)
 
 #### Hit Data With Hash
 
