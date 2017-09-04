@@ -1,80 +1,53 @@
-var http  = require('http');
-var hits  = require('./lib/hits');
 var port  = process.env.PORT || 8000;
-var wreck = require('wreck');
-var fs    = require('fs');
-var png   = fs.readFileSync('./lib/1x1px.png');
+var fs    = require('fs'); // so we can open the HTML & JS file
+var hits  = require('./lib/hits'); // our storage interface
+var make_svg = require('./lib/make_svg.js');
+var extract = require('./lib/extract_request_data.js');
+var format = require('./lib/format_hit.js')
 
-var HEADERS = { // headers see: http://stackoverflow.com/a/2068407/1148249
-  "Cache-Control": "no-cache, no-store, must-revalidate", // HTTP 1.1
-  "Pragma": "no-cache",                                   // HTTP 1.0
-  "Expires": "0",                                         // Proxies
-  "Content-Type":"image/svg+xml"                          // default to svg
-};
+var FAVICON = 'http://i.imgur.com/zBEQq4w.png'; // dwyl favicon
+var HEAD = require('./lib/headers.json'); // stackoverflow.com/a/2068407/1148249
 
-var app = http.createServer(function handler(req, res) {
+// plain node.js http server (no fancy framework required!)
+var app = require('http').createServer(handler)
+var io = require('socket.io')(app);
+
+io.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world (test message)' });
+  socket.on('hello', function (data) {
+    console.log(data);
+  });
+});
+
+function handler (req, res) {
   var url = req.url;
-  var r = req.headers;
-  r.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  r.url = url.replace('.svg', '').replace('.png', '');
-
-  if (url.match(/svg/)) {
-    hits.add(r, function(err, count) {
-      console.log(r.url, ' >> ', count);
-      var newurl = 'https://img.shields.io/badge/hits-' + count +'-brightgreen.svg';
-      wreck.get(newurl, function (error, response, raw) {
-        res.writeHead(200, Object.assign(HEADERS, {"Location": newurl}));
-        res.end(raw);
-      });
+  var hit = extract(req);
+  console.log(hit);
+  if (url.match(/svg/)) {      // only return a badge if SVG requested
+    hits(hit, function(err, count) {
+      io.sockets.emit('hit', { 'hit': format(hit, count) }); // broadcast
+      console.log(url, ' >> ', count); // log in dev
+      res.writeHead(200, HEAD);        // status code and SVG headers
+      res.end(make_svg(count));        // serve the SVG with count
     });
-  }
-  else if (url.match(/png/)) {
-    hits.add(r, function(err, count) {
-      console.log(r.url, ' >> ', count);
-      res.writeHead(200, Object.assign(HEADERS, {"Content-Type": "image/png"}));
-      res.end(png);
-    })
   }
   else if(url === '/favicon.ico') {
-    var favicon = 'http://i.imgur.com/zBEQq4w.png'; // dwyl favicon
-    res.writeHead(301, { "Location": favicon });
+    res.writeHead(301, { "Location": FAVICON }); // redirect to @dwyl Favicon
     res.end();
   }
-  else if(url === '/stats') {
-    fs.readFile('./lib/index.html', 'utf8', function (err, data) {
-      res.writeHead(200, {"Content-Type": "text/html"});
-      res.end(data);
-    });
-  }
-  else if(url === '/client.js') {
+  else if(url === '/client.js') { // these can be cached in "Prod" ...
     fs.readFile('./lib/client.js', 'utf8', function (err, data) {
       res.writeHead(200, {"Content-Type": "application/javascript"});
       res.end(data);
     });
   }
-  else if(url === '/style.css') {
-    fs.readFile('./lib/style.css', 'utf8', function (err, data) {
-      res.writeHead(200, {"Content-Type": "text/css"});
+  else { // echo the record without saving it
+    fs.readFile('./lib/index.html', 'utf8', function (err, data) {
+      res.writeHead(200, {"Content-Type": "text/html"});
       res.end(data);
     });
   }
-  else { // echo the record without saving it
-    console.log(" - - - - - - - - - - record:", r);
-    res.writeHead(200, {"Content-Type": "text/plain"});
-    res.end(JSON.stringify(r, null, "  "));
-  } // pretty JSON in Browser see: http://stackoverflow.com/a/5523967/1148249
-}).listen(port);
+}
 
-var io = require('socket.io')(app);
-
-io.on('connection', function (socket) {
-  console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ');
-  console.log(socket.client.conn);
-  console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ');
-  socket.emit('news', { msg: 'welcome to stats-ville!' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-});
-
-console.log('Visit http://localhost:' + port);
+app.listen(port);
+console.log('Visit ' + require('./lib/lanip') + ':'+ port);

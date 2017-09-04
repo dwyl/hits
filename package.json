@@ -21,24 +21,24 @@
     "hits",
     "hit counter"
   ],
-  "author": "this guy",
+  "author": "some random person on the internet...",
   "license": "GPL-2.0",
   "bugs": {
     "url": "https://github.com/dwyl/hits/issues"
   },
   "homepage": "https://github.com/dwyl/hits#readme",
   "dependencies": {
-    "redis-connection": "^5.0.0",
-    "socket.io": "^1.4.8",
-    "uniki": "^1.0.3",
-    "wreck": "^8.0.0"
+    "redis-connection": "^5.4.0",
+    "socket.io": "^2.0.3"
   },
   "devDependencies": {
-    "decache": "^4.0.0",
+    "decache": "^4.1.0",
     "istanbul": "^0.4.4",
-    "nodemon": "^1.9.2",
-    "pre-commit": "^1.1.3",
-    "tape": "^4.6.0"
+    "mkdirp": "^0.5.1",
+    "nodemon": "^1.11.0",
+    "pre-commit": "^1.2.2",
+    "rimraf": "^2.6.1",
+    "tape": "^4.8.0"
   },
   "pre-commit": [
     "coverage"
