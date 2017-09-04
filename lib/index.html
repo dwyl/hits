@@ -21,22 +21,23 @@
     </h4>
     
     <h2 class="mt0 fw5 tc f2 bg-teal white pa2"><em>How?</em></h2>
-    
-    
-    <p class="pl2">
-      Input your <strong class="fw5">GitHub Username</strong>
-      (<em> <strong class="u">or</strong> org name</em>):
-      <input class="input-reset f4 pa2 ba bw1" type="text" id="username" name="username" placeholder="username" autofocus>
-    </p>
-    
-    <p class="pl2">
-      Input the <strong class="fw5">GitHub Project/Repository</strong> name:
-      <input class="input-reset f4 pa2 ba bw1" type="text" id="repo" name="repo" placeholder="repo/project">
-    </p>
-    
-    <h3 class="mt0 fw5 tc f3 bg-teal white pa2">Your Badge <em>Markdown:</em></h3>
-    <pre id="badge" class="pl2 fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
+    <div id="how" class="dn">  
       
+      <p class="pl2">
+        Input your <strong class="fw5">GitHub Username</strong>
+        (<em> <strong class="u">or</strong> org name</em>):
+        <input class="input-reset f4 pa2 ba bw1" type="text" id="username" name="username" placeholder="username" autofocus>
+      </p>
+      
+      <p class="pl2">
+        Input the <strong class="fw5">GitHub Project/Repository</strong> name:
+        <input class="input-reset f4 pa2 ba bw1" type="text" id="repo" name="repo" placeholder="repo/project">
+      </p>
+      
+      <h3 class="mt0 fw5 tc f3 bg-teal white pa2">Your Badge <em>Markdown:</em></h3>
+    </div>
+    <pre id="badge" class="pl2 fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
+      [![HitCount](http://hits.dwyl.io/{username}/{repo}.svg)](http://hits.dwyl.io/{username}/{repo})
     </pre>
     
     <p class="pl2">
@@ -45,7 +46,7 @@
     </p>
     
     <h2 class="mt0 fw5 tc f4 bg-teal white pa2 mt5"><em>Recently</em> Viewed Projects (<em>tracked by Hits</em>)</h2>
-    <div class="h5" id='hits'>
+    <div class="h5 pl2" id='hits'>
       <div style="display:none">Dummy Child Node for insertBefore to work</div>
     </div>
     <style>
