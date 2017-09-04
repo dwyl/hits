@@ -23,18 +23,31 @@
     <h2 class="mt0 fw5 tc f2 bg-teal white pa2"><em>How?</em></h2>
     <div id="how" class="dn">  
       
-      <p class="pl2">
-        Input your <strong class="fw5">GitHub Username</strong>
-        (<em> <strong class="u">or</strong> org name</em>):
-        <input class="input-reset f4 pa2 ba bw1" type="text" id="username" name="username" placeholder="username" autofocus>
-      </p>
       
-      <p class="pl2">
-        Input the <strong class="fw5">GitHub Project/Repository</strong> name:
-        <input class="input-reset f4 pa2 ba bw1" type="text" id="repo" name="repo" placeholder="repo/project">
-      </p>
+      <table class="collapse pv2 ph3 w-100">
+        <tr class="">
+          <td class="pv2 ph3 w-40">
+            Input your <strong class="fw5">GitHub Username</strong>
+            (<em> <strong class="u">or</strong> org name</em>):
+          </td>
+          <td class="pv2 ph3 w-50">
+            <input class="input-reset f4 pa2 ba bw1 mr5 w-100" type="text" 
+            id="username" name="username" placeholder="username" autofocus>
+          </td>
+        </tr>
+        <tr class="">
+          <td class="pv2 ph3 w-40">
+            Input the <strong class="fw5">GitHub Project/Repository</strong> 
+            name:
+          </td>
+          <td class="pv2 ph3 w-50">
+            <input class="input-reset f4 pa2 ba bw1 mr5 w-100" type="text" 
+            id="repo" name="repo" placeholder="repo/project">
+          </td>
+        </tr>
+      </table>
       
-      <h3 class="mt0 fw5 tc f3 bg-teal white pa2">Your Badge <em>Markdown:</em></h3>
+      <h3 class="mt3 fw5 tc db f3 bg-teal white pa2">Your Badge <em>Markdown:</em></h3>
     </div>
     <pre id="badge" class="pl2 fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
       [![HitCount](http://hits.dwyl.io/{username}/{repo}.svg)](http://hits.dwyl.io/{username}/{repo})
@@ -56,6 +69,7 @@
     <div class="h5 pl2" id='hits'>
       <div style="display:none">Dummy Child Node for insertBefore to work</div>
     </div>
+    
     <style>
       .teal {
         color: #4DB6AC;
@@ -68,5 +82,6 @@
       }
     </style>
     <script src="/client.js"></script>
+    
   </body>
 </html>
