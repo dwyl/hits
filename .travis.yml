@@ -1,12 +1,11 @@
 language: node_js
 node_js:
-  - 4
+  - 6
 services:
   - redis-server
 env:
   global:
   - secure: "cX6SVlb9D60NLbMYg7Vw5OlV9eUHJEZDyj9dsMXaSYKD/uSUJUhq+f6FWa/DJsneNCydBLSnoWJT6aiMsbhas5qDHl/lVkzonOC6sOV6Dbpjs8bXLPd1NyYvRYEltm6Gb8TDq/29IfMXahmnsCwiDcHrmcyHwdlpaso9jx0IvB9g1Xu4Otwn48VomOL/y+EY08fWvw9Wkg3aWRTenV6GcTdw1vj7J/RxBdX7TY3wUytZ6PHx94jW5GFQ55UpELT6YM6EDUrHPfLYQCCBMyvXe789iDsGuxkW7c24QE4M5tNhgwWplgXyHIoTDygIoUrTCC9KNNqt7EAyOnCYGjCHfvDQtTnlouD/fQsNXpWnBv+slrKltCkAgXTcRrZKlN2lH+h8IHcge381LSgTDR1socY5lay0a0V3mLAuU9LtrXSpo0BNFLwDc+MsnGGCtlH5ex1czN4gkdbRIuU+lASDEsK5IcnGb1K8tsaFOJazHH6vRgnZzuQMTDolXeQ7pSHu/NDcOflOigUInhvBFWhDGGHXEYEixPtvZfDNSLIQTF+L31dIn6XBQPlR4ShNezAko9aZZxpMjjFc6i/IEdpuduCQSJuYQyJGgT+F+AAccbUzHzHqKclcAdwn+M/xlCd3Doq2YIAanP4AxOJcSyciJQiHOxRKGH//1K32n/jCTSo="
-before_install:
-  - pip install --user codecov
 after_success:
+  - pip install --user codecov
   - codecov --file coverage/lcov.info --disable search
