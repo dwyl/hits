@@ -28,7 +28,6 @@
   },
   "homepage": "https://github.com/dwyl/hits#readme",
   "dependencies": {
-    "redis-connection": "^5.4.0",
     "socket.io": "^2.0.3"
   },
   "devDependencies": {
