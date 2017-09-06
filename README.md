@@ -1,6 +1,6 @@
 # hits
 
-A _simple & easy_ way to see how many people have _viewed_ your GitHub Repository.
+![hits-dwyl-teal-banner](https://user-images.githubusercontent.com/194400/30136430-d1b2c2b8-9356-11e7-9ed5-3d84f6e44066.png)
 
 [![Build Status](https://img.shields.io/travis/dwyl/hits.svg?style=flat-square)](https://travis-ci.org/dwyl/hits)
 [![HitCount](http://hits.dwyl.io/dwyl/hits.svg)](https://github.com/dwyl/hits)
@@ -12,15 +12,57 @@ A _simple & easy_ way to see how many people have _viewed_ your GitHub Repositor
 ## Why?
 
 We have a _few_ projects on GitHub ... <br />
-_Sadly_, we ~~have~~ _had_ no idea how many people
-are _reading/using_ the projects because GitHub only shares "[traffic](https://github.com/blog/1672-introducing-github-traffic-analytics)" stats 
-for the [_past 14 days_](https://github.com/dwyl/hits/issues/49) and **not** in "***real time***".
-(_unless people star/watch the repo_) Also, _manually_ checking who has viewed a 
-project is _exceptionally_ tedious when you have more than a handful of projects.
 
-We want to *know* the popularity of _each_ of our repos
+We want to _instantly see_ the _popularity_ of _each_ of our repos
 to know what people are finding _useful_ and help us
 decide where we need to be investing our time.
+
+
+While GitHub has a basic 
+"[traffic](https://github.com/blog/1672-introducing-github-traffic-analytics)"  
+tab which displays page view stats, GitHub only records the data
+for the [_past 14 days_](https://github.com/dwyl/hits/issues/49)
+and then it gets reset. 
+The data is not relayed to the "owner" in "***real time***"
+and you would need to use the API and "poll" for data ...
+_Manually_ checking who has viewed a 
+project is _exceptionally_ tedious when you have 
+more than a _handful_ of projects.
+
+## What?
+
+A _simple & easy_ way to see how many people 
+have _viewed_ your GitHub Repository.
+
+## How?
+
+Place a badge (*image*) in your repo `README.md` so others can
+can see how popular the page is and you can track it.
+
+
+## _Run_ it Your_self_!
+
+Download (clone) the code to your local machine:
+
+```sh
+git clone https://github.com/dwyl/hits.git && cd hits
+```
+
+> Note: you will need to have Node.js running on your localhost.
+
+Install dependencies:
+```sh
+npm install
+```
+Run locally:
+```sh
+npm run dev
+```
+Visit: http://localhost:8000/any/url/count.svg
+
+
+## Implementation Detail
+
 
 ## What?
 
@@ -112,10 +154,11 @@ which can be parsed and re-formatted into any other format:
 
 ### Reducing Storage (_Costs_)
 
-If a person views _multiple_ pages, _three_ pieces of data are duplicated:
-User Agent, IP Address and Language.
-Rather than storing this data multiple times, we _hash_ the data 
-and store the hash as a lookup.
+If a person views _multiple_ pages, 
+_three_ pieces of data are duplicated:
+**User Agent**, **IP Address** and **Language** for each request/log.
+Rather than storing this data _multiple_ times, 
+we _hash_ the data and store the hash as a lookup.
 
 #### Hash Long Repeating (Identical) Data
 
@@ -146,34 +189,13 @@ possible strings which we consider "_enough_" entropy.
 1436570536950|github.com/dwyl/the-book|8HKg3NB5Cf|42
 ```
 
+We're _sure_ you will agree this is considerably more compact.
 
-## How?
-
-Place a badge (*image*) in your repo `README.md` so others can
-can see how popular the page is and you can track it.
-
-
-
-## _Run_ it Your_self_!
-
-Download (clone) the code to your local machine:
-
-```sh
-git clone https://github.com/dwyl/hits.git && cd hits
+> Note: our log also _strips_ the `github.com/` from the url so it's:
 ```
-
-> Note: you will need to have Node.js running on your localhost.
-
-Install dependencies:
-```sh
-npm install
+1436570536950|dwyl/the-book|8HKg3NB5Cf|42
 ```
-Run locally:
-```sh
-npm run dev
-```
-Visit: http://localhost:8000/any/url/count.svg
-
+Which is a _considerable_ saving on "CLF" (_see above_)
 
 # Data Storage
 
@@ -186,6 +208,7 @@ Filesystem and Redis <!-- and PostgreSQL. --> <br />
 
 ## Filesystem
 
+See: 
 
 
 
@@ -208,6 +231,7 @@ https://github.com/dwyl/aguid
 
 + Apache Log Sample:
 http://www.monitorware.com/en/logsamples/apache.php
+(_looked at the existing log formats, all were too verbose/wasteful for us!_)
 
 ### Node.js http module headers
 
