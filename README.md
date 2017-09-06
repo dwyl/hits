@@ -48,7 +48,7 @@ visit: http://hits.dwyl.io to get the Markdown!
 
 
 
-### Want to _Run_ it Your_self_?!
+### Want to _Run_ it Yourself?!
 
 To run the code on your localhost in 3 easy steps:
 
@@ -129,7 +129,7 @@ Real example:
 The data makes sense when viewed as a table:
 
 | IP Address of Client | User Identifier | User ID | Date+Imte of Request | Request "Verb" and URL of Request | HTTP Status Code | Size of Response |
-| -------------|:-----------|:--|:------------:|:--------:|:--|--|--|
+| ------------- | ----------- | -- | ------------ | -------- | -- | -- |
 | 84.91.136.21 | Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) | 007 | [05/Aug/2017:16:50:51 -0000] | "GET github.com/dwyl/phase-two HTTP/1.0" | 200 | 42247 |
 
 On further reflection, we think the "Common Log Format" is _inneficient_ 
@@ -145,8 +145,8 @@ From the CLF we can remove:
 + "**GET**"" - the word is implied by the service we are running (_we only accept GET requests_)
 + **Response size** is _irrelevant_ and will be the same for most requests.
 
-| Timestamp     | URL | User Agent  | IP Address   | Language | Hit Count |
-| ------------- |:------------|:------------|:------------:|:--------:|
+| Timestamp | URL | User Agent | IP Address | Language | Hit Count |
+| ----------| --- | ---------- | ---------- | -------- | --------- |
 | 1436570536950 | github.com/dwyl/the-book | Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) | 84.91.136.21 | EN-GB | 42 |
 
 
