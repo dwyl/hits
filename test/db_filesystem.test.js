@@ -41,7 +41,7 @@ test(file+'test with full github url', function (t) {
   var hit = extract(req);
   hits(hit, function (err, count) {
     t.ok(count >= 0, '✓ REQ ' +req.url +' was added at a index: ' + count);
-    t.end(); // shutdown redis con
+    t.end();
   })
 });
 
