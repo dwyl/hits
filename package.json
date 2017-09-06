@@ -1,8 +1,7 @@
 {
   "name": "hits",
-  "version": "2.0.3",
-  "description": "all the hits",
-  "main": "lib/hits.js",
+  "version": "3.0.0",
+  "description": "A basic hit counter for your GitHub projects!",
   "directories": {
     "test": "test"
   },
@@ -19,7 +18,9 @@
   },
   "keywords": [
     "hits",
-    "hit counter"
+    "hit counter",
+    "page views",
+    "basic analytics"
   ],
   "author": "some random person on the internet...",
   "license": "GPL-2.0",
