@@ -33,13 +33,25 @@ more than a _handful_ of projects.
 A _simple & easy_ way to see how many people 
 have _viewed_ your GitHub Repository.
 
+There are already *many* "badges" that people use in their repos.
+See: [github.com/dwyl/**repo-badges**](https://github.com/dwyl/repo-badges) <br />
+But we haven't seen one that gives a "***hit counter***"
+of the number of times a GitHub page has been viewed ... <br />
+So, in today's mini project we're going to _create_ a _basic **Web Counter**_.
+
+https://en.wikipedia.org/wiki/Web_counter
+
 ## How?
 
-Place a badge (*image*) in your repo `README.md` so others can
-can see how popular the page is and you can track it.
+If you simply want to display a "hit count badge" in your project's GitHub page,
+visit: http://hits.dwyl.io to get the Markdown!
 
 
-## _Run_ it Your_self_!
+### Want to _Run_ it Your_self_?!
+
+To run the code on your localhost in 3 easy steps:
+
+#### 1. Download the Code:
 
 Download (clone) the code to your local machine:
 
@@ -49,31 +61,29 @@ git clone https://github.com/dwyl/hits.git && cd hits
 
 > Note: you will need to have Node.js running on your localhost.
 
+#### 2. Install the Dependencies
+
 Install dependencies:
 ```sh
 npm install
 ```
+
+#### 3. Run the Server
+
 Run locally:
 ```sh
 npm run dev
 ```
-Visit: http://localhost:8000/any/url/count.svg
+
+Now open _Two_ web browser windows/tabs:
++ _first tab_: http://localhost:8000/ (_this is the hits "home page"_)
++ _second tab_: http://localhost:8000/any/url/count.svg
 
 
-## Implementation Detail
 
+## Implementation _Detail_
 
-## What?
-
-A simple way to add (*very basic*) analytics to your GitHub repos.
-
-There are already *many* "badges" that people use in their repos.
-See: [github.com/dwyl/**repo-badges**](https://github.com/dwyl/repo-badges) <br />
-But we haven't seen one that gives a "***hit counter***"
-of the number of times a GitHub page has been viewed ... <br />
-So, in today's mini project we're going to _create_ a _basic **Web Counter**_.
-
-https://en.wikipedia.org/wiki/Web_counter
+In case anyone wants to know the thought process that went into building this...
 
 ### What Data to Capture/Store?
 
