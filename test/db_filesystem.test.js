@@ -47,3 +47,20 @@ test(file + 'Add a hit for new url', function (t) {
     })
   })
 });
+
+test(file+'Add a hit without language', function (t) {
+  var db = require('../lib/db_filesystem.js');
+  var req = {
+    'url': '/my/awesome/url',
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5)',
+    'ip': '8.8.8.8'
+  }
+  var hit = extract(req);
+  db(hit, function (err, count1) {
+    t.ok(count1 >= 0, '✓ URl ' +req.url +' was added at a index: ' + count1)
+    db(hit, function (err, count2) {
+      t.ok(count2 > count1, '✓ URL ' +req.url +' count is: ' + count2);
+      t.end(); // shutdown redis con  
+    });  
+  });
+});

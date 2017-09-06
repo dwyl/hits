@@ -8,7 +8,6 @@
 [![Dependency Status](https://img.shields.io/david/dwyl/hits.svg?style=flat-square)](https://david-dm.org/dwyl/hits)
 [![devDependency Status](https://img.shields.io/david/dev/dwyl/hits.svg?style=flat-square)](https://david-dm.org/dwyl/hits#info=devDependencies)
 
-
 ## Why?
 
 We have a _few_ projects on GitHub ... <br />
@@ -18,7 +17,7 @@ to know what people are finding _useful_ and help us
 decide where we need to be investing our time.
 
 
-While GitHub has a basic 
+While GitHub has a _basic_
 "[traffic](https://github.com/blog/1672-introducing-github-traffic-analytics)"  
 tab which displays page view stats, GitHub only records the data
 for the [_past 14 days_](https://github.com/dwyl/hits/issues/49)

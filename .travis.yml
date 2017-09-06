@@ -9,3 +9,4 @@ env:
 after_success:
   - pip install --user codecov
   - codecov --file coverage/lcov.info --disable search
+  

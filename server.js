@@ -1,6 +1,6 @@
 var port  = process.env.PORT || 8000;
 var fs    = require('fs'); // so we can open the HTML & JS file
-var hits  = require('./lib/hits'); // our storage interface
+var hits  = require('./lib/db_filesystem.js'); // our storage interface
 var make_svg = require('./lib/make_svg.js');
 var extract = require('./lib/extract_request_data.js');
 var format = require('./lib/format_hit.js')
