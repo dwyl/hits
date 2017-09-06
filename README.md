@@ -18,8 +18,9 @@ decide where we need to be investing our time.
 
 
 While GitHub has a _basic_
-"[traffic](https://github.com/blog/1672-introducing-github-traffic-analytics)"  
-tab which displays page view stats, GitHub only records the data
+"[traffic](https://github.com/blog/1672-introducing-github-traffic-analytics)" 
+[tab](https://github.com/dwyl/start-here/graphs/traffic) 
+which displays page view stats, GitHub only records the data
 for the [_past 14 days_](https://github.com/dwyl/hits/issues/49)
 and then it gets reset. 
 The data is not relayed to the "owner" in "***real time***"
