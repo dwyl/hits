@@ -22,11 +22,11 @@ io.on('connection', function (socket) {
 function handler (req, res) {
   var url = req.url;
   var hit = extract(req);
-  console.log(hit);
+  // console.log(hit);
   if (url.match(/svg/)) {      // only return a badge if SVG requested
     hits(hit, function(err, count) {
       io.sockets.emit('hit', { 'hit': format(hit, count) }); // broadcast
-      console.log(url, ' >> ', count); // log in dev
+      // console.log(url, ' >> ', count); // log in dev
       res.writeHead(200, HEAD);        // status code and SVG headers
       res.end(make_svg(count));        // serve the SVG with count
     });

@@ -198,18 +198,16 @@ Which is a _considerable_ saving on "CLF" (_see above_)
 
 # Data Storage
 
-Recording the "hit" data is _essential_ 
-for this app to _work_ and be _useful_.
-
-We have built it to work with _two_ "data stores": 
-Filesystem and Redis <!-- and PostgreSQL. --> <br />
-> _**Note**: you only need **one** storage option to be available_.
+We aren't using a "Database", rather we are using the filesystem.
 
 ## Filesystem
 
-See: 
+For implementation see:
+[`/lib/db_filesystem.js`](https://github.com/dwyl/hits/blob/master/lib/db_filesystem.js)
 
 
+> Yes, we know Heroku does not give access to the Filesystem...
+If you want to run this on Heroku see: https://github.com/dwyl/hits/issues/54
 
 ## Research
 
