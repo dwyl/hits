@@ -12,13 +12,11 @@ Because _Elixir_ == :heart:!! see:
 
 ### Assumptions / Prerequisites
 
-+ Basic Elixir Knowledge: 
-+ Elixir installed 
++ [x] Elixir installed: https://github.com/dwyl/learn-elixir#how
++ [x] Basic Elixir Knowledge: https://elixir-lang.org/crash-course.html
 
 
 ## _How_?
-
-
 
 ### 1. Clone/Download the Code
 
@@ -32,7 +30,7 @@ git clone https://github.com/nelsonic/hits-elixir.git
 mix deps.get
 ```
 
-### 3. Run the App
+### 3. Run the App
 
 ```
 mix run --no-halt
