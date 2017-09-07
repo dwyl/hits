@@ -1,4 +1,4 @@
-defmodule Example.Plug.VerifyRequest do
+defmodule App.Plug.VerifyRequest do
 
   defmodule IncompleteRequestError do
     @moduledoc """

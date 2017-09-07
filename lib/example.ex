@@ -1,4 +1,4 @@
-defmodule Example do
+defmodule App do
   use Application
   require Logger
 
@@ -6,7 +6,7 @@ defmodule Example do
     port = Application.get_env(:example, :cowboy_port, 8080)
 
     children = [
-      Plug.Adapters.Cowboy.child_spec(:http, Example.Router, [], port: port)
+      Plug.Adapters.Cowboy.child_spec(:http, App.Router, [], port: port)
     ]
 
     Logger.info "Started application"

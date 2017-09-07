@@ -1,7 +1,7 @@
-defmodule Example.Router do
+defmodule App.Router do
   use Plug.Router
 
-  alias Example.Plug.VerifyRequest
+  alias App.Plug.VerifyRequest
 
   plug Plug.Parsers, parsers: [:urlencoded, :multipart]
   plug VerifyRequest, fields: ["content", "mimetype"],

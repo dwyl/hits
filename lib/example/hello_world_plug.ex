@@ -1,4 +1,4 @@
-defmodule Example.HelloWorldPlug do
+defmodule App.HelloWorldPlug do
   import Plug.Conn
 
   def init(options), do: options

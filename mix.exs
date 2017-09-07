@@ -1,4 +1,4 @@
-defmodule Example.Mixfile do
+defmodule App.Mixfile do
   use Mix.Project
 
   def project do
@@ -15,7 +15,7 @@ defmodule Example.Mixfile do
   def application do
     [
       extra_applications: [:logger],
-      mod: {Example, []},
+      mod: {App, []},
       env: [cowboy_port: 8080]
     ]
   end
