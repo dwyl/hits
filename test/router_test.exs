@@ -26,6 +26,14 @@ defmodule App.RouterTest do
   #   assert conn.state == :sent
   #   assert conn.status == 201
   # end
+  
+  test "GET /favicon.ico returns 301" do
+    conn = conn(:get, "/favicon.ico", "")
+           |> Router.call(@opts)
+
+    assert conn.state == :sent
+    assert conn.status == 200
+  end
 
   test "returns 404" do
     conn = conn(:get, "/missing", "")
