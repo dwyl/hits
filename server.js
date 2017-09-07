@@ -1,6 +1,6 @@
 var port  = process.env.PORT || 8000;
 var fs    = require('fs'); // so we can open the HTML & JS file
-var hits  = require('./lib/hits'); // our storage interface
+var hits  = require('./lib/db_filesystem.js'); // our storage interface
 var make_svg = require('./lib/make_svg.js');
 var extract = require('./lib/extract_request_data.js');
 var format = require('./lib/format_hit.js')
@@ -20,13 +20,13 @@ io.on('connection', function (socket) {
 });
 
 function handler (req, res) {
-  var url = req.url;
-  var hit = extract(req);
-  console.log(hit);
+  var url = req.url;      // alias req.url to reduce typing in matching below
+  var hit = extract(req); // extract just the data we want from the HTTP request
+
   if (url.match(/svg/)) {      // only return a badge if SVG requested
     hits(hit, function(err, count) {
       io.sockets.emit('hit', { 'hit': format(hit, count) }); // broadcast
-      console.log(url, ' >> ', count); // log in dev
+      // console.log(url, ' >> ', count); // log in dev
       res.writeHead(200, HEAD);        // status code and SVG headers
       res.end(make_svg(count));        // serve the SVG with count
     });

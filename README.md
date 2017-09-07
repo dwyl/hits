@@ -1,30 +1,41 @@
 # hits
 
-A _simple & easy_ way to see how many people have _viewed_ your GitHub Repository.
+![hits-dwyl-teal-banner](https://user-images.githubusercontent.com/194400/30136430-d1b2c2b8-9356-11e7-9ed5-3d84f6e44066.png)
 
+<div align="center">
+  
 [![Build Status](https://img.shields.io/travis/dwyl/hits.svg?style=flat-square)](https://travis-ci.org/dwyl/hits)
 [![HitCount](http://hits.dwyl.io/dwyl/hits.svg)](https://github.com/dwyl/hits)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hits/master.svg?style=flat-square)](http://codecov.io/github/dwyl/hits?branch=master)
 [![Dependency Status](https://img.shields.io/david/dwyl/hits.svg?style=flat-square)](https://david-dm.org/dwyl/hits)
 [![devDependency Status](https://img.shields.io/david/dev/dwyl/hits.svg?style=flat-square)](https://david-dm.org/dwyl/hits#info=devDependencies)
-
+</div>
 
 ## Why?
 
 We have a _few_ projects on GitHub ... <br />
-_Sadly_, we ~~have~~ _had_ no idea how many people
-are _reading/using_ the projects because GitHub only shares "[traffic](https://github.com/blog/1672-introducing-github-traffic-analytics)" stats 
-for the [_past 14 days_](https://github.com/dwyl/hits/issues/49) and **not** in "***real time***".
-(_unless people star/watch the repo_) Also, _manually_ checking who has viewed a 
-project is _exceptionally_ tedious when you have more than a handful of projects.
 
-We want to *know* the popularity of _each_ of our repos
+We want to _instantly see_ the _popularity_ of _each_ of our repos
 to know what people are finding _useful_ and help us
 decide where we need to be investing our time.
 
+
+While GitHub has a _basic_
+"[traffic](https://github.com/blog/1672-introducing-github-traffic-analytics)" 
+[tab](https://github.com/dwyl/start-here/graphs/traffic) 
+which displays page view stats, GitHub only records the data
+for the [_past 14 days_](https://github.com/dwyl/hits/issues/49)
+and then it gets reset. 
+The data is not relayed to the "owner" in "***real time***"
+and you would need to use the API and "poll" for data ...
+_Manually_ checking who has viewed a 
+project is _exceptionally_ tedious when you have 
+more than a _handful_ of projects.
+
 ## What?
 
-A simple way to add (*very basic*) analytics to your GitHub repos.
+A _simple & easy_ way to see how many people 
+have _viewed_ your GitHub Repository.
 
 There are already *many* "badges" that people use in their repos.
 See: [github.com/dwyl/**repo-badges**](https://github.com/dwyl/repo-badges) <br />
@@ -33,6 +44,51 @@ of the number of times a GitHub page has been viewed ... <br />
 So, in today's mini project we're going to _create_ a _basic **Web Counter**_.
 
 https://en.wikipedia.org/wiki/Web_counter
+
+## How?
+
+If you simply want to display a "hit count badge" in your project's GitHub page,
+visit: http://hits.dwyl.io to get the Markdown!
+
+
+
+### Want to _Run_ it Yourself?!
+
+To run the code on your localhost in 3 easy steps:
+
+#### 1. Download the Code:
+
+Download (clone) the code to your local machine:
+
+```sh
+git clone https://github.com/dwyl/hits.git && cd hits
+```
+
+> Note: you will need to have Node.js running on your localhost.
+
+#### 2. Install the Dependencies
+
+Install dependencies:
+```sh
+npm install
+```
+
+#### 3. Run the Server
+
+Run locally:
+```sh
+npm run dev
+```
+
+Now open _Two_ web browser windows/tabs:
++ _first tab_: http://localhost:8000/ (_this is the hits "home page"_)
++ _second tab_: http://localhost:8000/any/url/count.svg
+
+
+
+## Implementation _Detail_
+
+In case anyone wants to know the thought process that went into building this...
 
 ### What Data to Capture/Store?
 
@@ -77,7 +133,7 @@ Real example:
 The data makes sense when viewed as a table:
 
 | IP Address of Client | User Identifier | User ID | Date+Imte of Request | Request "Verb" and URL of Request | HTTP Status Code | Size of Response |
-| -------------|:-----------|:--|:------------:|:--------:|:--|--|--|
+| ------------- | ----------- | -- | ------------ | -------- | -- | -- |
 | 84.91.136.21 | Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) | 007 | [05/Aug/2017:16:50:51 -0000] | "GET github.com/dwyl/phase-two HTTP/1.0" | 200 | 42247 |
 
 On further reflection, we think the "Common Log Format" is _inneficient_ 
@@ -93,8 +149,8 @@ From the CLF we can remove:
 + "**GET**"" - the word is implied by the service we are running (_we only accept GET requests_)
 + **Response size** is _irrelevant_ and will be the same for most requests.
 
-| Timestamp     | URL | User Agent  | IP Address   | Language | Hit Count |
-| ------------- |:------------|:------------|:------------:|:--------:|
+| Timestamp | URL | User Agent | IP Address | Language | Hit Count |
+| ----------| --- | ---------- | ---------- | -------- | --------- |
 | 1436570536950 | github.com/dwyl/the-book | Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) | 84.91.136.21 | EN-GB | 42 |
 
 
@@ -112,10 +168,11 @@ which can be parsed and re-formatted into any other format:
 
 ### Reducing Storage (_Costs_)
 
-If a person views _multiple_ pages, _three_ pieces of data are duplicated:
-User Agent, IP Address and Language.
-Rather than storing this data multiple times, we _hash_ the data 
-and store the hash as a lookup.
+If a person views _multiple_ pages, 
+_three_ pieces of data are duplicated:
+**User Agent**, **IP Address** and **Language** for each request/log.
+Rather than storing this data _multiple_ times, 
+we _hash_ the data and store the hash as a lookup.
 
 #### Hash Long Repeating (Identical) Data
 
@@ -146,48 +203,26 @@ possible strings which we consider "_enough_" entropy.
 1436570536950|github.com/dwyl/the-book|8HKg3NB5Cf|42
 ```
 
+We're _sure_ you will agree this is considerably more compact.
 
-## How?
-
-Place a badge (*image*) in your repo `README.md` so others can
-can see how popular the page is and you can track it.
-
-
-
-## _Run_ it Your_self_!
-
-Download (clone) the code to your local machine:
-
-```sh
-git clone https://github.com/dwyl/hits.git && cd hits
+> Note: our log also _strips_ the `github.com/` from the url so it's:
 ```
-
-> Note: you will need to have Node.js running on your localhost.
-
-Install dependencies:
-```sh
-npm install
+1436570536950|dwyl/the-book|8HKg3NB5Cf|42
 ```
-Run locally:
-```sh
-npm run dev
-```
-Visit: http://localhost:8000/any/url/count.svg
-
+Which is a _considerable_ saving on "CLF" (_see above_)
 
 # Data Storage
 
-Recording the "hit" data is _essential_ 
-for this app to _work_ and be _useful_.
-
-We have built it to work with _two_ "data stores": 
-Filesystem and Redis <!-- and PostgreSQL. --> <br />
-> _**Note**: you only need **one** storage option to be available_.
+We aren't using a "Database", rather we are using the filesystem.
 
 ## Filesystem
 
+For implementation see:
+[`/lib/db_filesystem.js`](https://github.com/dwyl/hits/blob/master/lib/db_filesystem.js)
 
 
+> Yes, we know Heroku does not give access to the Filesystem...
+If you want to run this on Heroku see: https://github.com/dwyl/hits/issues/54
 
 ## Research
 
@@ -208,6 +243,7 @@ https://github.com/dwyl/aguid
 
 + Apache Log Sample:
 http://www.monitorware.com/en/logsamples/apache.php
+(_looked at the existing log formats, all were too verbose/wasteful for us!_)
 
 ### Node.js http module headers
 
