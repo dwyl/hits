@@ -13,7 +13,9 @@ defmodule App.Router do
     [last | _] = Enum.take(path, -1)
     cond do
       length(String.split(last, ".svg")) > 1 ->
-        render_badge(conn)
+        str = get_user_agent_string(conn)
+        hash = 
+        render_badge(conn, 42)
       # Enum.member?(path, "favicon.ico") ->
       #   IO.puts "FAVICON!"
       # 
@@ -28,10 +30,10 @@ defmodule App.Router do
     end
   end
   
-  def render_badge(conn) do
+  def render_badge(conn, count) do
     conn
     |> put_resp_content_type("image/svg+xml")
-    |> send_resp(200, make_badge(42))
+    |> send_resp(200, make_badge(count))
     |> halt()
   end
   
@@ -41,6 +43,15 @@ defmodule App.Router do
   
   def make_badge(count \\ 1) do
     String.replace(svg_badge_template(), ~r/{count}/, to_string(count))
+  end
+  
+  # there is probably a *much* better way of doing this ... PR welcome!
+  def get_user_agent_string(conn) do
+    [{_, ua}] = Enum.filter(conn.req_headers, fn {k, v} -> k == "user-agent" end)
+    [{_, lang}] = Enum.filter(conn.req_headers, fn {k, v} -> k == "accept-language" end)
+    [lang | _] = Enum.take(String.split(String.upcase(lang), ","), 1)
+    ip = Enum.join(Tuple.to_list(conn.remote_ip), ".")
+    str = Enum.join([ua, ip, lang], "|")
   end
   
 end
