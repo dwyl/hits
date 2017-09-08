@@ -14,15 +14,46 @@ defmodule App.Router do
     path = conn.path_info
     [last | _] = Enum.take(path, -1) # last part of url path e.g "myproject.svg"
     cond do
-      length(String.split(last, ".svg")) > 1 ->
-        str = get_user_agent_string(conn)
-        hash = Hash.make(str, 10);
+      length(String.split(last, ".svg")) > 1 -> # if url includes ".svg"
+        ua = get_user_agent_string(conn)
+        hash = Hash.make(ua, 10);
         agent_path = Path.expand("./logs") <> "/" <> hash
         # IO.inspect agent_path
-        File.write(agent_path, str, [:binary])
+        File.write(agent_path, ua, [:binary])
         # IO.inspect hash
-        render_badge(conn, 42)
-      true ->
+        hit_path = Path.expand("./logs") <> "/" <> 
+          String.replace(Enum.join(path, "_"), ".svg", "") <> ".log"
+        exists = File.regular?(hit_path)
+        
+        count = if exists do
+          [last] = File.stream!(hit_path) 
+            |> Stream.map(&String.trim_trailing/1) 
+            |> Enum.to_list
+            |> Enum.take(-1)
+            
+          [i] = Enum.take(String.split(last, "|"), -1)
+          {count, _} = Integer.parse(i)
+          # IO.puts(" - - - - - - - - - - - - - - ")
+          # IO.inspect last
+          # IO.inspect count + 1
+          # IO.puts(" - - - - - - - - - - - - - - ")
+          count + 1
+        else
+          1
+        end
+        
+        # IO.inspect count
+        hit = Enum.join([ 
+          Integer.to_string(:os.system_time(:millisecond)),
+          Enum.join(path, "/"),
+          hash,
+          count
+        ], "|") <> "\n"
+        IO.inspect hit
+        File.write!(hit_path, hit, [:append])
+        render_badge(conn, count)
+        
+      true -> # cat all 
         IO.inspect conn.path_info
         IO.inspect Enum.join(conn.path_info, "/")
         send_resp(conn, 404, Enum.join(conn.path_info, "/"))  
@@ -47,8 +78,8 @@ defmodule App.Router do
   # there is probably a *much* better way of doing this ... PR welcome!
   def get_user_agent_string(conn) do
     [{_, ua}] = Enum.filter(conn.req_headers, fn {k, _} -> k == "user-agent" end)
-    [{_, lang}] = Enum.filter(conn.req_headers, fn {k, _} -> k == "accept-language" end)
-    [lang | _] = Enum.take(String.split(String.upcase(lang), ","), 1)
+    [{_, langs}] = Enum.filter(conn.req_headers, fn {k, _} -> k == "accept-language" end)
+    [lang | _] = Enum.take(String.split(String.upcase(langs), ","), 1)
     ip = Enum.join(Tuple.to_list(conn.remote_ip), ".")
     Enum.join([ua, ip, lang], "|")
   end
