@@ -1,5 +1,6 @@
 defmodule App.Router do
   use Plug.Router
+  require Hash
   
   plug Plug.Logger
   plug :match
@@ -9,20 +10,18 @@ defmodule App.Router do
   get "/favicon.ico", do: send_file(conn, 200, "lib/favicon.ico")
 
   match _ do 
+
     path = conn.path_info
-    [last | _] = Enum.take(path, -1)
+    [last | _] = Enum.take(path, -1) # last part of url path e.g "myproject.svg"
     cond do
       length(String.split(last, ".svg")) > 1 ->
         str = get_user_agent_string(conn)
-        hash = 
+        hash = Hash.make(str, 10);
+        agent_path = Path.expand("./logs") <> "/" <> hash
+        # IO.inspect agent_path
+        File.write(agent_path, str, [:binary])
+        # IO.inspect hash
         render_badge(conn, 42)
-      # Enum.member?(path, "favicon.ico") ->
-      #   IO.puts "FAVICON!"
-      # 
-      # Enum.member?(path, "favicon.ico") ->
-      #   IO.puts "FAVICON!"
-      #   reply = put_resp_content_type(conn, "image/x-icon")
-      #   send_file(reply, 200, "lib/favicon.ico")
       true ->
         IO.inspect conn.path_info
         IO.inspect Enum.join(conn.path_info, "/")
@@ -47,11 +46,11 @@ defmodule App.Router do
   
   # there is probably a *much* better way of doing this ... PR welcome!
   def get_user_agent_string(conn) do
-    [{_, ua}] = Enum.filter(conn.req_headers, fn {k, v} -> k == "user-agent" end)
-    [{_, lang}] = Enum.filter(conn.req_headers, fn {k, v} -> k == "accept-language" end)
+    [{_, ua}] = Enum.filter(conn.req_headers, fn {k, _} -> k == "user-agent" end)
+    [{_, lang}] = Enum.filter(conn.req_headers, fn {k, _} -> k == "accept-language" end)
     [lang | _] = Enum.take(String.split(String.upcase(lang), ","), 1)
     ip = Enum.join(Tuple.to_list(conn.remote_ip), ".")
-    str = Enum.join([ua, ip, lang], "|")
+    Enum.join([ua, ip, lang], "|")
   end
   
 end
