@@ -9,8 +9,7 @@ defmodule App.Router do
   get "/", do: send_file(conn, 200, "lib/index.html")
   get "/favicon.ico", do: send_file(conn, 200, "lib/favicon.ico")
 
-  match _ do 
-
+  match _ do  # catch all matcher
     path = conn.path_info
     [last | _] = Enum.take(path, -1) # last part of url path e.g "myproject.svg"
     cond do
@@ -18,9 +17,9 @@ defmodule App.Router do
         ua = get_user_agent_string(conn)
         hash = Hash.make(ua, 10);
         agent_path = Path.expand("./logs") <> "/" <> hash
-        # IO.inspect agent_path
         File.write(agent_path, ua, [:binary])
-        # IO.inspect hash
+
+
         hit_path = Path.expand("./logs") <> "/" <> 
           String.replace(Enum.join(path, "_"), ".svg", "") <> ".log"
         exists = File.regular?(hit_path)
@@ -31,25 +30,20 @@ defmodule App.Router do
             |> Enum.to_list
             |> Enum.take(-1)
             
-          [i] = Enum.take(String.split(last, "|"), -1)
+          [i] = Enum.take(String.split(last, "|"), -1) # single element list
           {count, _} = Integer.parse(i)
-          # IO.puts(" - - - - - - - - - - - - - - ")
-          # IO.inspect last
-          # IO.inspect count + 1
-          # IO.puts(" - - - - - - - - - - - - - - ")
           count + 1
         else
-          1
+          1 # no previous hits for this url so count is 1
         end
         
-        # IO.inspect count
         hit = Enum.join([ 
           Integer.to_string(:os.system_time(:millisecond)),
           Enum.join(path, "/"),
           hash,
           count
         ], "|") <> "\n"
-        IO.inspect hit
+
         File.write!(hit_path, hit, [:append])
         render_badge(conn, count)
         
