@@ -79,3 +79,15 @@ https://www.djm.org.uk/posts/cryptographic-hash-functions-elixir-generating-hex-
 
 + How to create your own Mix Tasks:
 http://joeyates.info/2015/07/25/create-a-mix-task-for-an-elixir-project/
+
+
+### Compact sub-string syntax
+
+```elixir
+iex> "1test2" == "test"
+false
+iex> "1test2" =~ "test"
+true
+```
+
++ http://elixir-recipes.github.io/strings/checking-if-strings-contain-substring/

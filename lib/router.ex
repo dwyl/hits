@@ -13,9 +13,8 @@ defmodule App.Router do
   get "/favicon.ico", do: send_file(conn, 200, "lib/favicon.ico")
 
   match _ do  # catch all matcher
-    [last | _] = Enum.take(conn.path_info, -1) # e.g "org/myproject.svg"
     cond do
-      length(String.split(last, ".svg")) > 1 -> # if url includes ".svg"
+      conn.request_path =~ ".svg" -> # if url includes ".svg"
         render_badge(conn)
       true -> # cath all non .svg requests
         send_resp(conn, 404, Enum.join(conn.path_info, "/"))
