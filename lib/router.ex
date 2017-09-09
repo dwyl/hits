@@ -10,42 +10,10 @@ defmodule App.Router do
   get "/favicon.ico", do: send_file(conn, 200, "lib/favicon.ico")
 
   match _ do  # catch all matcher
-    path = conn.path_info
-    [last | _] = Enum.take(path, -1) # last part of url path e.g "myproject.svg"
+    [last | _] = Enum.take(conn.path_info, -1) # last part of url path e.g "myproject.svg"
     cond do
       length(String.split(last, ".svg")) > 1 -> # if url includes ".svg"
-        ua = get_user_agent_string(conn)
-        hash = Hash.make(ua, 10);
-        agent_path = Path.expand("./logs") <> "/" <> hash
-        File.write(agent_path, ua, [:binary])
-
-
-        hit_path = Path.expand("./logs") <> "/" <> 
-          String.replace(Enum.join(path, "_"), ".svg", "") <> ".log"
-        exists = File.regular?(hit_path)
-        
-        count = if exists do
-          [last] = File.stream!(hit_path) 
-            |> Stream.map(&String.trim_trailing/1) 
-            |> Enum.to_list
-            |> Enum.take(-1)
-            
-          [i] = Enum.take(String.split(last, "|"), -1) # single element list
-          {count, _} = Integer.parse(i)
-          count + 1
-        else
-          1 # no previous hits for this url so count is 1
-        end
-        
-        hit = Enum.join([ 
-          Integer.to_string(:os.system_time(:millisecond)),
-          Enum.join(path, "/"),
-          hash,
-          count
-        ], "|") <> "\n"
-
-        File.write!(hit_path, hit, [:append])
-        render_badge(conn, count)
+        render_badge(conn)
         
       true -> # cat all 
         IO.inspect conn.path_info
@@ -54,7 +22,8 @@ defmodule App.Router do
     end
   end
   
-  def render_badge(conn, count) do
+  def render_badge(conn) do
+    count = save_hit(conn)
     conn
     |> put_resp_content_type("image/svg+xml")
     |> send_resp(200, make_badge(count))
@@ -76,6 +45,50 @@ defmodule App.Router do
     [lang | _] = Enum.take(String.split(String.upcase(langs), ","), 1)
     ip = Enum.join(Tuple.to_list(conn.remote_ip), ".")
     Enum.join([ua, ip, lang], "|")
+  end
+  
+  def save_user_agent_hash(conn) do
+    ua = get_user_agent_string(conn)
+    hash = Hash.make(ua, 10);
+    agent_path = Path.expand("./logs") <> "/" <> hash
+    File.write(agent_path, ua, [:binary])
+    hash
+  end
+  
+  def get_hit_count(hit_path) do
+    exists = File.regular?(hit_path) # check if existing hits log for url
+    count = if exists do
+      [last] = File.stream!(hit_path) 
+        |> Stream.map(&String.trim_trailing/1) 
+        |> Enum.to_list
+        |> Enum.take(-1)
+        
+      [i] = Enum.take(String.split(last, "|"), -1) # single element list
+      {count, _} = Integer.parse(i)
+      count + 1 # increment hit counter
+    else
+      1 # no previous hits for this url so count is 1
+    end
+    count
+  end
+  
+  def save_hit(conn) do
+    path = conn.path_info
+    hit_path = Path.expand("./logs") <> "/" <> 
+      String.replace(Enum.join(path, "_"), ".svg", "") <> ".log"
+    
+    count = get_hit_count(hit_path)
+    hash = save_user_agent_hash(conn)
+    
+    hit = Enum.join([ 
+      Integer.to_string(:os.system_time(:millisecond)),
+      Enum.join(path, "/"),
+      hash,
+      count
+    ], "|") <> "\n"
+
+    File.write!(hit_path, hit, [:append])
+    count
   end
   
 end
