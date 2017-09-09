@@ -5,9 +5,10 @@
 <div align="center">
   
 [![Build Status](https://img.shields.io/travis/dwyl/hits-elixir.svg?style=flat-square)](https://travis-ci.org/dwyl/hits-elixir)
-[![HitCount](http://hits.dwyl.io/dwyl/hits-elixir.svg)](https://github.com/dwyl/hits-elixir)
+[![Inline docs](http://inch-ci.org/github/dwyl/hits-elixir.svg?style=flat-square)](http://inch-ci.org/github/dwyl/hits-elixir)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hits-elixir/master.svg?style=flat-square)](http://codecov.io/github/dwyl/hits-elixir?branch=master)
 [![Deps Status](https://beta.hexfaktor.org/badge/all/github/dwyl/hits-elixir.svg?style=flat-square)](https://beta.hexfaktor.org/github/dwyl/hits-elixir)
+[![HitCount](http://hits.dwyl.io/dwyl/hits-elixir.svg)](https://github.com/dwyl/hits-elixir)
 
 </div>
 
