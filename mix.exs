@@ -31,9 +31,9 @@ defmodule App.Mixfile do # this is a fairly standard/simple mix file ...
       # The rest of the dependendencies are for testing/reporting
       {:poison, "~> 3.1.0"}, # decode .json fixture in test
       {:excoveralls, "~> 0.7.0", only: [:test, :dev]}, # tracking test coverage
-      {:ex_doc, "~> 0.16.1", only: [:dev]}, # to generate documentation
+      {:ex_doc, "~> 0.16.3", only: [:dev]}, # to generate documentation
       {:dogma, "~> 0.1", only: [:test, :dev]}, # Elixir style
-      {:inch_ex, only: :docs} # see: github.com/dwyl/repo-badges#documentation
+      {:inch_ex, "~> 0.5.6", only: :docs} # see: https://git.io/v5inX
     ]
   end
 end
