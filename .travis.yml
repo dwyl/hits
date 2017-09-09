@@ -7,6 +7,5 @@ script:
   - mix do deps.get, compile --warnings-as-errors, coveralls.json, dogma
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-after_script:
   - mix deps.get --only docs
   - MIX_ENV=docs mix inch.report
