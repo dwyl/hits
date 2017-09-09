@@ -29,7 +29,7 @@ defmodule App.Mixfile do # this is a fairly standard/simple mix file ...
       {:plug, "~> 1.3.4"},   # Elixir's HTTP library for routing etc.
 
       # The rest of the dependendencies are for testing/reporting
-      {:poison, "~> 3.1.0", only: [:test, :dev]}, # decode .json fixture in test
+      {:poison, "~> 3.1.0"}, # decode .json fixture in test
       {:excoveralls, "~> 0.7.0", only: [:test, :dev]}, # tracking test coverage
       {:ex_doc, "~> 0.16.1", only: [:test, :dev]}, # to generate documentation
       {:dogma, "~> 0.1", only: [:test, :dev]}, # Elixir style
