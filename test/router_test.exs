@@ -5,6 +5,16 @@ defmodule App.RouterTest do
 
   @opts Router.init([])
 
+  setup_all do
+    IO.puts "Starting AssertionTest"
+    log_path = Path.expand("./logs")
+    IO.inspect log_path
+    unless File.exists?(log_path) do
+      File.mkdir(log_path)
+    end
+    :ok
+  end
+
   test "returns homepage" do
     route = conn(:get, "/", "")
     conn = Router.call(route, @opts)
