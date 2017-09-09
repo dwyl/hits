@@ -1,4 +1,7 @@
 defmodule App do
+  @moduledoc """
+  The "App" merely starts the Plug Router in a Supervision Tree.
+  """
   use Application
   require Logger
 
