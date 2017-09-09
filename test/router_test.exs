@@ -48,9 +48,6 @@ defmodule App.RouterTest do
     assert conn.resp_body =~ ~s(<text x=\"54\" y=\"14\">2</text>)
   end
 
-
-
-
   test "returns 404" do
     route = conn(:get, "/missing", "")
     conn = Router.call(route, @opts)
