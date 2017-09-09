@@ -69,6 +69,7 @@ http://www.brianstorti.com/getting-started-with-plug-elixir
 https://medium.com/@kansi/elixir-plug-unveiled-bf354e364641
 + Building a web framework from scratch in Elixir:
 https://codewords.recurse.com/issues/five/building-a-web-framework-from-scratch-in-elixir
++ Testing Plugs: https://robots.thoughtbot.com/testing-elixir-plugs
 
 ### SHA Cryptographic Hash Functions in Elixir/Erlang
 
@@ -90,4 +91,12 @@ iex> "1test2" =~ "test"
 true
 ```
 
-+ http://elixir-recipes.github.io/strings/checking-if-strings-contain-substring/
++ http://elixir-recipes.github.io/strings/checking-if-strings-contain-substring
+
+### Generate Random Srings in Elixir
+
+```
+:rand.uniform(n)
+```
+
++ https://stackoverflow.com/questions/38778054/how-to-generate-a-random-number-in-elixir

@@ -5,7 +5,7 @@ defmodule App.Router do
   use Plug.Router
   require Hash
 
-  plug Plug.Logger
+  # plug Plug.Logger
   plug :match
   plug :dispatch
 
@@ -26,7 +26,6 @@ defmodule App.Router do
     conn
     |> put_resp_content_type("image/svg+xml")
     |> send_resp(200, make_badge(count))
-    |> halt()
   end
 
   def svg_badge_template do # help wanted caching this!

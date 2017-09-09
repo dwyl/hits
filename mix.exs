@@ -31,7 +31,7 @@ defmodule App.Mixfile do # this is a fairly standard/simple mix file ...
       {:poison, "~> 3.1"}, # to decode .json file in hash test
       {:json, "~> 1.0", only: [:test, :dev]}, # for reading JSON fixture file
       {:excoveralls, "~> 0.6.2", only: [:test, :dev]}, # tracking test coverage
-      {:ex_doc, "~> 0.11", only: :test}, # to generate documentation
+      {:ex_doc, "~> 0.11", only: [:test, :dev]}, # to generate documentation
       {:dogma, "~> 0.1", only: [:test, :dev]}, # Elixir style
     ]
   end
