@@ -70,7 +70,7 @@ https://medium.com/@kansi/elixir-plug-unveiled-bf354e364641
 + Building a web framework from scratch in Elixir:
 https://codewords.recurse.com/issues/five/building-a-web-framework-from-scratch-in-elixir
 
-### SHA Cryptographic Hash Functions
+### SHA Cryptographic Hash Functions in Elixir/Erlang
 
 + Cryptographic hash functions in Elixir by [@djm](https://github.com/djm):
 https://www.djm.org.uk/posts/cryptographic-hash-functions-elixir-generating-hex-digests-md5-sha1-sha2/

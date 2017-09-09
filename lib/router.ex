@@ -7,7 +7,7 @@ defmodule App.Router do
   plug :dispatch
 
   get "/", do: send_file(conn, 200, "lib/index.html") # serve html homepage
-  get "/favicon.ico", do: send_file(conn, 200, "lib/favicon.ico")
+  get "/favicon.ico", do: send_file(conn, 200, "lib/favicon.ico") 
 
   match _ do  # catch all matcher
     [last | _] = Enum.take(conn.path_info, -1) # last part of url path e.g "myproject.svg"
@@ -40,7 +40,7 @@ defmodule App.Router do
     [{_, ua}] = Enum.filter(conn.req_headers, fn {k, _} -> k == "user-agent" end)
     [{_, langs}] = Enum.filter(conn.req_headers, fn {k, _} -> k == "accept-language" end)
     [lang | _] = Enum.take(String.split(String.upcase(langs), ","), 1)
-    ip = Enum.join(Tuple.to_list(conn.remote_ip), ".")
+    ip = Enum.join(Tuple.to_list(conn.remote_ip), ".") # {192,168,1,42} >> 192.168.1.42
     Enum.join([ua, ip, lang], "|")
   end
   
