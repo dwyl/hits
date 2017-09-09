@@ -45,7 +45,7 @@ git clone https://github.com/dwyl/hits-elixir.git && cd hits-elixir
 ### 2. Install the Dependencies
 
 ```
-mix deps.get
+mix deps.get && mkdir logs
 ```
 
 ### 3. Run the App
@@ -59,6 +59,21 @@ That's it! <br />
 Now, take your time to peruse the code in `/test` and `/lib`,
 and _ask_ any questions by opening GitHub Issues:
 https://github.com/dwyl/hits-elixir/issues
+
+### Run the Tests
+
+You 
+
+```elixir
+mix test
+```
+
+If you want to run the tests with coverage, copy-paste the following command 
+into your terminal:
+
+```elixir
+MIX_ENV=test mix do coveralls.json
+```
 
 
 ## Research & Background Reading

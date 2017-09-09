@@ -6,11 +6,10 @@ defmodule App.RouterTest do
   @opts Router.init([])
 
   setup_all do
-    IO.puts "Starting AssertionTest"
     log_path = Path.expand("./logs")
-    IO.inspect log_path
     unless File.exists?(log_path) do
-      File.mkdir(log_path)
+      IO.puts "Creating Logs Directory: " <> log_path
+      File.mkdir_p(log_path <> "/agents")
     end
     :ok
   end
