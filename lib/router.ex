@@ -14,10 +14,7 @@ defmodule App.Router do
     cond do
       length(String.split(last, ".svg")) > 1 -> # if url includes ".svg"
         render_badge(conn)
-        
-      true -> # cat all 
-        IO.inspect conn.path_info
-        IO.inspect Enum.join(conn.path_info, "/")
+      true -> # cath all non .svg requests
         send_resp(conn, 404, Enum.join(conn.path_info, "/"))  
     end
   end
@@ -38,7 +35,7 @@ defmodule App.Router do
     String.replace(svg_badge_template(), ~r/{count}/, to_string(count))
   end
   
-  # there is probably a *much* better way of doing this ... PR welcome!
+  # there is probably a *much* better way of doing this ... PR v. welcome!
   def get_user_agent_string(conn) do
     [{_, ua}] = Enum.filter(conn.req_headers, fn {k, _} -> k == "user-agent" end)
     [{_, langs}] = Enum.filter(conn.req_headers, fn {k, _} -> k == "accept-language" end)
@@ -58,12 +55,12 @@ defmodule App.Router do
   def get_hit_count(hit_path) do
     exists = File.regular?(hit_path) # check if existing hits log for url
     count = if exists do
-      [last] = File.stream!(hit_path) 
+      [last_line] = File.stream!(hit_path) 
         |> Stream.map(&String.trim_trailing/1) 
         |> Enum.to_list
         |> Enum.take(-1)
         
-      [i] = Enum.take(String.split(last, "|"), -1) # single element list
+      [i] = Enum.take(String.split(last_line, "|"), -1) # single element list
       {count, _} = Integer.parse(i)
       count + 1 # increment hit counter
     else
@@ -90,5 +87,4 @@ defmodule App.Router do
     File.write!(hit_path, hit, [:append])
     count
   end
-  
 end
