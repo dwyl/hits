@@ -5,8 +5,8 @@ defmodule App.Hits do
   require Hash
 
   # open the SVG template file
-  def svg_badge_template do # help wanted caching this! 
-    File.read!("./lib/template.svg") # 
+  def svg_badge_template do # help wanted caching this!
+    File.read!("./lib/template.svg") # see: github.com/dwyl/hits-elixir/issues/3
   end
 
   # make_badge from svg template substituting the count value

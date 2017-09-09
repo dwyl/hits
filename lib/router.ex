@@ -21,7 +21,7 @@ defmodule App.Router do
         send_resp(conn, 404, Enum.join(conn.path_info, "/"))
     end
   end
-  
+
   defp render_badge(conn) do
     count = save_hit(conn)
     conn
