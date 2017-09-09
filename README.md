@@ -100,3 +100,18 @@ true
 ```
 
 + https://stackoverflow.com/questions/38778054/how-to-generate-a-random-number-in-elixir
+
+### Unix Timestamp in Elixir
+
+```elixir
+iex> DateTime.utc_now |> DateTime.to_unix
+1486035766
+
+iex> System.system_time(:second)
+1486035766
+
+iex> System.system_time(:millisecond)
+1504975995312
+```
+
++ http://michal.muskala.eu/2017/02/02/unix-timestamps-in-elixir-1-4.html

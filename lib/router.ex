@@ -83,7 +83,7 @@ defmodule App.Router do
     hash = save_user_agent_hash(conn)
 
     hit = Enum.join([
-      Integer.to_string(:os.system_time(:millisecond)),
+      Integer.to_string(System.system_time(:millisecond)),
       Enum.join(path, "/"),
       hash,
       count
