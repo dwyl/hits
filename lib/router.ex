@@ -6,7 +6,7 @@ defmodule App.Router do
   plug :match
   plug :dispatch
 
-  get "/", do: send_file(conn, 200, "lib/index.html")
+  get "/", do: send_file(conn, 200, "lib/index.html") # serve html homepage
   get "/favicon.ico", do: send_file(conn, 200, "lib/favicon.ico")
 
   match _ do  # catch all matcher

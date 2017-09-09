@@ -18,5 +18,4 @@ defmodule HashTest do
     {:ok, body} = File.read(filename)
     JSON.parse(body)
   end
-  
 end
