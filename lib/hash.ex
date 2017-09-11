@@ -6,7 +6,7 @@ defmodule Hash do
   @doc """
   make/2 create a SHA512 hash from the given input and return the require length
   note: we remove "ambiguous" characters so _humans_ can type the hash without
-  getting "confused" this might not be required, but is to match the original 
+  getting "confused" this might not be required, but is to match the original
   "Hits" implementation.
   
   ## Parameters
