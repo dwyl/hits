@@ -31,7 +31,7 @@ defmodule App.Router do
   
   Returns Http response to end-user's browser with the svg (XML) of the badge.
   """
-  defp render_badge(conn) do
+  def render_badge(conn) do
     count = save_hit(conn)
     conn
     |> put_resp_content_type("image/svg+xml")
