@@ -30,7 +30,7 @@ defmodule App.Hits do
 
   @doc """
   get_user_agent_string/1 extracts user-agent, IP address and browser language
-  from the Plug.Conn map see: 
+  from the Plug.Conn map see: https://hexdocs.pm/plug/Plug.Conn.html
   
   > there is probably a *much* better way of doing this ... PR v. welcome!
   

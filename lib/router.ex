@@ -22,6 +22,15 @@ defmodule App.Router do
     end
   end
 
+  @doc """
+  render_badge/1 renders the badge for the url requested in conn
+  
+  ## Parameters
+
+  - conn: Map the standard Plug.Conn info see: hexdocs.pm/plug/Plug.Conn.html
+  
+  Returns Http response to end-user's browser with the svg (XML) of the badge.
+  """
   defp render_badge(conn) do
     count = save_hit(conn)
     conn

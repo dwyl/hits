@@ -19,8 +19,8 @@ defmodule Hash do
   def make(input, length \\ 13) do
     hash = :crypto.hash(:sha512, input) # dogma requires this extra line ... =(
     hash
-      |> Base.encode64
-      |> String.replace(~r/[Il0oO=\/\+]/, "", global: true)
+      |> Base.encode64 # so alpha numeric with UPPERCASE lowercase and 0-9
+      |> String.replace(~r/[Il0oO=\/\+]/, "", global: true) # "ambiguous" chars
       |> String.slice(0..length - 1) # 0 index so length needs decrement
   end
 end
