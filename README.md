@@ -56,9 +56,26 @@ mix run --no-halt
 
 That's it! <br />
 
+Visit: http://localhost:8080/ (_in your web broser_)
+
+![hits-homepage](https://user-images.githubusercontent.com/194400/30294516-3dc31aca-9735-11e7-9e07-29a74e7c6bf0.png)
+
+Or visit _any_ endpoint that includes `.svg` in the url,
+e.g: http://localhost:8080/yourname/project.svg
+
+![hits-example-badge](https://user-images.githubusercontent.com/194400/30294601-915b28b2-9735-11e7-8c56-c3ea6f414ded.png)
+
+Refresh the page a few times and watch the count go up!
+
+![hit-count-42](https://user-images.githubusercontent.com/194400/30295139-7db6c008-9737-11e7-9098-9488319e1271.png)
+
+> note: I've increased the "zoom" in chrome to 500% for _effect_.
+
+
 Now, take your time to peruse the code in `/test` and `/lib`,
 and _ask_ any questions by opening GitHub Issues:
 https://github.com/dwyl/hits-elixir/issues
+
 
 ### Run the Tests
 
