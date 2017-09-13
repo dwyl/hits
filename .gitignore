@@ -20,3 +20,10 @@ erl_crash.dump
 *.ez
 *.beam
 logs/
+
+# people can generate docs locally if they want, they are useless on GitHub!
+docs/
+
+# exclude node_modules which are required for pre-commit hook ...
+node_modules
+# see: github.com/dwyl/hits-elixir/issues/10
