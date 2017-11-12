@@ -3,7 +3,7 @@
 ![hits-dwyl-teal-banner](https://user-images.githubusercontent.com/194400/30136430-d1b2c2b8-9356-11e7-9ed5-3d84f6e44066.png)
 
 <div align="center">
-  
+
 [![Build Status](https://img.shields.io/travis/dwyl/hits-elixir.svg?style=flat-square)](https://travis-ci.org/dwyl/hits-elixir)
 [![Inline docs](http://inch-ci.org/github/dwyl/hits-elixir.svg?style=flat-square)](http://inch-ci.org/github/dwyl/hits-elixir)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hits-elixir/master.svg?style=flat-square)](http://codecov.io/github/dwyl/hits-elixir?branch=master)
@@ -17,7 +17,7 @@ Elixir implementation of: https://github.com/dwyl/hits
 
 ## Why?
 
-Because _Elixir_ == :heart:!! see: 
+Because _Elixir_ == :heart:!! see:
 [github.com/dwyl/**learn-elixir#why**](https://github.com/dwyl/learn-elixir#why)
 
 ## _What_?
@@ -28,7 +28,7 @@ A basic "web counter". see: https://github.com/dwyl/hits#what
 ### Assumptions / Prerequisites
 
 + [x] Elixir installed: https://github.com/dwyl/learn-elixir#how
-+ [x] Basic knowledge/understanding of Elixir syntax: 
++ [x] Basic knowledge/understanding of Elixir syntax:
 https://elixir-lang.org/crash-course.html
 
 
@@ -44,8 +44,10 @@ git clone https://github.com/dwyl/hits-elixir.git && cd hits-elixir
 
 ### 2. Install the Dependencies
 
+Install dependencies and create necessary directories (_to store the data_):
+
 ```
-mix deps.get && mkdir logs
+mix deps.get && mkdir -p logs/logs
 ```
 
 ### 3. Run the App
@@ -56,7 +58,8 @@ mix run --no-halt
 
 That's it! <br />
 
-Visit: http://localhost:8080/ (_in your web broser_)
+
+Visit: http://localhost:8080/ (_in your web browser_)
 
 ![hits-homepage](https://user-images.githubusercontent.com/194400/30294516-3dc31aca-9735-11e7-9e07-29a74e7c6bf0.png)
 
@@ -79,38 +82,43 @@ https://github.com/dwyl/hits-elixir/issues
 
 ### Run the Tests
 
-You 
+You
 
 ```elixir
 mix test
 ```
 
-If you want to run the tests with coverage, copy-paste the following command 
+If you want to run the tests with coverage, copy-paste the following command
 into your terminal:
 
 ```elixir
 MIX_ENV=test mix do coveralls.json
 ```
+If you want to view the coverage in a web browser:
+
+```elixir
+MIX_ENV=test mix coveralls.html && open cover/excoveralls.html
+```
 
 
 ## Research & Background Reading
 
-We found the following links/articles/posts _useful_ 
+We found the following links/articles/posts _useful_
 when learning how to build this mini-project:
 
 ### Plug (_the Elixir HTTP Libirary_)
 
 + Plug Docs: https://hexdocs.pm/plug/readme.html (_the official Plug docs_)
-+ Plug Conn (_connection struct specific_) Docs: 
++ Plug Conn (_connection struct specific_) Docs:
 https://hexdocs.pm/plug/Plug.Conn.html
 (_the are feature-complete but no practical/usage examples!_)
 + Understanding Plug (Phoenix Blog): https://hexdocs.pm/phoenix/plug.html
 + Elixir School Plug:
 https://elixirschool.com/en/lessons/specifics/plug/
-+ Getting started with Plug in Elixir: 
++ Getting started with Plug in Elixir:
 http://www.brianstorti.com/getting-started-with-plug-elixir
 (_has a good/simple example of "Plug.Builder"_)
-+ Elixir Plug unveiled: 
++ Elixir Plug unveiled:
 https://medium.com/@kansi/elixir-plug-unveiled-bf354e364641
 + Building a web framework from scratch in Elixir:
 https://codewords.recurse.com/issues/five/building-a-web-framework-from-scratch-in-elixir
@@ -138,7 +146,7 @@ true
 
 + http://elixir-recipes.github.io/strings/checking-if-strings-contain-substring
 
-### Generate Random Srings in Elixir
+### Generate Random Strings in Elixir
 
 ```
 :rand.uniform(n)
