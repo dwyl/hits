@@ -97,7 +97,7 @@ MIX_ENV=test mix do coveralls.json
 If you want to view the coverage in a web browser:
 
 ```elixir
-MIX_ENV=test mix coveralls.html
+MIX_ENV=test mix coveralls.html && open cover/excoveralls.html
 ```
 
 
