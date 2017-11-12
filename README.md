@@ -58,6 +58,7 @@ mix run --no-halt
 
 That's it! <br />
 
+
 Visit: http://localhost:8080/ (_in your web browser_)
 
 ![hits-homepage](https://user-images.githubusercontent.com/194400/30294516-3dc31aca-9735-11e7-9e07-29a74e7c6bf0.png)
