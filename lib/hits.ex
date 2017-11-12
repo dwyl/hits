@@ -8,7 +8,7 @@ defmodule App.Hits do
   svg_badge_template/0 opens the SVG template file.
   the function is single-purpose so that we can _cache_ the template.
   see: https://github.com/dwyl/hits-elixir/issues/3 #helpwanted
-  
+
   returns String of template.
   """
   def svg_badge_template do # help wanted caching this!
@@ -17,11 +17,11 @@ defmodule App.Hits do
 
   @doc """
   make_badge/1 from svg template substituting the count value
-  
+
   ## Parameters
 
   - count: Number the view/hit count to be displayed in the badge.
-  
+
   Returns the badge XML with the count.
   """
   def make_badge(count \\ 1) do
@@ -31,13 +31,13 @@ defmodule App.Hits do
   @doc """
   get_user_agent_string/1 extracts user-agent, IP address and browser language
   from the Plug.Conn map see: https://hexdocs.pm/plug/Plug.Conn.html
-  
+
   > there is probably a *much* better way of doing this ... PR v. welcome!
-  
+
   ## Parameters
 
   - conn: Map the standard Plug.Conn info see: hexdocs.pm/plug/Plug.Conn.html
-  
+
   Returns String with user-agent, IP and language separated by "pipe" charater.
   """
   def get_user_agent_string(conn) do
@@ -52,16 +52,16 @@ defmodule App.Hits do
   end
 
   @doc """
-  save_user_agent_has/1 save/overwrite user-agent in a file 
+  save_user_agent_has/1 save/overwrite user-agent in a file
   the filename is the SHA hash of the string so it's always the same.
   from the Plug.Conn map see: https://hexdocs.pm/plug/Plug.Conn.html
-  
+
   > there is probably a *much* better way of doing this ... PR v. welcome!
-  
+
   ## Parameters
 
   - conn: Map the standard Plug.Conn info see: hexdocs.pm/plug/Plug.Conn.html
-  
+
   Returns String with user-agent, IP and language separated by "pipe" charater.
   """
   def save_user_agent_hash(conn) do
@@ -75,11 +75,11 @@ defmodule App.Hits do
   @doc """
   get_hit_count/1 reads the log file for the given file path (if it exists)
   finds the last line in the file and read the hit valie in the last column.
-  
+
   ## Parameters
 
   - hit_path: String the filesystem path to the hits append-only log file.
-  
+
   Returns Number count the current hit count for the given url.
   """
   def get_hit_count(hit_path) do
@@ -103,11 +103,11 @@ defmodule App.Hits do
   @doc """
   save_hit/1 is the "main" function for saving a hit including extracting
   user-agent data from conn (see above).
-  
+
   ## Parameters
 
   - conn: Map the standard Plug.Conn info see: hexdocs.pm/plug/Plug.Conn.html
-  
+
   Returns Number count the current hit count for the given url.
   """
   def save_hit(conn) do

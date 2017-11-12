@@ -12,6 +12,15 @@ defmodule HashTest do
     end
   end
 
+
+  test "Hash.make default length 13" do
+    text = "Everything is Awesome!"
+    actual = Hash.make(text)
+    expected = "Bc6HaSgCH8JKF"
+    assert expected == actual
+    assert String.length(actual) == 13
+  end
+
   defp fixture do
     filename = "./test/hash_fixtures.json"
     {:ok, body} = File.read(filename)

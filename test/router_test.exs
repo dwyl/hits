@@ -8,8 +8,8 @@ defmodule App.RouterTest do
   setup_all do
     log_path = Path.expand("./logs")
     unless File.exists?(log_path) do
-      IO.puts "Creating Logs Directory: " <> log_path
-      File.mkdir_p(log_path <> "/agents")
+      IO.puts "Created Logs Directory: " <> Path.expand("./logs") <> "/agents/"
+      File.mkdir_p(Path.expand("./logs") <> "/agents/")
     end
     :ok
   end
