@@ -5,10 +5,9 @@ defmodule HashTest do
   test "confirm that our hash function works as expected based on fixture" do
     {:ok, json} = fixture()
 
-    Enum.each json,  fn {k, v} ->
-      # IO.puts "#{k} --> #{v}"
-      expected = v
-      actual = Hash.make(k, 10)
+    Enum.each json,  fn {key, expected} ->
+      # IO.puts "#{key} --> #{expected}"
+      actual = Hash.make(key, 10)
       assert expected == actual
     end
   end
