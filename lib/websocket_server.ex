@@ -5,15 +5,13 @@ defmodule App.WebsocketServer do
   """
 
   use GenServer
-  require Record
 
-  Record.defrecord :state, [clients: []]
 
   @doc """
   Initialize the GenServer
   """
   def start_link(opts \\ []) do
-    :gen_server.start_link({:local, __MODULE__}, __MODULE__, :ok, opts)
+    GenServer.start_link(__MODULE__, opts, name: __MODULE__)
   end
 
   @doc """
@@ -21,7 +19,7 @@ defmodule App.WebsocketServer do
   called from websockets - cast the `:join` message to GenServer
   """
   def join(pid) do
-    :gen_server.cast(__MODULE__, {:join, pid})
+    GenServer.cast(__MODULE__, {:join, pid})
   end
 
   @doc """
@@ -29,7 +27,7 @@ defmodule App.WebsocketServer do
   terminate function - cast the `:leave` message to GenServer
   """
   def leave(pid) do
-    :gen_server.cast(__MODULE__, {:leave, pid})
+    GenServer.cast(__MODULE__, {:leave, pid})
   end
 
   @doc """
@@ -37,11 +35,11 @@ defmodule App.WebsocketServer do
   that joined in this GenServer - cast the `:notify_all` message to GenServer
   """
   def broadcast(message) do
-    :gen_server.cast(__MODULE__, {:notify_all, message})
+    GenServer.cast(__MODULE__, {:notify_all, message})
   end
 
-  def init(:ok) do
-    state = state()
+  def init() do
+    state = []
     {:ok, state}
   end
 
@@ -66,23 +64,26 @@ defmodule App.WebsocketServer do
   clients list
   """
   def handle_cast({:join, pid}, state) do
-    current_clients = state(state, :clients)
-    all_clients = [pid | current_clients]
-    new_state = state(clients: all_clients)
+    current_clients = state
+    new_state = [pid | current_clients]
     {:noreply, new_state}
   end
 
   def handle_cast({:leave, pid}, state) do
-    all_clients = state(state, :clients)
+    all_clients = state
     others = all_clients -- [pid]
-    new_state = state(clients: others)
+    new_state = others
     {:noreply, new_state}
   end
 
   def handle_cast({:notify_all, message}, state) do
-    clients = state(state, :clients)
+    clients = state
     Enum.each(clients, &send(&1, {:new_hit, message}))
     {:noreply, state}
+  end
+
+  def handle_call({:clients_count}, _from, state) do
+    {:reply, {:ok, Enum.count(state)}, state}
   end
 
 end
