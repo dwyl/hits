@@ -117,15 +117,30 @@ defmodule App.Hits do
 
     count = get_hit_count(hit_path)
     hash = save_user_agent_hash(conn)
+    svg_path = Enum.join(path, "/")
 
     hit = Enum.join([
       Integer.to_string(System.system_time(:millisecond)),
-      Enum.join(path, "/"),
+      svg_path,
       hash,
       count
     ], "|") <> "\n"
 
     File.write!(hit_path, hit, [:append])
+
+    # Broadcast to Connected Clients
+    broadcast(svg_path, hash, count)
+
     count
+  end
+
+  def broadcast(svg_path, hash, count) do
+
+    time = App.Utils.now_to_string
+    git_path = String.replace(svg_path, ".svg", "")
+
+    msg = Enum.join([time, git_path, count, hash], " ")
+
+    App.WebsocketServer.broadcast(msg)
   end
 end
