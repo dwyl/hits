@@ -52,7 +52,7 @@ defmodule App.Hits do
   end
 
   @doc """
-  save_user_agent_has/1 save/overwrite user-agent in a file
+  save_user_agent_hash/1 save/overwrite user-agent in a file
   the filename is the SHA hash of the string so it's always the same.
   from the Plug.Conn map see: https://hexdocs.pm/plug/Plug.Conn.html
 
@@ -134,6 +134,18 @@ defmodule App.Hits do
     count
   end
 
+  @doc """
+  broadcast/3 submits the hit data for all the connected
+  websocket clients
+
+  ## Parameters
+
+  - svg_path: full svg path
+  - hash: hash of the user/agent
+  - count: current hits count
+
+  Returns Number count the current hit count for the given url.
+  """
   def broadcast(svg_path, hash, count) do
 
     time = App.Utils.now_to_string

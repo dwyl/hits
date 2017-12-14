@@ -27,3 +27,6 @@ docs/
 # exclude node_modules which are required for pre-commit hook ...
 node_modules
 # see: github.com/dwyl/hits-elixir/issues/10
+
+# exclude osx files
+.DS_Store

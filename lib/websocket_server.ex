@@ -1,21 +1,41 @@
 defmodule App.WebsocketServer do
+  @moduledoc """
+  App.WebsocketServer is a GenServer to interact the
+  application with the websockets
+  """
+
   use GenServer
   require Record
 
   Record.defrecord :state, [clients: []]
 
+  @doc """
+  Initialize the GenServer
+  """
   def start_link(opts \\ []) do
     :gen_server.start_link({:local, __MODULE__}, __MODULE__, :ok, opts)
   end
 
+  @doc """
+  Process utilizes it to join in the server, usually
+  called from websockets - cast the `:join` message to GenServer
+  """
   def join(pid) do
     :gen_server.cast(__MODULE__, {:join, pid})
   end
 
+  @doc """
+  Used by the process when it terminates, called on the websocket
+  terminate function - cast the `:leave` message to GenServer
+  """
   def leave(pid) do
     :gen_server.cast(__MODULE__, {:leave, pid})
   end
 
+  @doc """
+  Broadcast the message to all the websockets clients, or whatsoever processes
+  that joined in this GenServer - cast the `:notify_all` message to GenServer
+  """
   def broadcast(message) do
     :gen_server.cast(__MODULE__, {:notify_all, message})
   end
@@ -33,6 +53,18 @@ defmodule App.WebsocketServer do
     :ok
   end
 
+  @doc """
+  Handle the cast messages
+
+  `:join` - Insert a new process on the websockets
+  clients list
+
+  `:leave` - Removes the current process from
+  the websockets clients list
+
+  `:notify_all` cast message - Insert a new process on the websockets
+  clients list
+  """
   def handle_cast({:join, pid}, state) do
     current_clients = state(state, :clients)
     all_clients = [pid | current_clients]
