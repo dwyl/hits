@@ -1,20 +1,67 @@
 defmodule App.WebsocketTest do
   use ExUnit.Case
   alias App.WebsocketServer
-  alias App.WebsocketHandler
+  use Plug.Test
 
-  test "websocket broadcast" do
+  setup_all do
+    port =
+      Application.get_env(:app, :cowboy_port)
+      |> to_string
 
-    # initialize 2 websockets
-    WebsocketHandler.websocket_init(nil, "test", nil)
-    WebsocketHandler.websocket_init(nil, "test2", nil)
+    ws_url = "ws://127.0.0.1:" <> port <> "/ws"
 
-    # broadcast a message
-    WebsocketServer.broadcast("new hit!")
+    {:ok, ws_url: ws_url}
+  end
 
-    # verify that we have two connected websockets
+  test "websockets connections", state do
+
+    # first websocket join
+    ws1 = Socket.connect!(state[:ws_url])
+    {:ok, count} = GenServer.call(WebsocketServer, {:clients_count})
+    assert count == 1
+
+    # second websocket join
+    ws2 = Socket.connect!(state[:ws_url])
     {:ok, count} = GenServer.call(WebsocketServer, {:clients_count})
     assert count == 2
+
+
+    # verify that 1 client left
+    :ok = Socket.Web.close(ws1)
+    Process.sleep(1)
+    {:ok, count} = GenServer.call(WebsocketServer, {:clients_count})
+    assert count == 1
+
+    # verify that there's no more clients
+    :ok = Socket.Web.close(ws2)
+    Process.sleep(1)
+    {:ok, count} = GenServer.call(WebsocketServer, {:clients_count})
+    assert count == 0
+  end
+
+  test "websockets broadcast", state do
+
+    # first websocket join
+    ws1 = Socket.connect!(state[:ws_url])
+    {:ok, count} = GenServer.call(WebsocketServer, {:clients_count})
+    assert count == 1
+
+    # first broadcast
+    WebsocketServer.broadcast("test1")
+    {:ok, {:text, response}} = Socket.Web.recv(ws1)
+    assert response == "test1"
+
+    # second websocket join
+    ws2 = Socket.connect!(state[:ws_url])
+    {:ok, count} = GenServer.call(WebsocketServer, {:clients_count})
+    assert count == 2
+
+    # second broadcast - both clients should receive
+    WebsocketServer.broadcast("test-all")
+    {:ok, {:text, response1}} = Socket.Web.recv(ws1)
+    {:ok, {:text, response2}} = Socket.Web.recv(ws2)
+    assert response1 == "test-all"
+    assert response2 == "test-all"
   end
 
 end
