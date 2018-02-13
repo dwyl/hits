@@ -47,7 +47,7 @@ git clone https://github.com/dwyl/hits-elixir.git && cd hits-elixir
 Install dependencies and create necessary directories (_to store the data_):
 
 ```
-mix deps.get && mkdir -p logs/logs
+mix deps.get && mkdir -p logs/agents
 ```
 
 ### 3. Run the App
