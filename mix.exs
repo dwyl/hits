@@ -33,7 +33,8 @@ defmodule App.Mixfile do # this is a fairly standard/simple mix file ...
       {:excoveralls, "~> 0.7.0", only: [:test, :dev]}, # tracking test coverage
       {:ex_doc, "~> 0.16.3", only: [:dev]}, # to generate documentation
       {:dogma, "~> 0.1", only: [:test, :dev]}, # Elixir style
-      {:credo, "~> 0.8.6", only: [:dev, :test]}, # github.com/rrrene/credo
+      {:credo, github: "rrrene/credo"},
+      # {:credo, "~> 0.8.6", only: [:dev, :test]}, # github.com/rrrene/credo
       {:inch_ex, "~> 0.5.6", only: :docs}, # see: https://git.io/v5inX
       {:socket, "~> 0.3"},
       {:pre_commit, "~> 0.2.4", only: :dev}
