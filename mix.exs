@@ -35,7 +35,8 @@ defmodule App.Mixfile do # this is a fairly standard/simple mix file ...
       {:dogma, "~> 0.1", only: [:test, :dev]}, # Elixir style
       {:credo, "~> 0.8.6", only: [:dev, :test]}, # github.com/rrrene/credo
       {:inch_ex, "~> 0.5.6", only: :docs}, # see: https://git.io/v5inX
-      {:socket, "~> 0.3"}
+      {:socket, "~> 0.3"},
+      {:pre_commit, "~> 0.2.4", only: :dev}
     ]
   end
 end
