@@ -11,7 +11,7 @@ defmodule App do
 
     children = [
       Plug.Adapters.Cowboy.child_spec(:http, Router, [], [
-          dispatch: dispatch,
+          dispatch: dispatch(),
           port: port
         ]),
       App.WebsocketServer
