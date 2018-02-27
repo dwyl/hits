@@ -7,7 +7,7 @@ defmodule App.Utils do
   Get current time as string using Erlangs calendar module.
   """
   @spec now_to_string :: String
-  def now_to_string() do
+  def now_to_string do
     {{year, month, day}, {hour, minute, second}} = :calendar.local_time()
     "#{year}-#{month
     |> zero_pad}-#{day} #{hour
