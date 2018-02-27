@@ -100,13 +100,12 @@ If you want to view the coverage in a web browser:
 MIX_ENV=test mix coveralls.html && open cover/excoveralls.html
 ```
 
-
 ## Research & Background Reading
 
 We found the following links/articles/posts _useful_
 when learning how to build this mini-project:
 
-### Plug (_the Elixir HTTP Libirary_)
+### Plug (_the Elixir HTTP Library_)
 
 + Plug Docs: https://hexdocs.pm/plug/readme.html (_the official Plug docs_)
 + Plug Conn (_connection struct specific_) Docs:
