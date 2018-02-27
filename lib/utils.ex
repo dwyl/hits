@@ -20,7 +20,7 @@ defmodule App.Utils do
   defp zero_pad(number, amount \\ 2) do
      number
      |> Integer.to_string
-     |> String.rjust(amount, ?0)
+     |> String.pad_leading(amount, "0")
   end
 
 end
