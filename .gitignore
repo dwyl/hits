@@ -30,3 +30,4 @@ node_modules
 
 # exclude osx files
 .DS_Store
+npm-debug.log
