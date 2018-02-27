@@ -5,9 +5,7 @@ defmodule App.WebsocketTest do
   use Plug.Test
 
   setup_all do
-    port =
-      Application.get_env(:app, :cowboy_port)
-      |> to_string
+    port = to_string(Application.get_env(:app, :cowboy_port))
     WebsocketServer.init()
     ws_url = "ws://127.0.0.1:" <> port <> "/ws"
 
