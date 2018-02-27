@@ -4,7 +4,7 @@ elixir:
 env:
   - MIX_ENV=test
 script:
-  - mix do deps.get, compile --warnings-as-errors, coveralls.json, dogma
+  - mix do deps.get, compile, coveralls.json, dogma
 after_success:
   - bash <(curl -s https://codecov.io/bash)
   - mix deps.get --only docs

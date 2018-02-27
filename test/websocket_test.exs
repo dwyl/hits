@@ -1,13 +1,12 @@
 defmodule App.WebsocketTest do
   use ExUnit.Case
   alias App.WebsocketServer
+  alias App.WebsocketHandler
   use Plug.Test
 
   setup_all do
-    port =
-      Application.get_env(:app, :cowboy_port)
-      |> to_string
-
+    port = to_string(Application.get_env(:app, :cowboy_port))
+    WebsocketServer.init()
     ws_url = "ws://127.0.0.1:" <> port <> "/ws"
 
     {:ok, ws_url: ws_url}
@@ -62,6 +61,16 @@ defmodule App.WebsocketTest do
     {:ok, {:text, response2}} = Socket.Web.recv(ws2)
     assert response1 == "test-all"
     assert response2 == "test-all"
+  end
+
+  test "WebsocketHandler functional tests > websocket_info" do
+    {res, :req, :state} = WebsocketHandler.websocket_info(:empty, :req, :state)
+    assert res == :ok
+  end
+
+  test "WebsocketHandler functional tests > websocket_handle" do
+    {res, :req, :state} = WebsocketHandler.websocket_handle(:msg, :req, :state)
+    assert res == :ok
   end
 
 end
