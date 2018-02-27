@@ -22,7 +22,7 @@ Because _Elixir_ == :heart:!! see:
 
 ## _What_?
 
-A basic "web counter". see: https://github.com/dwyl/hits#what
+A basic "web counter", see: https://github.com/dwyl/hits#what
 
 
 ### Assumptions / Prerequisites
