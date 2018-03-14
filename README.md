@@ -92,12 +92,12 @@ If you want to run the tests with coverage, copy-paste the following command
 into your terminal:
 
 ```elixir
-MIX_ENV=test mix do coveralls.json
+mix cover
 ```
 If you want to view the coverage in a web browser:
 
 ```elixir
-MIX_ENV=test mix coveralls.html && open cover/excoveralls.html
+mix cover && open cover/excoveralls.html
 ```
 
 ## Research & Background Reading

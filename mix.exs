@@ -9,9 +9,13 @@ defmodule App.Mixfile do # this is a fairly standard/simple mix file ...
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
       deps: deps(),
+      aliases: aliases(),
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test,
-        "coveralls.post": :test, "coveralls.html": :test]
+      preferred_cli_env: ["coveralls": :test,
+                          "coveralls.json": :test,
+                          "coveralls.html": :test,
+                          "cover": :test,
+                          "cover.html": :test]
     ]
   end
 
@@ -38,6 +42,13 @@ defmodule App.Mixfile do # this is a fairly standard/simple mix file ...
       {:inch_ex, "~> 0.5.6", only: :docs}, # see: https://git.io/v5inX
       {:socket, "~> 0.3"},
       {:pre_commit, "~> 0.2.4", only: :dev}
+    ]
+  end
+
+  defp aliases do
+    [
+      "cover": ["coveralls.json"],
+      "cover.html": ["coveralls.html"]
     ]
   end
 end
