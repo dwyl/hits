@@ -46,8 +46,6 @@ defmodule App.Mixfile do
       {:excoveralls, "~> 0.7.0", only: [:test, :dev]},
       # to generate documentation
       {:ex_doc, "~> 0.16.3", only: [:dev]},
-      # Elixir style
-      {:dogma, "~> 0.1", only: [:test, :dev]},
       # github.com/rrrene/credo
       {:credo, "~> 0.8.6", only: [:dev, :test]},
       # see: https://git.io/v5inX
