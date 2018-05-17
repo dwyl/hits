@@ -13,7 +13,6 @@ defmodule App.WebsocketTest do
   end
 
   test "websockets connections", state do
-
     # first websocket join
     ws1 = Socket.connect!(state[:ws_url])
     {:ok, count} = GenServer.call(WebsocketServer, {:clients_count})
@@ -23,7 +22,6 @@ defmodule App.WebsocketTest do
     ws2 = Socket.connect!(state[:ws_url])
     {:ok, count} = GenServer.call(WebsocketServer, {:clients_count})
     assert count == 2
-
 
     # verify that 1 client left
     :ok = Socket.Web.close(ws1)
@@ -39,7 +37,6 @@ defmodule App.WebsocketTest do
   end
 
   test "websockets broadcast", state do
-
     # first websocket join
     ws1 = Socket.connect!(state[:ws_url])
     {:ok, count} = GenServer.call(WebsocketServer, {:clients_count})
@@ -72,5 +69,4 @@ defmodule App.WebsocketTest do
     {res, :req, :state} = WebsocketHandler.websocket_handle(:msg, :req, :state)
     assert res == :ok
   end
-
 end

@@ -17,10 +17,14 @@ defmodule Hash do
   Returns String hash of desired length.
   """
   def make(input, length \\ 13) do
-    hash = :crypto.hash(:sha512, input) # dogma requires this extra line ... =(
+    # dogma requires this extra line ... =(
+    hash = :crypto.hash(:sha512, input)
+    # so alpha numeric with UPPERCASE lowercase and 0-9
+    # "ambiguous" chars
+    # 0 index so length needs decrement
     hash
-      |> Base.encode64 # so alpha numeric with UPPERCASE lowercase and 0-9
-      |> String.replace(~r/[Il0oO=\/\+]/, "", global: true) # "ambiguous" chars
-      |> String.slice(0..length - 1) # 0 index so length needs decrement
+    |> Base.encode64()
+    |> String.replace(~r/[Il0oO=\/\+]/, "", global: true)
+    |> String.slice(0..(length - 1))
   end
 end

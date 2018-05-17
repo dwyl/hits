@@ -43,5 +43,4 @@ defmodule App.WebsocketHandler do
     App.WebsocketServer.leave(self())
     :ok
   end
-
 end

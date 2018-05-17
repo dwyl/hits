@@ -4,16 +4,20 @@ defmodule App do
   """
   use Application
   require Logger
-  alias App.Router, as: Router # credo requires this ... kinda pointless here.
+  # credo requires this ... kinda pointless here.
+  alias App.Router, as: Router
 
   def start(_type, _args) do
     port = Application.get_env(:app, :cowboy_port, 8080)
 
     children = [
-      Plug.Adapters.Cowboy.child_spec(:http, Router, [], [
-          dispatch: dispatch,
-          port: port
-        ]),
+      Plug.Adapters.Cowboy.child_spec(
+        :http,
+        Router,
+        [],
+        dispatch: dispatch,
+        port: port
+      ),
       App.WebsocketServer
     ]
 
@@ -24,10 +28,11 @@ defmodule App do
 
   defp dispatch do
     [
-      {:_, [
-        {"/ws", App.WebsocketHandler, []},
-        {:_, Plug.Adapters.Cowboy.Handler, {Router, []}}
-      ]}
+      {:_,
+       [
+         {"/ws", App.WebsocketHandler, []},
+         {:_, Plug.Adapters.Cowboy.Handler, {Router, []}}
+       ]}
     ]
   end
 end
