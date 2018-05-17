@@ -11,6 +11,7 @@ defmodule App.Mixfile do
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      aliases: aliases(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
         coveralls: :test,
@@ -51,6 +52,13 @@ defmodule App.Mixfile do
       # see: https://git.io/v5inX
       {:inch_ex, "~> 0.5.6", only: :docs},
       {:socket, "~> 0.3"}
+    ]
+  end
+
+  defp aliases do
+    [
+      "cover": ["coveralls.json"],
+      "cover.html": ["coveralls.html"]
     ]
   end
 end
