@@ -43,8 +43,10 @@ defmodule App.Hits do
   Returns String with user-agent, IP and language separated by "pipe" charater.
   """
   def get_user_agent_string(conn) do
-    [{_, ua}] = Enum.filter(conn.req_headers, fn {k, _} -> k == "user-agent" end)
-    [{_, langs}] = Enum.filter(conn.req_headers, fn {k, _} -> k == "accept-language" end)
+    [{_, ua}] = Enum.filter(conn.req_headers, fn {k, _} ->
+      k == "user-agent" end)
+    [{_, langs}] = Enum.filter(conn.req_headers, fn {k, _} ->
+      k == "accept-language" end)
     [lang | _] = Enum.take(String.split(String.upcase(langs), ","), 1)
     # remote_ip comes in as a Tuple {192, 168, 1, 42} >> 192.168.1.42 (dot quad)
     ip = Enum.join(Tuple.to_list(conn.remote_ip), ".")
@@ -124,7 +126,8 @@ defmodule App.Hits do
     path = conn.path_info
 
     hit_path =
-      Path.expand("./logs") <> "/" <> String.replace(Enum.join(path, "_"), ".svg", "") <> ".log"
+      Path.expand("./logs") <> "/" <>
+        String.replace(Enum.join(path, "_"), ".svg", "") <> ".log"
 
     count = get_hit_count(hit_path)
     hash = save_user_agent_hash(conn)

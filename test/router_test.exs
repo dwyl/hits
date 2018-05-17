@@ -34,7 +34,8 @@ defmodule App.RouterTest do
   end
 
   test "Request SVG Endpoint returns 200 with current count 1" do
-    conn = conn(:get, "/org/" <> Integer.to_string(:rand.uniform(1_000_000)) <> ".svg")
+    conn = conn(:get, "/org/" <>
+      Integer.to_string(:rand.uniform(1_000_000)) <> ".svg")
     conn = put_req_header(conn, "user-agent", "Hackintosh")
     req = put_req_header(conn, "accept-language", "en-GB,en;q=0.5")
     conn = Router.call(req, @opts)
@@ -57,7 +58,8 @@ defmodule App.RouterTest do
   end
 
   test "Confirm User Agent String is Saved to File" do
-    conn = conn(:get, "/org/" <> Integer.to_string(:rand.uniform(1_000_000)) <> ".svg")
+    conn = conn(:get, "/org/" <>
+      Integer.to_string(:rand.uniform(1_000_000)) <> ".svg")
     conn = put_req_header(conn, "user-agent", "Hackintosh")
     req = put_req_header(conn, "accept-language", "en-GB,en;q=0.5")
     conn = Router.call(req, @opts)
