@@ -7,10 +7,12 @@ defmodule App.RouterTest do
 
   setup_all do
     log_path = Path.expand("./logs")
+
     unless File.exists?(log_path) do
-      IO.puts "Created Logs Directory: " <> Path.expand("./logs") <> "/agents/"
+      IO.puts("Created Logs Directory: " <> Path.expand("./logs") <> "/agents/")
       File.mkdir_p(Path.expand("./logs") <> "/agents/")
     end
+
     :ok
   end
 
@@ -33,7 +35,7 @@ defmodule App.RouterTest do
 
   test "Request SVG Endpoint returns 200 with current count 1" do
     conn = conn(:get, "/org/" <>
-      Integer.to_string(:rand.uniform(1000000)) <> ".svg")
+      Integer.to_string(:rand.uniform(1_000_000)) <> ".svg")
     conn = put_req_header(conn, "user-agent", "Hackintosh")
     req = put_req_header(conn, "accept-language", "en-GB,en;q=0.5")
     conn = Router.call(req, @opts)
@@ -57,7 +59,7 @@ defmodule App.RouterTest do
 
   test "Confirm User Agent String is Saved to File" do
     conn = conn(:get, "/org/" <>
-      Integer.to_string(:rand.uniform(1000000)) <> ".svg")
+      Integer.to_string(:rand.uniform(1_000_000)) <> ".svg")
     conn = put_req_header(conn, "user-agent", "Hackintosh")
     req = put_req_header(conn, "accept-language", "en-GB,en;q=0.5")
     conn = Router.call(req, @opts)

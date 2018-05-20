@@ -11,8 +11,10 @@ defmodule App.Hits do
 
   returns String of template.
   """
-  def svg_badge_template do # help wanted caching this!
-    File.read!("./lib/template.svg") # see: github.com/dwyl/hits-elixir/issues/3
+  # help wanted caching this!
+  def svg_badge_template do
+    # see: github.com/dwyl/hits-elixir/issues/3
+    File.read!("./lib/template.svg")
   end
 
   @doc """
@@ -41,10 +43,10 @@ defmodule App.Hits do
   Returns String with user-agent, IP and language separated by "pipe" charater.
   """
   def get_user_agent_string(conn) do
-    [{_, ua}] = Enum.filter(conn.req_headers, fn
-      {k, _} -> k == "user-agent" end)
-    [{_, langs}] = Enum.filter(conn.req_headers,
-    fn {k, _} -> k == "accept-language" end)
+    [{_, ua}] = Enum.filter(conn.req_headers, fn {k, _} ->
+      k == "user-agent" end)
+    [{_, langs}] = Enum.filter(conn.req_headers, fn {k, _} ->
+      k == "accept-language" end)
     [lang | _] = Enum.take(String.split(String.upcase(langs), ","), 1)
     # remote_ip comes in as a Tuple {192, 168, 1, 42} >> 192.168.1.42 (dot quad)
     ip = Enum.join(Tuple.to_list(conn.remote_ip), ".")
@@ -83,20 +85,30 @@ defmodule App.Hits do
   Returns Number count the current hit count for the given url.
   """
   def get_hit_count(hit_path) do
-    exists = File.regular?(hit_path) # check if existing hits log for url
-    count = if exists do
-      stream = File.stream!(hit_path)
-      [last_line] = stream
-        |> Stream.map(&String.trim_trailing/1)
-        |> Enum.to_list
-        |> Enum.take(-1) # take the last line in the file to get current count
+    # check if existing hits log for url
+    exists = File.regular?(hit_path)
 
-      [i] = Enum.take(String.split(last_line, "|"), -1) # single element list
-      {count, _} = Integer.parse(i) # for some reason Int.parse returns tuple...
-      count + 1 # increment hit counter
-    else
-      1 # no previous hits for this url so count is 1
-    end
+    count =
+      if exists do
+        stream = File.stream!(hit_path)
+        # take the last line in the file to get current count
+        [last_line] =
+          stream
+          |> Stream.map(&String.trim_trailing/1)
+          |> Enum.to_list()
+          |> Enum.take(-1)
+
+        # single element list
+        [i] = Enum.take(String.split(last_line, "|"), -1)
+        # for some reason Int.parse returns tuple...
+        {count, _} = Integer.parse(i)
+        # increment hit counter
+        count + 1
+      else
+        # no previous hits for this url so count is 1
+        1
+      end
+
     count
   end
 
@@ -112,19 +124,25 @@ defmodule App.Hits do
   """
   def save_hit(conn) do
     path = conn.path_info
-    hit_path = Path.expand("./logs") <> "/" <>
-      String.replace(Enum.join(path, "_"), ".svg", "") <> ".log"
+
+    hit_path =
+      Path.expand("./logs") <> "/" <>
+        String.replace(Enum.join(path, "_"), ".svg", "") <> ".log"
 
     count = get_hit_count(hit_path)
     hash = save_user_agent_hash(conn)
     svg_path = Enum.join(path, "/")
 
-    hit = Enum.join([
-      Integer.to_string(System.system_time(:millisecond)),
-      svg_path,
-      hash,
-      count
-    ], "|") <> "\n"
+    hit =
+      Enum.join(
+        [
+          Integer.to_string(System.system_time(:millisecond)),
+          svg_path,
+          hash,
+          count
+        ],
+        "|"
+      ) <> "\n"
 
     File.write!(hit_path, hit, [:append])
 
@@ -147,8 +165,7 @@ defmodule App.Hits do
   Returns Number count the current hit count for the given url.
   """
   def broadcast(svg_path, hash, count) do
-
-    time = App.Utils.now_to_string
+    time = App.Utils.now_to_string()
     git_path = String.replace(svg_path, ".svg", "")
 
     msg = Enum.join([time, git_path, count, hash], " ")

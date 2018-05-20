@@ -5,5 +5,4 @@ defmodule FunctionalTests do
     badge = App.Hits.make_badge()
     assert badge =~ ~s(1)
   end
-
 end
