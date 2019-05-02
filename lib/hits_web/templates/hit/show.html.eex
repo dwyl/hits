@@ -1,0 +1,8 @@
+<h1>Show Hit</h1>
+
+<ul>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.hit_path(@conn, :edit, @hit) %></span>
+<span><%= link "Back", to: Routes.hit_path(@conn, :index) %></span>
