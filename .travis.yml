@@ -4,7 +4,8 @@ elixir:
 env:
   - MIX_ENV=test
 script:
-  - mix do deps.get, compile, test
+  - mix deps.get
+  - mix test
   - mix cover
 after_success:
   - bash <(curl -s https://codecov.io/bash)
