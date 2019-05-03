@@ -15,8 +15,8 @@ defmodule HitsWeb.Router do
 
   scope "/", HitsWeb do
     pipe_through :browser
-
     get "/", PageController, :index
+    resources "/hits", HitController
   end
 
   # Other scopes may use custom stacks.
