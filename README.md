@@ -12,44 +12,83 @@
 
 </div> -->
 
-<br />
-Phoenix implementation of: https://github.com/dwyl/hits
 
 ## Why?
 
-Because `Elixir` == :heart:!! see:
-[github.com/dwyl/**learn-elixir#why**](https://github.com/dwyl/learn-elixir#why) and https://github.com/dwyl/learn-elixir/issues/102 <br />
-And Phoenix gives us Postgres and WebSockets built-in
-so we can take the hits app to the next level!
+@dwyl We have a _few_ projects on GitHub ... <br />
+
+We want to _instantly see_ the _popularity_ of _each_ of our repos
+to know what people are finding _useful_ and help us
+decide where we need to be investing our time.
+
+While GitHub has a _basic_
+"[traffic](https://github.com/blog/1672-introducing-github-traffic-analytics)"
+[tab](https://github.com/dwyl/start-here/graphs/traffic)
+which displays page view stats, GitHub only records the data
+for the [_past 14 days_](https://github.com/dwyl/hits/issues/49)
+and then it gets reset.
+The data is not relayed to the "owner" in "***real time***"
+and you would need to use the API and "poll" for data ...
+_Manually_ checking who has viewed a
+project is _exceptionally_ tedious when you have
+more than a _handful_ of projects.
+
+### Why Phoenix (Elixir + PostgreSQL/Ecto)?
+
+We wrote our MVP in `Node.js`: https://github.com/dwyl/hits-nodejs
+That worked well to test the idea (_before we embraced Phoenix_).
+We decided to re-write in `Elixir`/`Phoenix` because we want
+the reliability and fault tolerance of `Erlang`,
+built-in application monitoring
+([`supervisor`](http://erlang.org/doc/man/supervisor.html))
+and metrics ([`telemetry`](https://github.com/beam-telemetry/telemetry))
+and the built-in support for _highly_ scalable WebSockets
+will allow us to build an _awesome_ UX!
+
+For more on "Why Elixir?" see:
+https://github.com/dwyl/learn-elixir/issues/102
 
 
-## _What_?
 
-A basic "web counter", see: https://github.com/dwyl/hits#what
+## What?
+
+A _simple & easy_ way to see how many people
+have _viewed_ your GitHub Repository.
+
+There are already *many* "badges" that people use in their repos.
+See: [github.com/dwyl/**repo-badges**](https://github.com/dwyl/repo-badges) <br />
+But we haven't seen one that gives a "***hit counter***"
+of the number of times a GitHub page has been viewed ... <br />
+So, in today's mini project we're going to _create_ a _basic **Web Counter**_.
+
+https://en.wikipedia.org/wiki/Web_counter
+
+## How?
+
+If you simply want to display a "hit count badge" in your project's GitHub page,
+visit: http://hits.dwyl.io to get the Markdown!
 
 
-### Assumptions / Prerequisites
 
-+ [x] Elixir installed: https://github.com/dwyl/learn-elixir#how
-+ [x] Basic knowledge/understanding of Elixir syntax:
-https://elixir-lang.org/crash-course.html
-+ [x] Basic understanding of Phoenix:
-https://github.com/dwyl/learn-phoenix-framework
+### _Run_ the App on `localhost`
+
+To _run_ the app on your localhost follow these easy steps:
+
+#### 0. Ensure your `localhost` has Node.js & Phoenix installed
+
+see: [before you start](https://github.com/dwyl/phoenix-chat-example#0-pre-requisites-before-you-start)
 
 
-## _How_?
-
-To _run_ the app on your localhost follow these 3 easy steps:
-
-### 1. Clone/Download the Code
+#### 1. Clone/Download the Code
 
 ```
-git clone https://github.com/dwyl/hits-phoenix.git && cd hits-elixir
+git clone https://github.com/dwyl/hits.git && cd hits
 ```
 
-### 2. Install the Dependencies
+#### 2. Install the Dependencies
 
-Install dependencies and setup Webpack hot reloading:
+Install elixir/node dependencies
+and setup Webpack static asset compilation (_with hot reloading_):
 
 ```
 mix deps.get
@@ -57,13 +96,13 @@ cd assets && npm install
 node node_modules/webpack/bin/webpack.js --mode development && cd ..
 ```
 
-### 3. Create the database
+#### 3. Create the database
 
 ```
 mix ecto.create && mix ecto.migrate
 ```
 
-### 3. Run the App
+### 4. Run the App
 
 ```
 mix phx.server
@@ -116,7 +155,18 @@ If you want to view the coverage in a web browser:
 mix cover && open cover/excoveralls.html
 ```
 
-# Implementation
+# _Implementation_
+
+
+
+
+### Assumptions / Prerequisites
+
++ [x] Elixir installed: https://github.com/dwyl/learn-elixir#how
++ [x] Basic knowledge/understanding of Elixir syntax:
+https://elixir-lang.org/crash-course.html
++ [x] Basic understanding of Phoenix:
+https://github.com/dwyl/learn-phoenix-framework
 
 ## Create New Phoenix App
 
@@ -125,7 +175,7 @@ mix cover && open cover/excoveralls.html
 mix phx.new hits
 ```
 
-
+##
 
 ```sh
 
