@@ -1,10 +1,11 @@
 language: elixir
 elixir:
-  - 1.5
+  - 1.8
 env:
   - MIX_ENV=test
 script:
   - mix deps.get
+  - mix compile
   - mix test
   - mix cover
 after_success:
