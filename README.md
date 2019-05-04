@@ -35,8 +35,10 @@ more than a _handful_ of projects.
 
 ### Why Phoenix (Elixir + PostgreSQL/Ecto)?
 
-We wrote our MVP in `Node.js`: https://github.com/dwyl/hits-nodejs
-That worked well to test the idea (_before we embraced Phoenix_).
+We wrote our MVP in `Node.js`, see:
+https://github.com/dwyl/hits-nodejs <br />
+That worked quite well to test the idea writing minimal code.
+
 We decided to re-write in `Elixir`/`Phoenix` because we want
 the reliability and fault tolerance of `Erlang`,
 built-in application monitoring
@@ -60,8 +62,18 @@ See: [github.com/dwyl/**repo-badges**](https://github.com/dwyl/repo-badges) <br 
 But we haven't seen one that gives a "***hit counter***"
 of the number of times a GitHub page has been viewed ... <br />
 So, in today's mini project we're going to _create_ a _basic **Web Counter**_.
-
 https://en.wikipedia.org/wiki/Web_counter
+
+#### A Fully Working Production Phoenix App _And_ Step-by-Step Tutorial?
+
+Yes, that's right!
+Not only is this a fully functioning web app
+that is serving _millions_ of requests per day
+in production _right_ now,
+it's also a step-by-step example/tutorial
+showing you _exactly_
+how it's implemented.
+
 
 ## How?
 
@@ -114,7 +126,7 @@ That's it! <br />
 Visit: http://localhost:4000/ (_in your web browser_)
 
 
-## TODO: Update Screenshot of Localhost when Working
+## TODO: Update Screenshot of Localhost when Working (port: 4000 ...)
 
 ![hits-homepage](https://user-images.githubusercontent.com/194400/30294516-3dc31aca-9735-11e7-9e07-29a74e7c6bf0.png)
 
@@ -155,17 +167,24 @@ If you want to view the coverage in a web browser:
 mix cover && open cover/excoveralls.html
 ```
 
+
+
+
 # _Implementation_
 
-
+This is a step-by-step guide
+to _building_ the Hits App
+from scratch
+in Phoenix.
 
 
 ### Assumptions / Prerequisites
 
-+ [x] Elixir installed: https://github.com/dwyl/learn-elixir#how
-+ [x] Basic knowledge/understanding of Elixir syntax:
++ [x] `Elixir` & `Phoenix` installed.
+see: [**_before_ you start**](https://github.com/dwyl/phoenix-chat-example#0-pre-requisites-before-you-start)
++ [x] Basic knowledge/understanding of `Elixir` syntax:
 https://elixir-lang.org/crash-course.html
-+ [x] Basic understanding of Phoenix:
++ [x] Basic understanding of `Phoenix`:
 https://github.com/dwyl/learn-phoenix-framework
 
 ## Create New Phoenix App
@@ -174,12 +193,134 @@ https://github.com/dwyl/learn-phoenix-framework
 ```sh
 mix phx.new hits
 ```
+When prompted to install the dependencies:
+```sh
+Fetch and install dependencies? [Yn]
+```
+Type `Y` and the `Enter` key to install.
 
-##
+
+## Create the 4 Schemas
+
++ users - for simplicity sake we are assuming that
+all repositories belong to a "user" and not an organisation.
++ repositories
++ useragents
++ hits
+
 
 ```sh
-
+mix phx.gen.schema User users name:string
+mix phx.gen.schema Repository repositories name:string user_id:references:users
+mix phx.gen.schema Useragent useragents name:string ip:string
+mix phx.gen.html Context Hit hits repo_id:references:repositories useragent_id:references:useragents
 ```
+You will see a suggestion in the terminal output similar to this:
+```sh
+Add the resource to your browser scope in lib/hits_web/router.ex:
+
+    resources "/hits", HitController
+```
+
+### Add the `/hits` resource
+
+Open the `lib/hits_web/router.ex` file and locate the `scope "/"` section:
+```elixir
+scope "/", HitsWeb do
+  pipe_through :browser
+  get "/", PageController, :index
+end
+```
+Add the necessary line, so that it looks like this:
+
+```elixir
+scope "/", HitsWeb do
+  pipe_through :browser
+  get "/", PageController, :index
+  resources "/hits", HitController
+end
+```
+
+Now we can run the scripts to create the database and tables:
+```
+mix ecto.create
+mix ecto.migrate
+```
+
+In your terminal you should see:
+
+```sh
+Compiling 2 files (.ex)
+The database for Hits.Repo has been created
+```
+This tells you the PostgreSQL database `hits_dev` was successfully created.
+Next you should see:
+
+```sh
+[info] == Running 20190502224605 Hits.Repo.Migrations.CreateUsers.change/0 forward
+[info] create table users
+[info] == Migrated 20190502224605 in 0.0s
+[info] == Running 20190502224617 Hits.Repo.Migrations.CreateRepositories.change/0 forward
+[info] create table repositories
+[info] create index repositories_user_id_index
+[info] == Migrated 20190502224617 in 0.0s
+[info] == Running 20190502224623 Hits.Repo.Migrations.CreateUseragents.change/0 forward
+[info] create table useragents
+[info] == Migrated 20190502224623 in 0.0s
+[info] == Running 20190502224736 Hits.Repo.Migrations.CreateHits.change/0 forward
+[info] create table hits
+[info] create index hits_repo_id_index
+[info] create index hits_useragent_id_index
+[info] == Migrated 20190502224736 in 0.0s
+```
+> _**Note**: the dates of your migration files will differ from these.
+The 14 digit number corresponds to the date and time
+in the format **`YYYYMMDDHHMMSS`**.
+This is helpful for knowing when the database schemas/fields
+were created or updated._
+
+### _Run_ the Tests
+
+Once you have created the schemas and run the resulting migrations,
+it's time to run the tests!
+
+```sh
+mix test
+```
+
+You will see that _four_ tests are failing:
+
+![1st-and-2nd-failing-test](https://user-images.githubusercontent.com/194400/57181235-f8c86100-6e88-11e9-94f6-be5bac514c48.png)
+![3rd-and-4th-failing-test](https://user-images.githubusercontent.com/194400/57181270-74c2a900-6e89-11e9-98a8-55266c3b5386.png)
+
+It may seem _odd_ that a brand new application has _failing_ tests,
+but if you read the assertions, it makes perfect sense.
+Also, it's a _good_ thing that Phoenix is encouraging us
+to practice TDD by making tests pass.
+
+> _**Note**: if you are new to or rusty on TDD,
+we wrote a beginner's tutorial_:
+[github.com/dwyl/**learn-tdd**](https://github.com/dwyl/learn-tdd)
+
+
+If you are following along without writing the code,
+e.g on a Chromebook, iPad
+or Library/School PC that doesn't allow you to install,
+
+
+
+### _Fix_ the _Failing_ Tests
+
+Let's start by addressing the _first_ failing test:
+
+![first-failing-test](https://user-images.githubusercontent.com/194400/57181253-35945800-6e89-11e9-8fa5-f829e3d03090.png)
+
+
+Run the following to execute the _single_ test starting on line 36
+```sh
+mix test test/hits_web/controllers/hit_controller_test.exs:36
+```
+
 
 
 
