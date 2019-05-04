@@ -15,6 +15,7 @@ defmodule HitsWeb.HitController do
   end
 
   def create(conn, %{"hit" => hit_params}) do
+    IO.inspect(hit_params, label: "hit_params")
     case Context.create_hit(hit_params) do
       {:ok, hit} ->
         conn

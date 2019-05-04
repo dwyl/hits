@@ -45,7 +45,7 @@ built-in application monitoring
 ([`supervisor`](http://erlang.org/doc/man/supervisor.html))
 and metrics ([`telemetry`](https://github.com/beam-telemetry/telemetry))
 and the built-in support for _highly_ scalable WebSockets
-will allow us to build an _awesome_ UX!
+that will allow us to build an _awesome_ real-time UX!
 
 For more on "Why Elixir?" see:
 https://github.com/dwyl/learn-elixir/issues/102
@@ -320,7 +320,7 @@ Run the following to execute the _single_ test starting on line 36
 ```sh
 mix test test/hits_web/controllers/hit_controller_test.exs:36
 ```
-
+Open the `test/hits_web/controllers/hit_controller_test.exs` file in your editor.
 
 
 
