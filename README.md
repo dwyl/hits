@@ -199,6 +199,162 @@ Fetch and install dependencies? [Yn]
 ```
 Type `Y` and the `Enter` key to install.
 
+You should see something like this in your terminal:
+```sh
+* running mix deps.get
+* running cd assets && npm install && node node_modules/webpack/bin/webpack.js --mode development
+* running mix deps.compile
+
+We are almost there! The following steps are missing:
+
+    $ cd hits
+
+Then configure your database in config/dev.exs and run:
+
+    $ mix ecto.create
+
+Start your Phoenix app with:
+
+    $ mix phx.server
+
+You can also run your app inside IEx (Interactive Elixir) as:
+
+    $ iex -S mix phx.server
+```
+
+Follow the instructions (run the following commands)
+to create the PostgreSQL database for the app:
+
+```sh
+cd hits
+mix ecto.create
+```
+
+You should see the following in your terminal:
+
+```sh
+Compiling 13 files (.ex)
+Generated hits app
+The database for Hits.Repo has already been created
+```
+
+Run the default tests to confirm everything is working:
+```sh
+Generated hits app
+...
+
+Finished in 0.03 seconds
+3 tests, 0 failures
+
+Randomized with seed 98214
+```
+
+
+Start the Phoenix server:
+```sh
+mix phx.server
+```
+
+That spits out a bunch of data about Webpack compilation:
+```sh
+[info] Running HitsWeb.Endpoint with cowboy 2.6.3 at 0.0.0.0:4000 (http)
+[info] Access HitsWeb.Endpoint at http://localhost:4000
+
+Webpack is watching the files…
+
+Hash: 1fc94cc9b786e491ad40
+Version: webpack 4.4.0
+Time: 609ms
+Built at: 05/05/2019 08:58:46
+                Asset       Size       Chunks             Chunk Names
+       ../css/app.css   10.6 KiB  ./js/app.js  [emitted]  ./js/app.js
+               app.js   7.26 KiB  ./js/app.js  [emitted]  ./js/app.js
+       ../favicon.ico   1.23 KiB               [emitted]
+        ../robots.txt  202 bytes               [emitted]
+../images/phoenix.png   13.6 KiB               [emitted]
+   [0] multi ./js/app.js 28 bytes {./js/app.js} [built]
+[../deps/phoenix_html/priv/static/phoenix_html.js] 2.21 KiB {./js/app.js} [built]
+[./css/app.css] 39 bytes {./js/app.js} [built]
+[./js/app.js] 493 bytes {./js/app.js} [built]
+    + 2 hidden modules
+Child mini-css-extract-plugin node_modules/css-loader/dist/cjs.js!css/app.css:
+    [./node_modules/css-loader/dist/cjs.js!./css/app.css] 284 bytes {mini-css-extract-plugin} [built]
+    [./node_modules/css-loader/dist/cjs.js!./css/phoenix.css] 10.9 KiB {mini-css-extract-plugin} [built]
+        + 1 hidden module
+```
+
+Visit the app in your web browser to confirm it's all working:
+![phoenix-app-default-homepage](https://user-images.githubusercontent.com/194400/57190794-71293380-6f16-11e9-8df3-1fb87139e6a3.png)
+
+The default Phoenix App home page
+should be familiar to you
+if you followed our Chat example/tutorial
+[github.com/dwyl/**phoenix-chat-example**](https://github.com/dwyl/phoenix-chat-example)
+
+
+
+
+## Create the _Static_ Home Page
+
+In order to help people understand what Hits is
+and how they can add a counter badge to their project,
+we have a simple (_static_) home page.
+In the interest of doing a "feature parity" migration
+from the Node.js MVP to the Phoenix version,
+we are just copying over the
+[`index.html`](https://github.com/dwyl/hits/blob/0a44edd692b5b765c20c85ed4057a50bbd872507/lib/index.html)
+at this stage; we can/will enhance it later.
+
+Phoenix has the concept of a Layout template
+which allows us to put all layout related
+code in a single file and
+then each subsequent page of content
+does not have to worry about static (CSS/JS) assets.
+Open the file
+`/lib/hits_web/templates/layout/app.html.eex`
+in your text editor. It should look like this:
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Hits · Phoenix Framework</title>
+    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+  </head>
+  <body>
+    <header>
+      <section class="container">
+        <nav role="navigation">
+          <ul>
+            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
+          </ul>
+        </nav>
+        <a href="http://phoenixframework.org/" class="phx-logo">
+          <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
+        </a>
+      </section>
+    </header>
+    <main role="main" class="container">
+      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <%= render @view_module, @view_template, assigns %>
+    </main>
+    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+  </body>
+</html>
+```
+
+
+
+
+
+
+
+
+
+
 
 ## Create the 4 Schemas
 
