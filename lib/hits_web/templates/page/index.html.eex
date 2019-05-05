@@ -10,17 +10,16 @@
 </h4>
 
 <h2 class="mt0 fw5 tc f2 bg-teal white pa2"><em>How?</em></h2>
-<div id="how" class="dn">
+<div id="how" class="dn pa3">
 
-
-  <table class="collapse pv2 ph3 w-100">
-    <tr class="">
-      <td class="pv2 ph3 w-40">
+  <table class="collapse pv2 ph3 w-100 pa4">
+    <tr class="bb-0">
+      <td class="pv2 ph3 w-30">
         Input your <strong class="fw5">GitHub Username</strong>
         (<em> <strong class="u">or</strong> org name</em>):
       </td>
-      <td class="pv2 ph3 w-40">
-        <input class="input-reset f4 pa2 ba bw1 mr5 w-80" type="text"
+      <td class="pv2 ph3 w-30">
+        <input class="input-reset f4 pa2 ba mr5 w-80" type="text"
         id="username" name="username" placeholder="username" autofocus maxlength="50">
       </td>
     </tr>
@@ -30,15 +29,15 @@
         name:
       </td>
       <td class="pv2 ph3 w-40">
-        <input class="input-reset f4 pa2 ba bw1 mr5 w-80" type="text"
+        <input class="input-reset f4 pa2 ba mr5 w-80" type="text"
         id="repo" name="repo" placeholder="repo/project" maxlength="100">
       </td>
     </tr>
   </table>
-
-  <h3 class="mt3 fw5 tc db f3 bg-teal white pa2">Your Badge <em>Markdown:</em></h3>
 </div>
-<pre id="badge" class="pl2 fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
+
+<h3 class="mt3 fw5 tc db f3 bg-teal white pa2">Your Badge <em>Markdown:</em></h3>
+<pre id="badge" class="fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
   [![HitCount](http://hits.dwyl.io/{username}/{repo}.svg)](http://hits.dwyl.io/{username}/{repo})
 </pre>
 
@@ -48,7 +47,7 @@
   <em>Replace</em> the <strong class="code">{repo}</strong> with the repo name.
 </p>
 
-<p class="pl2">
+<p class="pl2 ml2">
 <em>Copy</em> the markdown snippet and <em>Paste</em> it into your
 <strong class="code">README.md</strong> file <br />
   to start tracking the view count on your GitHub project!
