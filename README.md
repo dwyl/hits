@@ -292,8 +292,6 @@ if you followed our Chat example/tutorial
 [github.com/dwyl/**phoenix-chat-example**](https://github.com/dwyl/phoenix-chat-example)
 
 
-
-
 ## Create the _Static_ Home Page
 
 In order to help people understand what Hits is
@@ -346,12 +344,227 @@ in your text editor. It should look like this:
 </html>
 ```
 
+Let's remove the cruft and keep only the essential layout html:
 
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Hits</title>
+    <!-- <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/> -->
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.8.0/css/tachyons.min.css"/>
+  </head>
+  <body class="">
+    <main role="main"">
+      <!-- <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p> -->
+      <%= render @view_module, @view_template, assigns %>
+    </main>
+    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+  </body>
+</html>
 
+```
+We commented out the `app.css`
+and a couple of elements
+as we don't need them right now, but will later.
 
+If you refresh the page you should see the following:
+![phoenix-homepage-no-style](https://user-images.githubusercontent.com/194400/57190961-4cce5680-6f18-11e9-8542-582c9120196f.png)
 
+Don't panic, this is expected. We'll fix it in the next step.
 
+Open the homepage template file in your editor:
+`lib/hits_web/templates/page/index.html.eex`
 
+You should see something like this:
+```html
+<section class="phx-hero">
+  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
+  <p>A productive web framework that<br/>does not compromise speed or maintainability.</p>
+</section>
+
+<section class="row">
+  <article class="column">
+    <h2>Resources</h2>
+    <ul>
+      <li>
+        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
+      </li>
+      <li>
+        <a href="https://github.com/phoenixframework/phoenix">Source</a>
+      </li>
+      <li>
+        <a href="https://github.com/phoenixframework/phoenix/blob/v1.4/CHANGELOG.md">v1.4 Changelog</a>
+      </li>
+    </ul>
+  </article>
+  <article class="column">
+    <h2>Help</h2>
+    <ul>
+      <li>
+        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
+      </li>
+      <li>
+        <a href="https://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on Freenode IRC</a>
+      </li>
+      <li>
+        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
+      </li>
+    </ul>
+  </article>
+</section>
+```
+
+Notice how the page template only has the HTML code
+relevant to rendering _this_ page. <br />
+Let's replace the code in the file
+with the markup relevant to the Hits homepage:
+
+```html
+<h2 class="bg-teal white h-25 tc ttu f1 lh-title lh-solid mt0 pa2 pb3 mb0 pb0">
+  Hits!
+  <a href="http://hits.dwyl.io/" >
+    <img src="http://hits.dwyl.io/homepage.svg" alt="Hit Count" class="pa0 ba bw1 b--white">
+  </a>
+</h2>
+<h4 class="mt0 tc fw5 f5 teal pa2 mb0">
+  The <em>easy</em> way to know how many people are
+  <strong><em>viewing</em></strong> your GitHub projects!
+</h4>
+
+<h2 class="mt0 fw5 tc f2 bg-teal white pa2"><em>How?</em></h2>
+<div id="how" class="dn pa3">
+
+  <table class="collapse pv2 ph3 w-100 pa4">
+    <tr class="bb-0">
+      <td class="pv2 ph3 w-30">
+        Input your <strong class="fw5">GitHub Username</strong>
+        (<em> <strong class="u">or</strong> org name</em>):
+      </td>
+      <td class="pv2 ph3 w-30">
+        <input class="input-reset f4 pa2 ba mr5 w-80" type="text"
+        id="username" name="username" placeholder="username" autofocus maxlength="50">
+      </td>
+    </tr>
+    <tr class="">
+      <td class="pv2 ph3 w-40">
+        Input the <strong class="fw5">GitHub Project/Repository</strong>
+        name:
+      </td>
+      <td class="pv2 ph3 w-40">
+        <input class="input-reset f4 pa2 ba mr5 w-80" type="text"
+        id="repo" name="repo" placeholder="repo/project" maxlength="100">
+      </td>
+    </tr>
+  </table>
+</div>
+
+<h3 class="mt3 fw5 tc db f3 bg-teal white pa2">Your Badge <em>Markdown:</em></h3>
+<pre id="badge" class="fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
+  [![HitCount](http://hits.dwyl.io/{username}/{repo}.svg)](http://hits.dwyl.io/{username}/{repo})
+</pre>
+
+<p class="pl2" id="nojs">
+  Using the above markdown as a template, <br />
+  <em>Replace</em> the <strong class="code">{username}</strong> with <em>your</em> GitHub username <br />
+  <em>Replace</em> the <strong class="code">{repo}</strong> with the repo name.
+</p>
+
+<p class="pl2 ml2">
+<em>Copy</em> the markdown snippet and <em>Paste</em> it into your
+<strong class="code">README.md</strong> file <br />
+  to start tracking the view count on your GitHub project!
+</p>
+
+<h2 class="mt0 fw5 tc f4 bg-teal white pa2 mt5"><em>Recently</em> Viewed Projects (<em>tracked by Hits</em>)</h2>
+<div class="h5 pl2" id='hits'>
+  <div style="display:none">Dummy Child Node for insertBefore to work</div>
+</div>
+
+<style>
+  .teal {
+    color: #4DB6AC;
+  }
+  .bg-teal {
+    background: #4DB6AC;
+  }
+  body { /* dwyl font */
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+</style>
+```
+
+> _**Note**: we are using Tachyons (Functional) CSS
+for styling the page,
+if you haven't yet learned about Tachyons,
+we recommend reading:
+[github.com/dwyl/**learn-tachyons**](https://github.com/dwyl/learn-tachyons)_
+
+This is a fairly simple homepage.
+The only interesting part are the Tachyons styles
+which are fairly straightforward.
+
+Finally we need to update
+`assets/js/app.js`
+to add the code to render a badge
+when people input their `username` and `repo` name.
+
+Open the `assets/js/app.js` which should
+
+```js
+// We need to import the CSS so that webpack will load it.
+// The MiniCssExtractPlugin is used to separate it out into
+// its own CSS file.
+import css from "../css/app.css"
+
+// webpack automatically bundles all modules in your
+// entry points. Those entry points can be configured
+// in "webpack.config.js".
+//
+// Import dependencies
+//
+import "phoenix_html"
+
+// Import local files
+//
+// Local files can be imported directly using relative paths, for example:
+// import socket from "./socket"
+```
+Add the following lines to the end:
+```js
+// Markdown Template
+var mt = '[![HitCount](http://hits.dwyl.io/{user}/{repo}.svg)](http://hits.dwyl.io/{user}/{repo})';
+
+function generate_markdown () {
+  var user = document.getElementById("username").value || '{username}';
+  var repo = document.getElementById("repo").value || '{project}';
+  // console.log('user: ', user, 'repo: ', repo);
+  user = user.replace(/[.*+?^$<>()|[\]\\]/g, '');
+  repo = repo.replace(/[.*+?^$<>()|[\]\\]/g, '');
+  return mt.replace(/{user}/g, user).replace(/{repo}/g, repo);
+}
+
+function display_badge_markdown () {
+  var md = generate_markdown()
+  var pre = document.getElementById("badge").innerHTML = md;
+}
+
+setTimeout(function () {
+  // show form if JS available (progressive enhancement)
+  document.getElementById("how").classList.remove('dn');
+  document.getElementById("nojs").classList.add('dn');
+  display_badge_markdown(); // render initial markdown template
+  var get = document.getElementsByTagName('input');
+ for (var i = 0; i < get.length; i++) {
+     get[i].addEventListener('keyup', display_badge_markdown, false);
+     get[i].addEventListener('keyup', display_badge_markdown, false);
+ }
+}, 500);
+```
 
 
 
