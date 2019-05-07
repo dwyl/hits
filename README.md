@@ -610,9 +610,8 @@ scope "/", HitsWeb do
 end
 ```
 
-Now we can run the scripts to create the database and tables:
+Now we can run the scripts to create the database tables:
 ```
-mix ecto.create
 mix ecto.migrate
 ```
 
@@ -648,6 +647,21 @@ in the format **`YYYYMMDDHHMMSS`**.
 This is helpful for knowing when the database schemas/fields
 were created or updated._
 
+#### View the Entity Relationship (ER) Diagram
+
+Now that the Postgre database tables have been created,
+you can fire up your database client
+(_e.g: DBeaver in this case_)
+and view the Entity Relationship (ER) Diagram:
+
+![hits-er-diagram](https://user-images.githubusercontent.com/194400/57219989-b1a9af80-6ff1-11e9-8968-e3b76428093d.png)
+
+This us shows us the four tables we created above
+and how they are related (_with foreign keys_).
+It also shows us that there is `schema_migrations` table,
+which is _unrelated_ to the tables we created,
+but
+
 ### _Run_ the Tests
 
 Once you have created the schemas and run the resulting migrations,
@@ -665,7 +679,7 @@ You will see that _four_ tests are failing:
 It may seem _odd_ that a brand new application has _failing_ tests,
 but if you read the assertions, it makes perfect sense.
 Also, it's a _good_ thing that Phoenix is encouraging us
-to practice TDD by making tests pass.
+to practice TDD by making tests _pass_.
 
 > _**Note**: if you are new to or rusty on TDD,
 we wrote a beginner's tutorial_:
