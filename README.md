@@ -366,7 +366,6 @@ Let's remove the cruft and keep only the essential layout html:
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
-
 ```
 We commented out the `app.css`
 and a couple of elements
@@ -566,25 +565,42 @@ setTimeout(function () {
 }, 500);
 ```
 
+Run the Phoenix server to see the static page:
+```
+mix phx.server
+```
+Now visit the route in your web browser:
+http://localhost:4000
 
+![hits-static-homepage](https://user-images.githubusercontent.com/194400/57684208-3ff2e680-762d-11e9-89c4-0b0d04694f5a.png)
+
+Now that the static homepage is working,
+we can move on to the _interesting_ part of the Hits Application!
+
+> As always, if you have questions or got stuck at any point,
+please open an issue and we will help!
+https://github.com/dwyl/hits/issues/
 
 
 ## Create the 4 Schemas
 
+
 + users - for simplicity sake we are assuming that
 all repositories belong to a "user" and not an organisation.
-+ repositories
-+ useragents
-+ hits
-
++ repositories - the projects on GitHub
++ useragents - the web browsers viewing the project pages
++ hits - the record of each "hit" (page view).
 
 ```sh
 mix phx.gen.schema User users name:string
 mix phx.gen.schema Repository repositories name:string user_id:references:users
 mix phx.gen.schema Useragent useragents name:string ip:string
-mix phx.gen.html Context Hit hits repo_id:references:repositories useragent_id:references:useragents
+mix phx.gen.schema Hit hits repo_id:references:repositories useragent_id:references:useragents
 ```
-You will see a suggestion in the terminal output similar to this:
+In your terminal,
+you will see a suggestion in the terminal output similar to this:
+
+<!--
 ```sh
 Add the resource to your browser scope in lib/hits_web/router.ex:
 
@@ -609,6 +625,7 @@ scope "/", HitsWeb do
   resources "/hits", HitController
 end
 ```
+-->
 
 Now we can run the scripts to create the database tables:
 ```
