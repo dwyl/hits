@@ -15,7 +15,7 @@
 
 ## Why?
 
-@dwyl We have a _few_ projects on GitHub ... <br />
+@dwyl we have a _few_ projects on GitHub ... <br />
 
 We want to _instantly see_ the _popularity_ of _each_ of our repos
 to know what people are finding _useful_ and help us

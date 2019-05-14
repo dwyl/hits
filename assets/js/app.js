@@ -15,32 +15,3 @@ import "phoenix_html"
 //
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
-
-// Markdown Template
-var mt = '[![HitCount](http://hits.dwyl.io/{user}/{repo}.svg)](http://hits.dwyl.io/{user}/{repo})';
-
-function generate_markdown () {
-  var user = document.getElementById("username").value || '{username}';
-  var repo = document.getElementById("repo").value || '{project}';
-  // console.log('user: ', user, 'repo: ', repo);
-  user = user.replace(/[.*+?^$<>()|[\]\\]/g, '');
-  repo = repo.replace(/[.*+?^$<>()|[\]\\]/g, '');
-  return mt.replace(/{user}/g, user).replace(/{repo}/g, repo);
-}
-
-function display_badge_markdown () {
-  var md = generate_markdown()
-  var pre = document.getElementById("badge").innerHTML = md;
-}
-
-setTimeout(function () {
-  // show form if JS available (progressive enhancement)
-  document.getElementById("how").classList.remove('dn');
-  document.getElementById("nojs").classList.add('dn');
-  display_badge_markdown(); // render initial markdown template
-  var get = document.getElementsByTagName('input');
- for (var i = 0; i < get.length; i++) {
-     get[i].addEventListener('keyup', display_badge_markdown, false);
-     get[i].addEventListener('keyup', display_badge_markdown, false);
- }
-}, 500);

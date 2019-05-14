@@ -13,7 +13,7 @@ config :hits,
 # Configures the endpoint
 config :hits, HitsWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "yZWIs7V2AL+ABpoJOjibam5PLvt9UM+BaqEMQvdO0xF3tDgh1/wVLmCVPMq4qn8N",
+  secret_key_base: "HIj/88e7R4rzPELEk+0prDvPCVKZqNMsfJAdNxvV555++5GkfPjqxAoiqAmhI9a7",
   render_errors: [view: HitsWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Hits.PubSub, adapter: Phoenix.PubSub.PG2]
 

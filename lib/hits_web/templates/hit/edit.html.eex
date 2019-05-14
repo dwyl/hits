@@ -1,5 +1,0 @@
-<h1>Edit Hit</h1>
-
-<%= render "form.html", Map.put(assigns, :action, Routes.hit_path(@conn, :update, @hit)) %>
-
-<span><%= link "Back", to: Routes.hit_path(@conn, :index) %></span>

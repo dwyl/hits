@@ -40,7 +40,7 @@ defmodule HitsWeb.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_hits_key",
-    signing_salt: "AaIiODvq"
+    signing_salt: "hGmk8ZNx"
 
   plug HitsWeb.Router
 end
