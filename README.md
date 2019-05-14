@@ -579,7 +579,51 @@ we can move on to the _interesting_ part of the Hits Application!
 
 > As always, if you have questions or got stuck at any point,
 please open an issue and we will help!
-https://github.com/dwyl/hits/issues/
+https://github.com/dwyl/hits/issues
+
+### _Fix_ Failing Test
+
+Before moving on to building the app,
+let's make sure that the default tests are passing ...
+
+```
+mix test
+```
+![failing-test](https://user-images.githubusercontent.com/194400/57686427-7f233680-7631-11e9-83ef-931016d7b68b.png)
+
+The reason for this failing test is pretty clear,
+the page no longer contains the words "Welcome to Phoenix!".
+
+Let's open the file `test/hits_web/controllers/page_controller_test.exs`
+and update the assertion text
+From:
+
+```elixir
+test "GET /", %{conn: conn} do
+  conn = get(conn, "/")
+  assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+end
+```
+
+To:
+
+```elixir
+test "GET /", %{conn: conn} do
+  conn = get(conn, "/")
+  assert html_response(conn, 200) =~ "Hits!"
+end
+```
+
+Re-run the test:
+
+```sh
+mix test
+```
+
+![hits-static-page-test-passing](https://user-images.githubusercontent.com/194400/57686862-46d02800-7632-11e9-8be0-76e46c4d1cd9.png)
+
+The test should now pass
+and we can crack on with creating the schemas!
 
 
 ## Create the 4 Schemas
