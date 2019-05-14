@@ -659,8 +659,11 @@ and view the Entity Relationship (ER) Diagram:
 This us shows us the four tables we created above
 and how they are related (_with foreign keys_).
 It also shows us that there is `schema_migrations` table,
-which is _unrelated_ to the tables we created,
-but
+which is _unrelated_ to the tables we created for our app,
+but contains the log of the schema migrations that have been run
+and when they were applied to the database:
+
+![hits-schema-migrations](https://user-images.githubusercontent.com/194400/57219813-347e3a80-6ff1-11e9-95bb-73ffbceea22b.png)
 
 ### _Run_ the Tests
 

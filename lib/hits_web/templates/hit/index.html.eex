@@ -8,6 +8,7 @@
     </tr>
   </thead>
   <tbody>
+<!--
 <%= for hit <- @hits do %>
     <tr>
 
@@ -18,7 +19,6 @@
       </td>
     </tr>
 <% end %>
+-->
   </tbody>
 </table>
-
-<span><%= link "New Hit", to: Routes.hit_path(@conn, :new) %></span>

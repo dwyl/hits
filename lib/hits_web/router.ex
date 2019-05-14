@@ -16,7 +16,7 @@ defmodule HitsWeb.Router do
   scope "/", HitsWeb do
     pipe_through :browser
     get "/", PageController, :index
-    resources "/hits", HitController
+    get("/:user/:repository", HitController, :switcher)
   end
 
   # Other scopes may use custom stacks.
