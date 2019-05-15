@@ -595,7 +595,8 @@ The reason for this failing test is pretty clear,
 the page no longer contains the words "Welcome to Phoenix!".
 
 Let's open the file `test/hits_web/controllers/page_controller_test.exs`
-and update the assertion text
+and update the assertion text.
+
 From:
 
 ```elixir
@@ -624,6 +625,7 @@ mix test
 
 The test should now pass
 and we can crack on with creating the schemas!
+
 
 
 ## Create the 4 Schemas
@@ -671,9 +673,11 @@ end
 ```
 -->
 
-Now we can run the scripts to create the database tables:
-```
-mix ecto.migrate
+Before we can run the database migration, we must create the database.
+Run the create script:
+
+```sh
+mix ecto.create
 ```
 
 In your terminal you should see:
@@ -682,25 +686,33 @@ In your terminal you should see:
 Compiling 2 files (.ex)
 The database for Hits.Repo has been created
 ```
-This tells you the PostgreSQL database `hits_dev` was successfully created.
-Next you should see:
+This tells you the PostgreSQL database **`hits_dev`** was successfully created.
+
+Now we can run the scripts to create the database tables:
+```
+mix ecto.migrate
+```
+
+In your terminal, you should see:
 
 ```sh
-[info] == Running 20190502224605 Hits.Repo.Migrations.CreateUsers.change/0 forward
+Compiling 17 files (.ex)
+Generated hits app
+[info] == Running 20190515211749 Hits.Repo.Migrations.CreateUsers.change/0 forward
 [info] create table users
-[info] == Migrated 20190502224605 in 0.0s
-[info] == Running 20190502224617 Hits.Repo.Migrations.CreateRepositories.change/0 forward
+[info] == Migrated 20190515211749 in 0.0s
+[info] == Running 20190515211755 Hits.Repo.Migrations.CreateRepositories.change/0 forward
 [info] create table repositories
 [info] create index repositories_user_id_index
-[info] == Migrated 20190502224617 in 0.0s
-[info] == Running 20190502224623 Hits.Repo.Migrations.CreateUseragents.change/0 forward
+[info] == Migrated 20190515211755 in 0.0s
+[info] == Running 20190515211804 Hits.Repo.Migrations.CreateUseragents.change/0 forward
 [info] create table useragents
-[info] == Migrated 20190502224623 in 0.0s
-[info] == Running 20190502224736 Hits.Repo.Migrations.CreateHits.change/0 forward
+[info] == Migrated 20190515211804 in 0.0s
+[info] == Running 20190515211819 Hits.Repo.Migrations.CreateHits.change/0 forward
 [info] create table hits
 [info] create index hits_repo_id_index
 [info] create index hits_useragent_id_index
-[info] == Migrated 20190502224736 in 0.0s
+[info] == Migrated 20190515211819 in 0.0s
 ```
 > _**Note**: the dates of your migration files will differ from these.
 The 14 digit number corresponds to the date and time
