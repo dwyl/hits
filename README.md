@@ -374,7 +374,7 @@ as we don't need them right now, but will later.
 If you refresh the page you should see the following:
 ![phoenix-homepage-no-style](https://user-images.githubusercontent.com/194400/57190961-4cce5680-6f18-11e9-8542-582c9120196f.png)
 
-Don't panic, this is expected. We'll fix it in the next step.
+Don't panic, this is _expected_. We'll fix it in the next step.
 
 Open the homepage template file in your editor:
 `lib/hits_web/templates/page/index.html.eex`
@@ -581,7 +581,7 @@ we can move on to the _interesting_ part of the Hits Application!
 please open an issue and we will help!
 https://github.com/dwyl/hits/issues
 
-### _Fix_ Failing Test
+### _Fix_ The Failing Test
 
 Before moving on to building the app,
 let's make sure that the default tests are passing ...
@@ -722,7 +722,7 @@ were created or updated._
 
 #### View the Entity Relationship (ER) Diagram
 
-Now that the Postgre database tables have been created,
+Now that the Postgres database tables have been created,
 you can fire up your database client
 (_e.g: DBeaver in this case_)
 and view the Entity Relationship (ER) Diagram:
@@ -736,7 +736,34 @@ which is _unrelated_ to the tables we created for our app,
 but contains the log of the schema migrations that have been run
 and when they were applied to the database:
 
-![hits-schema-migrations](https://user-images.githubusercontent.com/194400/57219813-347e3a80-6ff1-11e9-95bb-73ffbceea22b.png)
+![hits-schema-migrations](https://user-images.githubusercontent.com/194400/57811257-b55fd380-7761-11e9-9ad3-cf06757a410b.png)
+
+The keen observer will note that the migration table data:
+```sh
+version       |inserted_at        |
+--------------|-------------------|
+20190515211749|2019-05-15 21:18:38|
+20190515211755|2019-05-15 21:18:38|
+20190515211804|2019-05-15 21:18:38|
+20190515211819|2019-05-15 21:18:38|
+```
+The version column corresponds to the date timestamps
+in the migration file names:
+
+priv/repo/migrations/**20190515211749**_create_users.exs <br />
+priv/repo/migrations/**20190515211755**_create_repositories.exs <br />
+priv/repo/migrations/**20190515211804**_create_useragents.exs <br />
+priv/repo/migrations/**20190515211819**_create_hits.exs <br />
+
+
+
+
+
+# Next: add the route to /Users/n/code/hits/lib/hits_web/router.ex
+
+
+
+
 
 ### _Run_ the Tests
 
