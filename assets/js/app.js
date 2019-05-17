@@ -11,6 +11,7 @@ import css from "../css/app.css"
 //
 import "phoenix_html"
 
+console.log('hello!');
 // Import local files
 //
 // Local files can be imported directly using relative paths, for example:
@@ -33,13 +34,16 @@ function display_badge_markdown () {
 }
 
 setTimeout(function () {
+  var how = document.getElementById("how");
   // show form if JS available (progressive enhancement)
-  document.getElementById("how").classList.remove('dn');
-  document.getElementById("nojs").classList.add('dn');
-  display_badge_markdown(); // render initial markdown template
-  var get = document.getElementsByTagName('input');
- for (var i = 0; i < get.length; i++) {
-     get[i].addEventListener('keyup', display_badge_markdown, false);
-     get[i].addEventListener('keyup', display_badge_markdown, false);
- }
+  if(how) {
+    document.getElementById("how").classList.remove('dn');
+    document.getElementById("nojs").classList.add('dn');
+    display_badge_markdown(); // render initial markdown template
+    var get = document.getElementsByTagName('input');
+   for (var i = 0; i < get.length; i++) {
+       get[i].addEventListener('keyup', display_badge_markdown, false);
+       get[i].addEventListener('keyup', display_badge_markdown, false);
+   }
+  }
 }, 500);

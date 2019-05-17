@@ -164,6 +164,7 @@ in your terminal:
 ```elixir
 mix cover
 ```
+
 If you want to view the coverage in a web browser:
 
 ```elixir
