@@ -17,7 +17,8 @@
 
 @dwyl we have a _few_ projects on GitHub ... <br />
 
-We want to _instantly see_ the _popularity_ of _each_ of our repos
+We want to _instantly see_ the _popularity_
+of _each_ of our repos
 to know what people are finding _useful_ and help us
 decide where we need to be investing our time.
 
@@ -37,7 +38,7 @@ more than a _handful_ of projects.
 
 We wrote our MVP in `Node.js`, see:
 https://github.com/dwyl/hits-nodejs <br />
-That worked quite well to test the idea writing minimal code.
+That worked quite well to test the idea while writing minimal code.
 
 We decided to re-write in `Elixir`/`Phoenix` because we want
 the reliability and fault tolerance of `Erlang`,
@@ -125,13 +126,13 @@ That's it! <br />
 
 Visit: http://localhost:4000/ (_in your web browser_)
 
+![hits-homepage-phoenix](https://user-images.githubusercontent.com/194400/57912373-0b2b9d00-7882-11e9-8dfd-df1021e9d076.png)
 
-## TODO: Update Screenshot of Localhost when Working (port: 4000 ...)
-
-![hits-homepage](https://user-images.githubusercontent.com/194400/30294516-3dc31aca-9735-11e7-9e07-29a74e7c6bf0.png)
 
 Or visit _any_ endpoint that includes `.svg` in the url,
-e.g: http://localhost:8080/yourname/project.svg
+e.g: http://localhost:4000/yourname/project.svg
+
+## TODO: Update Screenshot of Localhost when Working (port: 4000 ...)
 
 ![hits-example-badge](https://user-images.githubusercontent.com/194400/30294601-915b28b2-9735-11e7-8c56-c3ea6f414ded.png)
 
@@ -149,14 +150,16 @@ https://github.com/dwyl/hits-phoenix/issues
 
 ### Run the Tests
 
-You
+To run the tests on your localhost,
+execute the following command in your terminal:
 
 ```elixir
 mix test
 ```
 
-If you want to run the tests with coverage, copy-paste the following command
-into your terminal:
+If you want to run the tests with coverage,
+run the following command
+in your terminal:
 
 ```elixir
 mix cover
@@ -239,6 +242,11 @@ The database for Hits.Repo has already been created
 ```
 
 Run the default tests to confirm everything is working:
+
+```sh
+mix test
+```
+You should see the following output
 ```sh
 Generated hits app
 ...
@@ -374,7 +382,11 @@ as we don't need them right now, but will later.
 If you refresh the page you should see the following:
 ![phoenix-homepage-no-style](https://user-images.githubusercontent.com/194400/57190961-4cce5680-6f18-11e9-8542-582c9120196f.png)
 
-Don't panic, this is _expected_. We'll fix it in the next step.
+Don't panic, this is _expected_!
+We just commented out the link to `app.css` in the layout template
+and Phoenix does not have/use any Tachyons classes
+so no styling is present.
+We'll fix it in the next step.
 
 Open the homepage template file in your editor:
 `lib/hits_web/templates/page/index.html.eex`
@@ -500,11 +512,11 @@ with the markup relevant to the Hits homepage:
 > _**Note**: we are using Tachyons (Functional) CSS
 for styling the page,
 if you haven't yet learned about Tachyons,
-we recommend reading:
-[github.com/dwyl/**learn-tachyons**](https://github.com/dwyl/learn-tachyons)_
+we recommend reading_:
+[github.com/dwyl/**learn-tachyons**](https://github.com/dwyl/learn-tachyons)
 
 This is a fairly simple homepage.
-The only interesting part are the Tachyons styles
+The only _interesting_ part are the Tachyons styles
 which are fairly straightforward.
 
 Finally we need to update
@@ -512,7 +524,7 @@ Finally we need to update
 to add the code to render a badge
 when people input their `username` and `repo` name.
 
-Open the `assets/js/app.js` which should
+Open the `assets/js/app.js` which should look like this:
 
 ```js
 // We need to import the CSS so that webpack will load it.
@@ -533,6 +545,7 @@ import "phoenix_html"
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
 ```
+
 Add the following lines to the end:
 ```js
 // Markdown Template
@@ -756,15 +769,6 @@ priv/repo/migrations/**20190515211804**_create_useragents.exs <br />
 priv/repo/migrations/**20190515211819**_create_hits.exs <br />
 
 
-
-
-
-# Next: add the route to /Users/n/code/hits/lib/hits_web/router.ex
-
-
-
-
-
 ### _Run_ the Tests
 
 Once you have created the schemas and run the resulting migrations,
@@ -773,6 +777,19 @@ it's time to run the tests!
 ```sh
 mix test
 ```
+
+Everything should still pass because `phx.gen.schema`
+does not create any new tests
+and our previous tests are unaffected.
+
+
+# Next: add the route to /Users/n/code/hits/lib/hits_web/router.ex
+
+
+
+
+
+
 
 You will see that _four_ tests are failing:
 
@@ -794,7 +811,7 @@ e.g on a Chromebook, iPad
 or Library/School PC that doesn't allow you to install,
 
 
-
+<!--
 ### _Fix_ the _Failing_ Tests
 
 Let's start by addressing the _first_ failing test:
@@ -807,7 +824,7 @@ Run the following to execute the _single_ test starting on line 36
 mix test test/hits_web/controllers/hit_controller_test.exs:36
 ```
 Open the `test/hits_web/controllers/hit_controller_test.exs` file in your editor.
-
+-->
 
 
 
