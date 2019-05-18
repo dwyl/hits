@@ -1,6 +1,7 @@
 defmodule HitsWeb.HitController do
   use HitsWeb, :controller
-  alias Hits.Useragent
+  import Ecto.Query
+  alias Hits.{Hit, Repository, User, Useragent}
 
   def index(conn, %{"user" => user, "repository" => repository } = params) do
     IO.inspect(params, label: "params")
@@ -20,15 +21,41 @@ defmodule HitsWeb.HitController do
 
 
   def insert_hit(conn, params) do
+    IO.inspect(params, label: "insert_hit > params")
     useragent_id = insert_user_agent(conn)
     IO.inspect(useragent_id, label: "useragent_id")
+    username = params["user"]
+    user_id = insert_user(username)
+    IO.inspect(user_id, label: "user_id")
+    repository = params["repository"] |> String.replace(".svg", "")
+    repository_id = insert_repository(repository, user_id)
+    IO.inspect(repository_id, label: "repository_id")
+    {:ok, hit} = %Hit{repo_id: repository_id, useragent_id: useragent_id}
+      |> Hits.Repo.insert()
+    # https://til.hashrocket.com/posts/e0754031e3-counting-records-with-ecto
+    # count = Hits.Repo.aggregate(Hits, :count, :repo_id) #, repository_id)
+    # count = List.first Hits.Repo.all(from h in User, select: count(u.id))
+    IO.inspect(hit, label: "hit")
+    
+    query = "SELECT COUNT(*) FROM hits WHERE repo_id = $1"
+    res = Ecto.Adapters.SQL.query!(Hits.Repo, query, [repository_id])
+    IO.inspect(res, label: "res")
+    # IO.inspect(count, label: "count:")
 
   end
 
-  # does what it says. returns useragent.id
+  @doc """
+  insert_user_agent/1 inserts and returns the useragent for the request.
+
+  ## Parameters
+
+  - conn: Map the standard Plug.Conn info see: hexdocs.pm/plug/Plug.Conn.html
+
+  returns Int useragent.id
+  """
   def insert_user_agent(conn) do
-    # extract useragent from conn.req_headers:
     # TODO: sanitise useragent string https://github.com/dwyl/fields/issues/19
+    # extract user-agent from conn.req_headers:
     [{_, ua}] = Enum.filter(conn.req_headers, fn {k, _} ->
       k == "user-agent" end)
     IO.inspect(ua, label: "ua")
@@ -51,8 +78,63 @@ defmodule HitsWeb.HitController do
         IO.inspect(useragent, label: "EXISTING useragent:")
         useragent.id
     end
-
   end
+
+  @doc """
+  insert_user/1 inserts and returns the user for the request.
+
+  ## Parameters
+
+  - username: String the user name of the person the repository belongs to.
+
+  returns Int user.id
+  """
+  def insert_user(username) do
+    # TODO: sanitise user string using https://github.com/dwyl/fields/issues/19
+    # check if user exists
+    case Hits.Repo.get_by(User, name: username) do
+      nil  ->  # User not found, insert!
+        {:ok, user} =
+          %User{name: username}
+            |> Hits.Repo.insert()
+
+        IO.inspect(user, label: "INSERTED user:")
+        user.id
+
+      user ->
+        IO.inspect(user, label: "EXISTING user:")
+        user.id
+    end
+  end
+
+  @doc """
+  insert_repository/2 inserts and returns the user for the request.
+
+  ## Parameters
+
+  - repository: String the name of the repository.
+  - user_id: Int the user.id the repository belongs to.
+
+  returns Int user.id
+  """
+  def insert_repository(repository, user_id) do
+    # TODO: sanitise repository string using github.com/dwyl/fields/issues/19
+    # check if repository exists
+    case Hits.Repo.get_by(Repository, name: repository, user_id: user_id) do
+      nil  ->  # Repository not found, insert!
+        {:ok, repo} =
+          %Repository{name: repository, user_id: user_id}
+            |> Hits.Repo.insert()
+
+        IO.inspect(repo, label: "INSERTED repo:")
+        repo.id
+
+      repo ->
+        IO.inspect(repo, label: "EXISTING repo:")
+        repo.id
+    end
+  end
+
 
   @doc """
   svg_badge_template/0 opens the SVG template file.
