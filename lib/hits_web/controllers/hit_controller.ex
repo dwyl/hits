@@ -1,6 +1,5 @@
 defmodule HitsWeb.HitController do
   use HitsWeb, :controller
-  # use Ecto.Repo
   import Ecto.Query
   alias Hits.{Hit, Repository, Repo, User, Useragent}
 
@@ -18,25 +17,21 @@ defmodule HitsWeb.HitController do
   end
 
 
-
   def insert_hit(conn, params) do
-    IO.inspect(params, label: "insert_hit > params")
+    # IO.inspect(params, label: "insert_hit > params")
     useragent_id = insert_user_agent(conn)
-    IO.inspect(useragent_id, label: "useragent_id")
+    # IO.inspect(useragent_id, label: "useragent_id")
     username = params["user"]
     user_id = insert_user(username)
-    IO.inspect(user_id, label: "user_id")
+    # IO.inspect(user_id, label: "user_id")
     repository = params["repository"] |> String.replace(".svg", "")
     repository_id = insert_repository(repository, user_id)
-    IO.inspect(repository_id, label: "repository_id")
+    # IO.inspect(repository_id, label: "repository_id")
     {:ok, hit} = %Hit{repo_id: repository_id, useragent_id: useragent_id}
       |> Hits.Repo.insert()
-    # https://til.hashrocket.com/posts/e0754031e3-counting-records-with-ecto
-    # count = Hits.Repo.aggregate(Hits, :count, :repo_id) #, repository_id)
-    # count = List.first Hits.Repo.all(from h in User, select: count(u.id))
-    IO.inspect(hit, label: "hit")
+    # IO.inspect(hit, label: "hit")
 
-    count = Repo.aggregate(from(h in Hit,
+    Repo.aggregate(from(h in Hit, # see: github.com/dwyl/hits/issues/71
       where: h.repo_id == ^repository_id), :count, :id)
   end
 

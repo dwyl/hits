@@ -134,11 +134,11 @@ e.g: http://localhost:4000/yourname/project.svg
 
 ## TODO: Update Screenshot of Localhost when Working (port: 4000 ...)
 
-![hits-example-badge](https://user-images.githubusercontent.com/194400/30294601-915b28b2-9735-11e7-8c56-c3ea6f414ded.png)
+![hits-example-badge](https://user-images.githubusercontent.com/194400/57980413-57faa980-7a23-11e9-91cd-cc9e106be1ee.png)
 
 Refresh the page a few times and watch the count go up!
 
-![hit-count-42](https://user-images.githubusercontent.com/194400/30295139-7db6c008-9737-11e7-9098-9488319e1271.png)
+![hit-count-42](https://user-images.githubusercontent.com/194400/57980416-62b53e80-7a23-11e9-948a-7c423ecb18c1.png)
 
 > note: I've increased the "zoom" in chrome to 500% for _effect_.
 
