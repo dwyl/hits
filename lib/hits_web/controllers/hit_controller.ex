@@ -1,16 +1,15 @@
 defmodule HitsWeb.HitController do
   use HitsWeb, :controller
+  # use Ecto.Repo
   import Ecto.Query
-  alias Hits.{Hit, Repository, User, Useragent}
+  alias Hits.{Hit, Repository, Repo, User, Useragent}
 
   def index(conn, %{"user" => user, "repository" => repository } = params) do
     IO.inspect(params, label: "params")
     if repository =~ ".svg" do
       # insert hit
-      insert_hit(conn, params)
-
+      count = insert_hit(conn, params)
       # render badge
-      count = 42
       render_badge(conn, count)
 
     else
@@ -36,12 +35,9 @@ defmodule HitsWeb.HitController do
     # count = Hits.Repo.aggregate(Hits, :count, :repo_id) #, repository_id)
     # count = List.first Hits.Repo.all(from h in User, select: count(u.id))
     IO.inspect(hit, label: "hit")
-    
-    query = "SELECT COUNT(*) FROM hits WHERE repo_id = $1"
-    res = Ecto.Adapters.SQL.query!(Hits.Repo, query, [repository_id])
-    IO.inspect(res, label: "res")
-    # IO.inspect(count, label: "count:")
 
+    count = Repo.aggregate(from(h in Hit,
+      where: h.repo_id == ^repository_id), :count, :id)
   end
 
   @doc """
