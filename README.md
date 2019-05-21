@@ -195,6 +195,8 @@ see: [**_before_ you start**](https://github.com/dwyl/phoenix-chat-example#0-pre
 https://github.com/dwyl/learn-elixir#how
 + [x] Basic understanding of `Phoenix`:
 https://github.com/dwyl/learn-phoenix-framework
++ [x] Basic PostgreSQL knowledge:
+[github.com/dwyl/**learn-postgresql**](https://github.com/dwyl/learn-postgresql)
 
 ## Create New Phoenix App
 
@@ -702,10 +704,6 @@ But if you are curious about any of these words, read the following pages:
 + https://en.wikipedia.org/wiki/Denormalization
 + https://en.wikipedia.org/wiki/Third_normal_form
 
-If you are new to PostgreSQL,
-please see:
-[github.com/dwyl/**learn-postgresql**](https://github.com/dwyl/learn-postgresql)
-
 ### Create the 4 Schemas
 
 + users - for simplicity sake we are assuming that
@@ -807,24 +805,43 @@ Everything should still pass because `phx.gen.schema`
 does not create any new tests
 and our previous tests are unaffected.
 
+<br />
+
+### SVG Badge Template
+
+We created the SVG badge template for our MVP
+[`template.svg`](https://github.com/dwyl/hits-nodejs/blob/master/lib/template.svg)
+and it still serves our needs
+so there's no need to change it.
+
+Create a new file `lib/hits_web/templates/hit/badge.svg`
+and paste the following SVG code in it:
+
+```svg
+<?xml version="1.0"?> <!-- SVG container is 80 x 20 pixel rectangle -->
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="20">
+	<rect width="30" height="20" fill="#555"/> <!-- grey rectangle 30px width -->
+	<rect x="30" width="50" height="20" fill="#4c1"/> <!-- green rect 30px -->
+	<g fill="#fff" text-anchor="middle" font-size="11"
+    font-family="DejaVu Sans,Verdana,Geneva,sans-serif">   <!-- group & font -->
+	    <text x="15" y="14">hits</text>                      <!-- "hits" label -->
+	    <text x="54" y="14">{count}</text>  <!-- count is replaced with number -->
+	</g>
+</svg> <!-- that's it! pretty simple, right? :-) Any questions? Ask! -->
+```
+The comments are there for beginner-friendliness,
+they are stripped out before sending the badge to the client
+to conserve bandwidth.
+
+
+
+
+
 
 # Next: add the route to /Users/n/code/hits/lib/hits_web/router.ex
 
 
 
-
-
-
-
-You will see that _four_ tests are failing:
-
-![1st-and-2nd-failing-test](https://user-images.githubusercontent.com/194400/57181235-f8c86100-6e88-11e9-94f6-be5bac514c48.png)
-![3rd-and-4th-failing-test](https://user-images.githubusercontent.com/194400/57181270-74c2a900-6e89-11e9-98a8-55266c3b5386.png)
-
-It may seem _odd_ that a brand new application has _failing_ tests,
-but if you read the assertions, it makes perfect sense.
-Also, it's a _good_ thing that Phoenix is encouraging us
-to practice TDD by making tests _pass_.
 
 > _**Note**: if you are new to or rusty on TDD,
 we wrote a beginner's tutorial_:
@@ -833,23 +850,21 @@ we wrote a beginner's tutorial_:
 
 If you are following along without writing the code,
 e.g on a Chromebook, iPad
-or Library/School PC that doesn't allow you to install,
+or Library/School PC that doesn't allow you to install anything,
 
 
-<!--
-### _Fix_ the _Failing_ Tests
+### Create a _Failing_ Test
 
 Let's start by addressing the _first_ failing test:
 
 ![first-failing-test](https://user-images.githubusercontent.com/194400/57181253-35945800-6e89-11e9-8fa5-f829e3d03090.png)
 
 
-Run the following to execute the _single_ test starting on line 36
+Run the following command to execute the _single_ test starting on line 36
 ```sh
 mix test test/hits_web/controllers/hit_controller_test.exs:36
 ```
-Open the `test/hits_web/controllers/hit_controller_test.exs` file in your editor.
--->
+Open `test/hits_web/controllers/hit_controller_test.exs` in your editor.
 
 
 
@@ -860,8 +875,6 @@ Open the `test/hits_web/controllers/hit_controller_test.exs` file in your editor
 
 We found the following links/articles/posts _useful_
 when learning how to build this mini-project:
-
-### Plug (_the Elixir HTTP Library_)
 
 + Plug Docs: https://hexdocs.pm/plug/readme.html (_the official Plug docs_)
 + Plug Conn (_connection struct specific_) Docs:
@@ -878,23 +891,3 @@ https://medium.com/@kansi/elixir-plug-unveiled-bf354e364641
 + Building a web framework from scratch in Elixir:
 https://codewords.recurse.com/issues/five/building-a-web-framework-from-scratch-in-elixir
 + Testing Plugs: https://robots.thoughtbot.com/testing-elixir-plugs
-
-### SHA Cryptographic Hash Functions in Elixir/Erlang
-
-+ Cryptographic hash functions in Elixir by [@djm](https://github.com/djm):
-https://www.djm.org.uk/posts/cryptographic-hash-functions-elixir-generating-hex-digests-md5-sha1-sha2/
-
-### Mix Tasks
-
-+ How to create your own Mix Tasks:
-http://joeyates.info/2015/07/25/create-a-mix-task-for-an-elixir-project/
-
-
-### Compact sub-string syntax
-
-```elixir
-iex> "1test2" == "test"
-false
-iex> "1test2" =~ "test"
-true
-```
