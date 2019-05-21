@@ -173,7 +173,7 @@ MIX_ENV=test mix cover
 If you want to view the coverage in a web browser:
 
 ```elixir
-MIX_ENV=test mix cover && open cover/excoveralls.html
+MIX_ENV=test mix coveralls.html && open cover/excoveralls.html
 ```
 
 <br /> <br />
