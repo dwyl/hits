@@ -9,9 +9,10 @@ defmodule HitsWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
+  # temporarily comment out API endpoint till we need it!
+  # pipeline :api do
+  #   plug :accepts, ["json"]
+  # end
 
   scope "/", HitsWeb do
     pipe_through :browser
