@@ -34,6 +34,11 @@ _Manually_ checking who has viewed a
 project is _exceptionally_ tedious when you have
 more than a _handful_ of projects.
 
+### Scratch Your Own Itch?
+
+
+
+
 ### Why Phoenix (Elixir + PostgreSQL/Ecto)?
 
 We wrote our MVP in `Node.js`, see:
@@ -78,8 +83,10 @@ how it's implemented.
 
 ## How?
 
-If you simply want to display a "hit count badge" in your project's GitHub page,
-visit: http://hits.dwyl.io to get the Markdown!
+> If you simply want to display a "hit count badge"
+in your project's GitHub page, visit:
+http://hits.dwyl.io
+to get the Markdown!
 
 
 
@@ -132,20 +139,18 @@ Visit: http://localhost:4000/ (_in your web browser_)
 Or visit _any_ endpoint that includes `.svg` in the url,
 e.g: http://localhost:4000/yourname/project.svg
 
-## TODO: Update Screenshot of Localhost when Working (port: 4000 ...)
-
 ![hits-example-badge](https://user-images.githubusercontent.com/194400/57980413-57faa980-7a23-11e9-91cd-cc9e106be1ee.png)
 
 Refresh the page a few times and watch the count go up!
 
 ![hit-count-42](https://user-images.githubusercontent.com/194400/57980416-62b53e80-7a23-11e9-948a-7c423ecb18c1.png)
 
-> note: I've increased the "zoom" in chrome to 500% for _effect_.
+> note: the "Zoom" in chrome to 500% for _effect_.
 
 
 Now, take your time to peruse the code in `/test` and `/lib`,
 and _ask_ any questions by opening GitHub Issues:
-https://github.com/dwyl/hits-phoenix/issues
+https://github.com/dwyl/hits/issues
 
 
 ### Run the Tests
@@ -157,21 +162,21 @@ execute the following command in your terminal:
 mix test
 ```
 
-If you want to run the tests with coverage,
+To run the tests with coverage,
 run the following command
 in your terminal:
 
 ```elixir
-mix cover
+MIX_ENV=test mix cover
 ```
 
 If you want to view the coverage in a web browser:
 
 ```elixir
-mix cover && open cover/excoveralls.html
+MIX_ENV=test mix cover && open cover/excoveralls.html
 ```
 
-
+<br /> <br />
 
 
 # _Implementation_
@@ -187,7 +192,7 @@ in Phoenix.
 + [x] `Elixir` & `Phoenix` installed.
 see: [**_before_ you start**](https://github.com/dwyl/phoenix-chat-example#0-pre-requisites-before-you-start)
 + [x] Basic knowledge/understanding of `Elixir` syntax:
-https://elixir-lang.org/crash-course.html
+https://github.com/dwyl/learn-elixir#how
 + [x] Basic understanding of `Phoenix`:
 https://github.com/dwyl/learn-phoenix-framework
 
@@ -293,6 +298,7 @@ Child mini-css-extract-plugin node_modules/css-loader/dist/cjs.js!css/app.css:
 ```
 
 Visit the app in your web browser to confirm it's all working:
+http://localhost:4000
 ![phoenix-app-default-homepage](https://user-images.githubusercontent.com/194400/57190794-71293380-6f16-11e9-8df3-1fb87139e6a3.png)
 
 The default Phoenix App home page
@@ -316,7 +322,8 @@ Phoenix has the concept of a Layout template
 which allows us to put all layout related
 code in a single file and
 then each subsequent page of content
-does not have to worry about static (CSS/JS) assets.
+does not have to worry about static (CSS/JS) assets
+and metadata.
 Open the file
 `/lib/hits_web/templates/layout/app.html.eex`
 in your text editor. It should look like this:
@@ -368,23 +375,36 @@ Let's remove the cruft and keep only the essential layout html:
   </head>
   <body class="">
     <main role="main"">
-      <!-- <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p> -->
+
       <%= render @view_module, @view_template, assigns %>
     </main>
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+    <style> /* custom classes for specific @dwyl color scheme */
+      .teal {
+        color: #4DB6AC;
+      }
+      .bg-teal {
+        background: #4DB6AC;
+      }
+      body { /* dwyl font */
+        font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+    </style>
   </body>
 </html>
 ```
-We commented out the `app.css`
+We removed the link to `app.css`
 and a couple of elements
-as we don't need them right now, but will later.
+as we don't need them;
+we can always add them back later,
+that's the beauty of version control,
+nothing is ever "lost".
 
 If you refresh the page you should see the following:
 ![phoenix-homepage-no-style](https://user-images.githubusercontent.com/194400/57190961-4cce5680-6f18-11e9-8542-582c9120196f.png)
 
 Don't panic, this is _expected_!
-We just commented out the link to `app.css` in the layout template
+We just removed `app.css` in the layout template
 and Phoenix does not have/use any Tachyons classes
 so no styling is present.
 We'll fix it in the next step.
@@ -440,7 +460,7 @@ with the markup relevant to the Hits homepage:
 <h2 class="bg-teal white h-25 tc ttu f1 lh-title lh-solid mt0 pa2 pb3 mb0 pb0">
   Hits!
   <a href="http://hits.dwyl.io/" >
-    <img src="http://hits.dwyl.io/homepage.svg" alt="Hit Count" class="pa0 ba bw1 b--white">
+    <img src="http://hits.dwyl.io/dwyl/homepage.svg" alt="Hit Count" class="pa0 ba bw1 b--white">
   </a>
 </h2>
 <h4 class="mt0 tc fw5 f5 teal pa2 mb0">
@@ -496,18 +516,6 @@ with the markup relevant to the Hits homepage:
 <div class="h5 pl2" id='hits'>
   <div style="display:none">Dummy Child Node for insertBefore to work</div>
 </div>
-
-<style>
-  .teal {
-    color: #4DB6AC;
-  }
-  .bg-teal {
-    background: #4DB6AC;
-  }
-  body { /* dwyl font */
-    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  }
-</style>
 ```
 
 > _**Note**: we are using Tachyons (Functional) CSS
@@ -550,15 +558,15 @@ import "phoenix_html"
 Add the following lines to the end:
 ```js
 // Markdown Template
-var mt = '[![HitCount](http://hits.dwyl.io/{user}/{repo}.svg)](http://hits.dwyl.io/{user}/{repo})';
+var mt = document.getElementById('badge').innerHTML;
 
 function generate_markdown () {
   var user = document.getElementById("username").value || '{username}';
   var repo = document.getElementById("repo").value || '{project}';
   // console.log('user: ', user, 'repo: ', repo);
-  user = user.replace(/[.*+?^$<>()|[\]\\]/g, '');
+  user = user.replace(/[.*+?^$<>()|[\]\\]/g, ''); // trim and escape
   repo = repo.replace(/[.*+?^$<>()|[\]\\]/g, '');
-  return mt.replace(/{user}/g, user).replace(/{repo}/g, repo);
+  return mt.replace(/{username}/g, user).replace(/{repo}/g, repo);
 }
 
 function display_badge_markdown () {
@@ -608,7 +616,7 @@ mix test
 The reason for this failing test is pretty clear,
 the page no longer contains the words "Welcome to Phoenix!".
 
-Let's open the file `test/hits_web/controllers/page_controller_test.exs`
+Open the file `test/hits_web/controllers/page_controller_test.exs`
 and update the assertion text.
 
 From:
@@ -641,9 +649,64 @@ The test should now pass
 and we can crack on with creating the schemas!
 
 
+## Create The Database for Storing Data
 
-## Create the 4 Schemas
+As is typical of most Phoenix applications,
+we will be using a PostgreSQL database for storing data.
 
+In your terminal, run the create script:
+
+```sh
+mix ecto.create
+```
+In your terminal you should see:
+
+```sh
+Compiling 2 files (.ex)
+The database for Hits.Repo has been created
+```
+This tells you the PostgreSQL database **`hits_dev`** was successfully created.
+
+### Note on Database Normalization
+
+In designing the Hits App database,
+we decided to normalize
+the database tables for efficient storage
+because we wanted to make the storage of an individual hit
+as minimal as possible.
+This means we have 4 schemas/tables to ensure there is no duplicate data
+and each bit of data is only stored _once_.
+We could have stored all the data in a _single_ table
+and on the surface this is appealing
+because it would only require one insert
+query and no "joins" when selecting/counting hits.
+But the initial benefit of a single table
+would be considerably outweighed
+by the wasted space of duplicate data.
+
+This is not the time or place
+to dive into the merits
+of database normalization and denormalisation.
+We will have a chance to explore it later
+when we need to optimise query performance.
+For now we are focussing on building the App
+with a database normalized to the third normal form (3NF)
+because it achieves a good balance of
+eliminating data duplication thus maximising storage efficiency
+while still having adequate query performance.
+
+You won't need to understand any of these concepts
+to follow along with building the Hits app.
+But if you are curious about any of these words, read the following pages:
++ https://en.wikipedia.org/wiki/Database_normalization
++ https://en.wikipedia.org/wiki/Denormalization
++ https://en.wikipedia.org/wiki/Third_normal_form
+
+If you are new to PostgreSQL,
+please see:
+[github.com/dwyl/**learn-postgresql**](https://github.com/dwyl/learn-postgresql)
+
+### Create the 4 Schemas
 
 + users - for simplicity sake we are assuming that
 all repositories belong to a "user" and not an organisation.
@@ -660,47 +723,8 @@ mix phx.gen.schema Hit hits repo_id:references:repositories useragent_id:referen
 In your terminal,
 you will see a suggestion in the terminal output similar to this:
 
-<!--
-```sh
-Add the resource to your browser scope in lib/hits_web/router.ex:
-
-    resources "/hits", HitController
-```
-
-### Add the `/hits` resource
-
-Open the `lib/hits_web/router.ex` file and locate the `scope "/"` section:
-```elixir
-scope "/", HitsWeb do
-  pipe_through :browser
-  get "/", PageController, :index
-end
-```
-Add the necessary line, so that it looks like this:
-
-```elixir
-scope "/", HitsWeb do
-  pipe_through :browser
-  get "/", PageController, :index
-  resources "/hits", HitController
-end
-```
--->
 
 Before we can run the database migration, we must create the database.
-Run the create script:
-
-```sh
-mix ecto.create
-```
-
-In your terminal you should see:
-
-```sh
-Compiling 2 files (.ex)
-The database for Hits.Repo has been created
-```
-This tells you the PostgreSQL database **`hits_dev`** was successfully created.
 
 Now we can run the scripts to create the database tables:
 ```

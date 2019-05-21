@@ -16,8 +16,8 @@ console.log('hello!');
 //
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
-// Markdown Template
-var mt = '[![HitCount](http://hits.dwyl.io/{user}/{repo}.svg)](http://hits.dwyl.io/{user}/{repo})';
+// Get Markdown Template from HTML:
+var mt = document.getElementById('badge').innerHTML;
 
 function generate_markdown () {
   var user = document.getElementById("username").value || '{username}';
@@ -25,7 +25,7 @@ function generate_markdown () {
   // console.log('user: ', user, 'repo: ', repo);
   user = user.replace(/[.*+?^$<>()|[\]\\]/g, '');
   repo = repo.replace(/[.*+?^$<>()|[\]\\]/g, '');
-  return mt.replace(/{user}/g, user).replace(/{repo}/g, repo);
+  return mt.replace(/{username}/g, user).replace(/{repo}/g, repo);
 }
 
 function display_badge_markdown () {
