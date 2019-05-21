@@ -24,8 +24,15 @@ defmodule Hits.Application do
 
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
-  def config_change(changed, _new, removed) do
-    HitsWeb.Endpoint.config_change(changed, removed)
+  # see: https://hexdocs.pm/phoenix/Phoenix.Endpoint.html#c:config_change/2
+  # def config_change(changed, _new, removed) do
+  #   HitsWeb.Endpoint.config_change(changed, removed)
+  #   :ok
+  # end
+
+  # The config_change function is not being used for anything
+  # but compilation fails if I remove it ... so this is a "dummy"
+  def config_change(_changed, _new, _removed) do
     :ok
   end
 end
