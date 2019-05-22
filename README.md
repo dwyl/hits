@@ -36,7 +36,22 @@ more than a _handful_ of projects.
 
 ### Scratch Your Own Itch?
 
+Some people think that scratching your own itch is a "terrible idea"...
 
+We think Jessica Livingston (YCombinator Co-founder)
+knows more about people successfully building ideas than _anyone_ else.
+
+> "_**Solve** a **problem** that you **yourself have**
+then you will at least know
+that it's something that **at least one person really wants**.
+And when you are **part** of the **target market** you will have **insights**
+about it that you wouldn't otherwise._"
+~ **Jessica Livingston** https://youtu.be/a2B4cVFIVpg?t=2m56s
+
+Hits solves a problem for _us_ @dwyl
+and we make the service available to others.
+We are very much building a "scratcher" for our own itch,
+and making it available to anyone else who wants it.
 
 
 ### Why Phoenix (Elixir + PostgreSQL/Ecto)?
