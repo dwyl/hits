@@ -28,7 +28,8 @@ defmodule HitsWeb.HitController do
     user_id = User.insert(%User{name: params["user"]})
     # IO.inspect(user_id, label: "user_id")
     repository = params["repository"] |> String.replace(".svg", "")
-    repository_id = insert_repository(repository, user_id)
+    repository_attrs = %Repository{name: repository, user_id: user_id}
+    repository_id = Repository.insert(repository_attrs)
     # IO.inspect(repository_id, label: "repository_id")
 
     hit = %Hit{repo_id: repository_id, useragent_id: useragent_id}
@@ -39,62 +40,6 @@ defmodule HitsWeb.HitController do
 
     Repo.aggregate(from(h in Hit, # see: github.com/dwyl/hits/issues/71
       where: h.repo_id == ^repository_id), :count, :id)
-  end
-
-
-  @doc """
-  insert_user/1 inserts and returns the user for the request.
-
-  ## Parameters
-
-  - username: String the user name of the person the repository belongs to.
-
-  returns Int user.id
-  """
-  def insert_user(username) do
-    # TODO: sanitise user string using https://github.com/dwyl/fields/issues/19
-    # check if user exists
-    case Hits.Repo.get_by(User, name: username) do
-      nil  ->  # User not found, insert!
-        {:ok, user} =
-          %User{name: username}
-            |> Hits.Repo.insert()
-
-        IO.inspect(user, label: "INSERTED user:")
-        user.id
-
-      user ->
-        IO.inspect(user, label: "EXISTING user:")
-        user.id
-    end
-  end
-
-  @doc """
-  insert_repository/2 inserts and returns the user for the request.
-
-  ## Parameters
-
-  - repository: String the name of the repository.
-  - user_id: Int the user.id the repository belongs to.
-
-  returns Int user.id
-  """
-  def insert_repository(repository, user_id) do
-    # TODO: sanitise repository string using github.com/dwyl/fields/issues/19
-    # check if repository exists
-    case Hits.Repo.get_by(Repository, name: repository, user_id: user_id) do
-      nil  ->  # Repository not found, insert!
-        {:ok, repo} =
-          %Repository{name: repository, user_id: user_id}
-            |> Hits.Repo.insert()
-
-        IO.inspect(repo, label: "INSERTED repo:")
-        repo.id
-
-      repo ->
-        IO.inspect(repo, label: "EXISTING repo:")
-        repo.id
-    end
   end
 
 
