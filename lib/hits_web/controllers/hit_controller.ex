@@ -25,8 +25,7 @@ defmodule HitsWeb.HitController do
     # IO.inspect(ip, label: "ip")
     useragent_id = Useragent.insert(%Useragent{name: useragent, ip: ip})
     # IO.inspect(useragent_id, label: "useragent_id")
-    username = params["user"]
-    user_id = insert_user(username)
+    user_id = User.insert(%User{name: params["user"]})
     # IO.inspect(user_id, label: "user_id")
     repository = params["repository"] |> String.replace(".svg", "")
     repository_id = insert_repository(repository, user_id)
@@ -42,41 +41,6 @@ defmodule HitsWeb.HitController do
       where: h.repo_id == ^repository_id), :count, :id)
   end
 
-  @doc """
-  insert_user_agent/1 inserts and returns the useragent for the request.
-
-  ## Parameters
-
-  - conn: Map the standard Plug.Conn info see: hexdocs.pm/plug/Plug.Conn.html
-
-  returns Int useragent.id
-  """
-  def insert_user_agent(conn) do
-    # TODO: sanitise useragent string https://github.com/dwyl/fields/issues/19
-    # extract user-agent from conn.req_headers:
-    [{_, ua}] = Enum.filter(conn.req_headers, fn {k, _} ->
-      k == "user-agent" end)
-    IO.inspect(ua, label: "ua")
-
-    # remote_ip comes in as a Tuple {192, 168, 1, 42} >> 192.168.1.42 (dot quad)
-    ip = Enum.join(Tuple.to_list(conn.remote_ip), ".")
-    IO.inspect(ip, label: "ip")
-
-    # check if useragent exists by Name && IP Address
-    case Hits.Repo.get_by(Useragent, name: ua) do
-      nil  ->  # Agent not found, insert!
-        {:ok, useragent} =
-          %Useragent{name: ua, ip: ip}
-            |> Hits.Repo.insert()
-
-        IO.inspect(useragent, label: "INSERTED useragent:")
-        useragent.id
-
-      useragent ->
-        IO.inspect(useragent, label: "EXISTING useragent:")
-        useragent.id
-    end
-  end
 
   @doc """
   insert_user/1 inserts and returns the user for the request.
