@@ -1,0 +1,71 @@
+<h2 class="bg-teal white h-25 tc ttu f1 lh-title lh-solid mt0 pa2 pb3 mb0 pb0">
+  Hits!
+  <a href="http://hits.dwyl.io/" >
+    <img src="http://hits.dwyl.io/homepage.svg" alt="Hit Count" class="pa0 ba bw1 b--white">
+  </a>
+</h2>
+<h4 class="mt0 tc fw5 f5 teal pa2 mb0">
+  The <em>easy</em> way to know how many people are
+  <strong><em>viewing</em></strong> your GitHub projects!
+</h4>
+
+<h2 class="mt0 fw5 tc f2 bg-teal white pa2"><em>How?</em></h2>
+<div id="how" class="dn pa3">
+
+  <table class="collapse pv2 ph3 w-100 pa4">
+    <tr class="bb-0">
+      <td class="pv2 ph3 w-30">
+        Input your <strong class="fw5">GitHub Username</strong>
+        (<em> <strong class="u">or</strong> org name</em>):
+      </td>
+      <td class="pv2 ph3 w-30">
+        <input class="input-reset f4 pa2 ba mr5 w-80" type="text"
+        id="username" name="username" placeholder="username" autofocus maxlength="50">
+      </td>
+    </tr>
+    <tr class="">
+      <td class="pv2 ph3 w-40">
+        Input the <strong class="fw5">GitHub Project/Repository</strong>
+        name:
+      </td>
+      <td class="pv2 ph3 w-40">
+        <input class="input-reset f4 pa2 ba mr5 w-80" type="text"
+        id="repo" name="repo" placeholder="repo/project" maxlength="100">
+      </td>
+    </tr>
+  </table>
+</div>
+
+<h3 class="mt3 fw5 tc db f3 bg-teal white pa2">Your Badge <em>Markdown:</em></h3>
+<pre id="badge" class="fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
+  [![HitCount](http://hits.dwyl.io/{username}/{repo}.svg)](http://hits.dwyl.io/{username}/{repo})
+</pre>
+
+<p class="pl2" id="nojs">
+  Using the above markdown as a template, <br />
+  <em>Replace</em> the <strong class="code">{username}</strong> with <em>your</em> GitHub username <br />
+  <em>Replace</em> the <strong class="code">{repo}</strong> with the repo name.
+</p>
+
+<p class="pl2 ml2">
+<em>Copy</em> the markdown snippet and <em>Paste</em> it into your
+<strong class="code">README.md</strong> file <br />
+  to start tracking the view count on your GitHub project!
+</p>
+
+<h2 class="mt0 fw5 tc f4 bg-teal white pa2 mt5"><em>Recently</em> Viewed Projects (<em>tracked by Hits</em>)</h2>
+<div class="h5 pl2" id='hits'>
+  <div style="display:none">Dummy Child Node for insertBefore to work</div>
+</div>
+
+<style>
+  .teal {
+    color: #4DB6AC;
+  }
+  .bg-teal {
+    background: #4DB6AC;
+  }
+  body { /* dwyl font */
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+</style>
