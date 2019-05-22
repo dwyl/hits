@@ -173,7 +173,7 @@ MIX_ENV=test mix cover
 If you want to view the coverage in a web browser:
 
 ```elixir
-MIX_ENV=test mix coveralls.html && open cover/excoveralls.html
+mix coveralls.html && open cover/excoveralls.html
 ```
 
 <br /> <br />
@@ -197,6 +197,8 @@ https://github.com/dwyl/learn-elixir#how
 https://github.com/dwyl/learn-phoenix-framework
 + [x] Basic PostgreSQL knowledge:
 [github.com/dwyl/**learn-postgresql**](https://github.com/dwyl/learn-postgresql)
++ [x] Test Driven Development (TDD):
+[github.com/dwyl/**learn-tdd**](https://github.com/dwyl/learn-tdd)
 
 ## Create New Phoenix App
 
@@ -833,24 +835,14 @@ The comments are there for beginner-friendliness,
 they are stripped out before sending the badge to the client
 to conserve bandwidth.
 
+# tl;dr
 
+![draw-the-dog](https://user-images.githubusercontent.com/194400/58163803-88895000-7c7c-11e9-82f1-8afe63b40f99.png)
 
+> But seriously, if you want a step-by-step tutorial,
+leave a comment on: https://github.com/dwyl/hits/issues/74
 
-
-
-# Next: add the route to /Users/n/code/hits/lib/hits_web/router.ex
-
-
-
-
-> _**Note**: if you are new to or rusty on TDD,
-we wrote a beginner's tutorial_:
-[github.com/dwyl/**learn-tdd**](https://github.com/dwyl/learn-tdd)
-
-
-If you are following along without writing the code,
-e.g on a Chromebook, iPad
-or Library/School PC that doesn't allow you to install anything,
+<!--
 
 
 ### Create a _Failing_ Test
@@ -866,9 +858,7 @@ mix test test/hits_web/controllers/hit_controller_test.exs:36
 ```
 Open `test/hits_web/controllers/hit_controller_test.exs` in your editor.
 
-
-
-
+-->
 
 
 ## Research & Background Reading
