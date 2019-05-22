@@ -62,6 +62,9 @@ defmodule HitsWeb do
 
   @doc """
   When used, dispatch to the appropriate controller/view/etc.
+  IMPOSSIBLE to get coverage of this macro!
+  see: https://elixirforum.com/t/why-how-when-to-use-the-using-macro/14001/3
+  so simply skip it in coveralls.json!!
   """
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
