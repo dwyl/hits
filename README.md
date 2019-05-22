@@ -34,9 +34,11 @@ _Manually_ checking who has viewed a
 project is _exceptionally_ tedious when you have
 more than a _handful_ of projects.
 
+<!--
 ### Scratch Your Own Itch?
 
-Some people think that scratching your own itch is a "terrible idea"...
+Some people claim that scratching your own itch is a "terrible idea" ...
+Most of those people have never built anything.
 
 We think Jessica Livingston (YCombinator Co-founder)
 knows more about people successfully building ideas than _anyone_ else.
@@ -52,6 +54,10 @@ Hits solves a problem for _us_ @dwyl
 and we make the service available to others.
 We are very much building a "scratcher" for our own itch,
 and making it available to anyone else who wants it.
+
+Read:
+https://hbr.org/2014/05/when-scratch-your-own-itch-is-dangerous-advice-for-entrepreneurs
+-->
 
 
 ### Why Phoenix (Elixir + PostgreSQL/Ecto)?
