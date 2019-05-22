@@ -2,15 +2,15 @@
 
 ![hits-dwyl-teal-banner](https://user-images.githubusercontent.com/194400/30136430-d1b2c2b8-9356-11e7-9ed5-3d84f6e44066.png)
 
-<!-- <div align="center">
+<div align="center">
 
 [![Build Status](https://img.shields.io/travis/dwyl/hits-phoenix/master.svg?style=flat-square)](https://travis-ci.org/dwyl/hits-phoenix)
-[![Inline docs](http://inch-ci.org/github/dwyl/hits-phoenix.svg?style=flat-square)](http://inch-ci.org/github/dwyl/hits-phoenix)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hits-phoenix/master.svg?style=flat-square)](http://codecov.io/github/dwyl/hits-phoenix?branch=master)
-[![Deps Status](https://beta.hexfaktor.org/badge/all/github/dwyl/hits-phoenix.svg?style=flat-square)](https://beta.hexfaktor.org/github/dwyl/hits-phoenix)
+[![Inline docs](http://inch-ci.org/github/dwyl/hits-phoenix.svg?style=flat-square)](http://inch-ci.org/github/dwyl/hits-phoenix)
 [![HitCount](http://hits.dwyl.io/dwyl/hits-phoenix.svg)](https://github.com/dwyl/hits-phoenix)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/hits/issues/74)
 
-</div> -->
+</div>
 
 
 ## Why?
