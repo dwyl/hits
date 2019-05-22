@@ -49,7 +49,7 @@ defmodule Hits do
     # extract user-agent from conn.req_headers:
     [{_, ua}] = Enum.filter(conn.req_headers, fn {k, _} ->
       k == "user-agent" end)
-    IO.inspect(ua, label: "ua")
+    # IO.inspect(ua, label: "ua")
     ua
   end
 

@@ -1,6 +1,6 @@
 defmodule Hits.Useragent do
   use Ecto.Schema
-  import Ecto.{Changeset, Query}
+  import Ecto.Changeset
 
   schema "useragents" do
     field :ip, :string
@@ -26,17 +26,16 @@ defmodule Hits.Useragent do
   returns Int useragent.id
   """
   def insert(attrs) do
-    IO.inspect(attrs, label: "insert attrs")
     # check if useragent exists by Name && IP Address
-    case Hits.Repo.get_by(__MODULE__, name: attrs.name) do
+    case Hits.Repo.get_by(__MODULE__, name: attrs.name, ip: attrs.ip) do
       nil  ->  # Agent not found, insert!
         {:ok, useragent} = attrs |> changeset(%{}) |> Hits.Repo.insert()
 
-        IO.inspect(useragent, label: "INSERTED useragent:")
+        # IO.inspect(useragent, label: "INSERTED useragent:")
         useragent.id
 
       useragent ->
-        IO.inspect(useragent, label: "EXISTING useragent:")
+        # IO.inspect(useragent, label: "EXISTING useragent:")
         useragent.id
     end
   end

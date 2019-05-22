@@ -32,11 +32,11 @@ defmodule Hits.User do
       nil  ->  # User not found, insert!
         {:ok, user} = attrs |> changeset(%{}) |> Hits.Repo.insert()
 
-        IO.inspect(user, label: "INSERTED user:")
+        # IO.inspect(user, label: "INSERTED user:")
         user.id
 
       user ->
-        IO.inspect(user, label: "EXISTING user:")
+        # IO.inspect(user, label: "EXISTING user:")
         user.id
     end
   end

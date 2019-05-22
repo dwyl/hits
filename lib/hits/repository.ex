@@ -32,11 +32,11 @@ defmodule Hits.Repository do
       nil  ->  # repo not found, insert!
         {:ok, repo} = attrs |> changeset(%{}) |> Hits.Repo.insert()
 
-        IO.inspect(repo, label: "INSERTED repo:")
+        # IO.inspect(repo, label: "INSERTED repo:")
         repo.id
 
       repo ->
-        IO.inspect(repo, label: "EXISTING repo:")
+        # IO.inspect(repo, label: "EXISTING repo:")
         repo.id
     end
   end
