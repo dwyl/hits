@@ -4,11 +4,14 @@
 
 <div align="center">
 
-[![Build Status](https://img.shields.io/travis/dwyl/hits-phoenix/master.svg?style=flat-square)](https://travis-ci.org/dwyl/hits-phoenix)
-[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hits-phoenix/master.svg?style=flat-square)](http://codecov.io/github/dwyl/hits-phoenix?branch=master)
-[![Inline docs](http://inch-ci.org/github/dwyl/hits-phoenix.svg?style=flat-square)](http://inch-ci.org/github/dwyl/hits-phoenix)
-[![HitCount](http://hits.dwyl.io/dwyl/hits-phoenix.svg)](https://github.com/dwyl/hits-phoenix)
+[![Build Status](https://img.shields.io/travis/dwyl/hits/master.svg?style=flat-square)](https://travis-ci.org/dwyl/hits)
+[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hits/master.svg?style=flat-square)](http://codecov.io/github/dwyl/hits?branch=master)
+[![HitCount](http://hits.dwyl.io/dwyl/hits.svg)](https://github.com/dwyl/hits)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/hits/issues/74)
+
+<!-- Docs badge not working ... if you have time to help investigate, please do.
+[![Inline docs](http://inch-ci.org/github/dwyl/hits.svg?style=flat-square)](http://inch-ci.org/github/dwyl/hits)
+-->
 
 </div>
 
