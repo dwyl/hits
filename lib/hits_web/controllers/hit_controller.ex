@@ -39,7 +39,7 @@ defmodule HitsWeb.HitController do
     user_id = User.insert(%User{name: params["user"]})
 
     # strip ".svg" from repo name and insert:
-    repository = params["repository"] |> String.replace(".svg", "")
+    repository = params["repository"] |> String.split(".svg") |> List.first
     repository_attrs = %Repository{name: repository, user_id: user_id}
     repository_id = Repository.insert(repository_attrs)
 
