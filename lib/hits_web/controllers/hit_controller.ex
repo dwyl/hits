@@ -64,4 +64,27 @@ defmodule HitsWeb.HitController do
     |> put_resp_content_type("image/svg+xml")
     |> send_resp(200, Hits.make_badge(count))
   end
+
+
+  @doc """
+  edgecase/2 handles the case where people did not follow the instructions
+  for creating their badge ... 🙄  see: https://github.com/dwyl/hits/issues/67
+
+  ## Parameters
+
+  - conn: Map the standard Plug.Conn info see: hexdocs.pm/plug/Plug.Conn.html
+  - params: the url path params %{"etc", "user", "repository"}
+
+  Invokes the index function if ".svg" is present else returns "bad badge"
+  """
+  def edgecase(conn, %{"repository" => repository } = params) do
+    # note: we ignore the "etc" portion of the url which is usually
+    # just the person's username ... see: github.com/dwyl/hits/issues/67
+    if repository =~ ".svg" do
+      index(conn, params)
+    else
+      render(conn, "index.html", params)
+    end
+  end
+
 end

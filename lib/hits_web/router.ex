@@ -20,6 +20,7 @@ defmodule HitsWeb.Router do
     get "/", PageController, :index
 
     get "/:user/:repository", HitController, :index
+    get "/:etc/:user/:repository", HitController, :edgecase
   end
 
   # Other scopes may use custom stacks.
