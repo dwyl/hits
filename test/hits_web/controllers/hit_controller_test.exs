@@ -44,7 +44,15 @@ defmodule HitsWeb.HitControllerTest do
     # IO.inspect(res.resp_body, label: "res.body")
     assert res.resp_body =~ ~s(1)
   end
+  # edge case where the person forgets to request an .svg file!
+  test "GET /test/user/repo-no-svg", %{conn: conn} do
+    res = put_req_header(conn, "user-agent", "Hackintosh")
+     |> put_req_header("accept-language", "en-GB,en;q=0.5")
+     |> get("/test/user/repo-no-svg")
 
+    # IO.inspect(res.resp_body, label: "res.body")
+    assert res.resp_body =~ ~s(404)
+  end
 
 
 end

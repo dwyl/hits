@@ -82,8 +82,10 @@ defmodule HitsWeb.HitController do
     # just the person's username ... see: github.com/dwyl/hits/issues/67
     if repository =~ ".svg" do
       index(conn, params)
-    else
-      render(conn, "index.html", params)
+    else # we cannot help you so you get a 404!
+      conn
+      |> put_resp_content_type("image/svg+xml")
+      |> send_resp(404, Hits.make_badge(404))
     end
   end
 
