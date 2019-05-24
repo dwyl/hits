@@ -34,4 +34,17 @@ defmodule HitsWeb.HitControllerTest do
     # |> IO.inspect(label: "badge")
     assert badge =~ ~s(1)
   end
+
+  # URL edgecase github.com/dwyl/hits/issues/67#issuecomment-488970053
+  test "GET /hhyo/hhyo/Archery", %{conn: conn} do
+    res = put_req_header(conn, "user-agent", "Hackintosh")
+     |> put_req_header("accept-language", "en-GB,en;q=0.5")
+     |> get("/hhyo/hhyo/Archery.svg")
+
+    # IO.inspect(res.resp_body, label: "res.body")
+    assert res.resp_body =~ ~s(1)
+  end
+
+
+
 end
