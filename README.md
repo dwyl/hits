@@ -905,5 +905,3 @@ https://medium.com/@kansi/elixir-plug-unveiled-bf354e364641
 + Building a web framework from scratch in Elixir:
 https://codewords.recurse.com/issues/five/building-a-web-framework-from-scratch-in-elixir
 + Testing Plugs: https://robots.thoughtbot.com/testing-elixir-plugs
-
-+ [x] Add route for handling url edge cases for #67
