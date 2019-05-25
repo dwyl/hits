@@ -13,9 +13,8 @@ import "phoenix_html"
 
 console.log('hello!');
 // Import local files
-//
-// Local files can be imported directly using relative paths, for example:
-// import socket from "./socket"
+import socket from "./socket"
+
 // Get Markdown Template from HTML:
 var mt = document.getElementById('badge').innerHTML;
 
@@ -47,3 +46,34 @@ setTimeout(function () {
    }
   }
 }, 500);
+
+
+// Websockets! https://github.com/dwyl/hits/issues/79
+// var channel = socket.channel('hit:lobby', {}); // connect to Hits "room"
+// channel.join(); // join the channel.
+//
+// channel.on('shout', function (payload) { // listen to the 'shout' event
+//   console.log('shout', payload);
+//   // var li = document.createElement("li"); // creaet new list item DOM element
+//   // var name = payload.name || 'guest';    // get name from payload or set default
+//   // li.innerHTML = '<b>' + name + '</b>: ' + payload.message;
+//   // ul.appendChild(li);                    // append to list
+// });
+
+
+//
+// var ul = document.getElementById('msg-list');        // list of messages.
+// var name = document.getElementById('name');          // name of message sender
+// var msg = document.getElementById('msg');            // message input field
+
+// "listen" for the [Enter] keypress event to send a message:
+// msg.addEventListener('keypress', function (event) {
+//   console.log('keypress', event);
+//   // if (event.keyCode == 13 && msg.value.length > 0) { // don't sent empty msg.
+//   //   channel.push('shout', { // send the message to the server
+//   //     name: name.value,     // get value of "name" of person sending the message
+//   //     message: msg.value    // get message text (value) from msg input field.
+//   //   });
+//   //   msg.value = '';         // reset the message input field for next message.
+//   // }
+// });
