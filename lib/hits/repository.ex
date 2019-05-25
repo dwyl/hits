@@ -3,8 +3,8 @@ defmodule Hits.Repository do
   import Ecto.Changeset
 
   schema "repositories" do
-    field :name, :string
-    field :user_id, :id
+    field(:name, :string)
+    field(:user_id, :id)
 
     timestamps()
   end
@@ -26,10 +26,11 @@ defmodule Hits.Repository do
   returns Int user.id
   """
   def insert(attrs) do
-    # TODO: sanitise user string using github.com/dwyl/fields/issues/19
+    #  TODO: sanitise user string using github.com/dwyl/fields/issues/19
     # check if user exists
     case Hits.Repo.get_by(__MODULE__, name: attrs.name, user_id: attrs.user_id) do
-      nil  ->  # repo not found, insert!
+      # repo not found, insert!
+      nil ->
         {:ok, repo} = attrs |> changeset(%{}) |> Hits.Repo.insert()
 
         # IO.inspect(repo, label: "INSERTED repo:")

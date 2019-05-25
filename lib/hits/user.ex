@@ -3,7 +3,7 @@ defmodule Hits.User do
   import Ecto.Changeset
 
   schema "users" do
-    field :name, :string
+    field(:name, :string)
 
     timestamps()
   end
@@ -15,7 +15,6 @@ defmodule Hits.User do
     |> validate_required([:name])
   end
 
-
   @doc """
   insert/1 inserts and returns the user for the request.
 
@@ -26,10 +25,11 @@ defmodule Hits.User do
   returns Int user.id
   """
   def insert(attrs) do
-    # TODO: sanitise user string using github.com/dwyl/fields/issues/19
+    #  TODO: sanitise user string using github.com/dwyl/fields/issues/19
     # check if user exists
     case Hits.Repo.get_by(__MODULE__, name: attrs.name) do
-      nil  ->  # User not found, insert!
+      # User not found, insert!
+      nil ->
         {:ok, user} = attrs |> changeset(%{}) |> Hits.Repo.insert()
 
         # IO.inspect(user, label: "INSERTED user:")
@@ -40,6 +40,4 @@ defmodule Hits.User do
         user.id
     end
   end
-
-
 end

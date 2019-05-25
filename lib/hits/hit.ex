@@ -4,8 +4,8 @@ defmodule Hits.Hit do
   alias Hits.Repo
 
   schema "hits" do
-    field :repo_id, :id
-    field :useragent_id, :id
+    field(:repo_id, :id)
+    field(:useragent_id, :id)
 
     timestamps()
   end
@@ -21,7 +21,13 @@ defmodule Hits.Hit do
     # IO.inspect(attrs, label: "insert(attrs)")
     attrs |> changeset(%{}) |> Hits.Repo.insert()
     repository_id = attrs.repo_id
-    Repo.aggregate(from(h in __MODULE__, # see: github.com/dwyl/hits/issues/71
-      where: h.repo_id == ^repository_id), :count, :id)
+    # see: github.com/dwyl/hits/issues/71
+    Repo.aggregate(
+      from(h in __MODULE__,
+        where: h.repo_id == ^repository_id
+      ),
+      :count,
+      :id
+    )
   end
 end

@@ -6,5 +6,4 @@ defmodule HitsTest do
     # |> IO.inspect(label: "badge")
     assert badge =~ ~s(1)
   end
-
 end

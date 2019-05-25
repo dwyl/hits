@@ -16,5 +16,4 @@ defmodule UserTest do
     user_id2 = User.insert(attrs)
     assert user_id == user_id2
   end
-
 end
