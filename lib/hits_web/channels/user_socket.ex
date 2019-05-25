@@ -3,7 +3,7 @@ defmodule HitsWeb.UserSocket do
 
   ## Channels
   # channel "room:*", HitsWeb.RoomChannel
-
+  channel "hit:lobby", HitsWeb.HitChannel
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
   # verification, you can put default assigns into

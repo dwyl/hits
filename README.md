@@ -884,6 +884,27 @@ Open `test/hits_web/controllers/hit_controller_test.exs` in your editor.
 
 -->
 
+## Add Channel
+
+If you are new to Phoenix Channels, please recap:
+https://github.com/dwyl/phoenix-chat-example
+
+In your terminal, run the following command:
+```sh
+mix phx.gen.channel Hit
+```
+You should see the following output:
+
+```
+* creating lib/hits_web/channels/hit_channel.ex
+* creating test/hits_web/channels/hit_channel_test.exs
+
+Add the channel to your `lib/hits_web/channels/user_socket.ex` handler, for example:
+
+    channel "hit:lobby", HitsWeb.HitChannel
+```
+
+
 
 ## Research & Background Reading
 
