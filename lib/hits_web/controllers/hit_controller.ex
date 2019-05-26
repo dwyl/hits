@@ -8,6 +8,9 @@ defmodule HitsWeb.HitController do
     if repository =~ ".svg" do
       # insert hit
       count = insert_hit(conn, params)
+      # send hit to connected clients via channel (websocket)
+      HitsWeb.Endpoint.broadcast("hits:lobby", "hit",
+        %{"user" => "Alex", "body" => "Testing"})
       # render badge
       render_badge(conn, count)
     else
