@@ -26,4 +26,6 @@ defmodule HitsWeb.HitChannel do
   defp authorized?(_payload) do
     true
   end
+
+
 end

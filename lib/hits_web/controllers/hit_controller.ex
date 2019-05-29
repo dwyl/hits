@@ -1,5 +1,6 @@
 defmodule HitsWeb.HitController do
   use HitsWeb, :controller
+  # use Phoenix.Channel
   # import Ecto.Query
   alias Hits.{Hit, Repository, User, Useragent}
 
@@ -9,8 +10,11 @@ defmodule HitsWeb.HitController do
       # insert hit
       count = insert_hit(conn, params)
       # send hit to connected clients via channel (websocket)
-      HitsWeb.Endpoint.broadcast("hits:lobby", "hit",
+      IO.inspect("START - - - - - - - - - - ")
+      HitsWeb.Endpoint.broadcast("hit:lobby", "hit",
         %{"user" => "Alex", "body" => "Testing"})
+        |> IO.inspect()
+      IO.inspect(" - - - - - - - - - - - - - - - END")
       # render badge
       render_badge(conn, count)
     else
