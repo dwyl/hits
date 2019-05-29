@@ -29,7 +29,8 @@ defmodule Hits do
   """
   def make_badge(count \\ 1) do
     String.replace(svg_badge_template(), ~r/{count}/, to_string(count))
-    |> String.replace(~r/<!--(.*?)-->/, "") # stackoverflow.com/a/1084759
+    # stackoverflow.com/a/1084759
+    |> String.replace(~r/<!--(.*?)-->/, "")
   end
 
   @doc """
@@ -45,12 +46,14 @@ defmodule Hits do
   Returns String with user-agent
   """
   def get_user_agent_string(conn) do
-    # TODO: sanitise useragent string https://github.com/dwyl/fields/issues/19
+    #  TODO: sanitise useragent string https://github.com/dwyl/fields/issues/19
     # extract user-agent from conn.req_headers:
-    [{_, ua}] = Enum.filter(conn.req_headers, fn {k, _} ->
-      k == "user-agent" end)
+    [{_, ua}] =
+      Enum.filter(conn.req_headers, fn {k, _} ->
+        k == "user-agent"
+      end)
+
     # IO.inspect(ua, label: "ua")
     ua
   end
-
 end

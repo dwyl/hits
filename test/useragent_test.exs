@@ -18,5 +18,4 @@ defmodule UseragentTest do
     agent_id_2 = Useragent.insert(attrs)
     assert useragent_id == agent_id_2
   end
-
 end

@@ -3,14 +3,13 @@ defmodule HitsWeb.HitController do
   # import Ecto.Query
   alias Hits.{Hit, Repository, User, Useragent}
 
-  def index(conn, %{"repository" => repository } = params) do
+  def index(conn, %{"repository" => repository} = params) do
     # IO.inspect(params, label: "params")
     if repository =~ ".svg" do
       # insert hit
       count = insert_hit(conn, params)
       # render badge
       render_badge(conn, count)
-
     else
       render(conn, "index.html", params)
     end
@@ -39,7 +38,7 @@ defmodule HitsWeb.HitController do
     user_id = User.insert(%User{name: params["user"]})
 
     # strip ".svg" from repo name and insert:
-    repository = params["repository"] |> String.replace(".svg", "")
+    repository = params["repository"] |> String.split(".svg") |> List.first()
     repository_attrs = %Repository{name: repository, user_id: user_id}
     repository_id = Repository.insert(repository_attrs)
 
@@ -47,7 +46,6 @@ defmodule HitsWeb.HitController do
     hit_attrs = %Hit{repo_id: repository_id, useragent_id: useragent_id}
     Hit.insert(hit_attrs)
   end
-
 
   @doc """
   render_badge/2 renders the badge for the url requested in conn
@@ -63,5 +61,29 @@ defmodule HitsWeb.HitController do
     conn
     |> put_resp_content_type("image/svg+xml")
     |> send_resp(200, Hits.make_badge(count))
+  end
+
+  @doc """
+  edgecase/2 handles the case where people did not follow the instructions
+  for creating their badge ... 🙄  see: https://github.com/dwyl/hits/issues/67
+
+  ## Parameters
+
+  - conn: Map the standard Plug.Conn info see: hexdocs.pm/plug/Plug.Conn.html
+  - params: the url path params %{"etc", "user", "repository"}
+
+  Invokes the index function if ".svg" is present else returns "bad badge"
+  """
+  def edgecase(conn, %{"repository" => repository} = params) do
+    # note: we ignore the "etc" portion of the url which is usually
+    # just the person's username ... see: github.com/dwyl/hits/issues/67
+    # we cannot help you so you get a 404!
+    if repository =~ ".svg" do
+      index(conn, params)
+    else
+      conn
+      |> put_resp_content_type("image/svg+xml")
+      |> send_resp(404, Hits.make_badge(404))
+    end
   end
 end

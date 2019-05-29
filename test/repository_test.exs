@@ -17,5 +17,4 @@ defmodule RepoTest do
     repo_id2 = Repository.insert(attrs)
     assert repo_id == repo_id2
   end
-
 end

@@ -8,7 +8,4 @@ defmodule CoverageTest do
   test "invoke config_change (dummy) function" do
     assert Hits.Application.config_change("hello", "world", "!") == :ok
   end
-
-
-
 end

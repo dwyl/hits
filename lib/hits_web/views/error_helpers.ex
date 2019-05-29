@@ -3,7 +3,7 @@ defmodule HitsWeb.ErrorHelpers do
   Conveniences for translating and building error messages.
   """
 
-  # not using Phoenix HTML forms (yet) so commenting this out for now ...
+  #  not using Phoenix HTML forms (yet) so commenting this out for now ...
   # use Phoenix.HTML
   #
   # @doc """
