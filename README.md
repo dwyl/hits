@@ -904,6 +904,9 @@ Add the channel to your `lib/hits_web/channels/user_socket.ex` handler, for exam
     channel "hit:lobby", HitsWeb.HitChannel
 ```
 
+> If you want to see the code required
+to render the hits on the homepage in realtime,
+please see: https://github.com/dwyl/hits/pull/80/files
 
 
 ## Research & Background Reading
