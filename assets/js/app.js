@@ -47,33 +47,36 @@ setTimeout(function () {
   }
 }, 500);
 
+// Now that you are connected, you can join channels with a topic:
+let channel = socket.channel("hit:lobby", {})
+channel.join()
+  .receive("ok", resp => { console.log("Joined successfully", resp) })
+  .receive("error", resp => { console.log("Unable to join", resp) })
 
-// Websockets! https://github.com/dwyl/hits/issues/79
-// var channel = socket.channel('hit:lobby', {}); // connect to Hits "room"
-// channel.join(); // join the channel.
-//
-// channel.on('shout', function (payload) { // listen to the 'shout' event
-//   console.log('shout', payload);
-//   // var li = document.createElement("li"); // creaet new list item DOM element
-//   // var name = payload.name || 'guest';    // get name from payload or set default
-//   // li.innerHTML = '<b>' + name + '</b>: ' + payload.message;
-//   // ul.appendChild(li);                    // append to list
-// });
+channel.on('hit', function (payload) { // listen to the 'shout' event
+  console.log('hit', payload);
+  append_hit(payload);
+  // var li = document.createElement("li"); // creaet new list item DOM element
+  // var name = payload.name || 'guest';    // get name from payload or set default
+  // li.innerHTML = '<b>' + name + '</b>: ' + payload.message;
+  // ul.appendChild(li);                    // append to list
+});
 
+const root = document.getElementById("hits");
+function append_hit (data) {
+  const previous = root.childNodes[0];
+  const DATE = new Date();
+  const date = Date.now();
+  const time = DATE.toUTCString().replace('GMT', '');
+  const text = time + ' /' + data.user + '/' + data.repo + ' ' + data.count
+  root.insertBefore(div(date, text), previous);
+}
 
-//
-// var ul = document.getElementById('msg-list');        // list of messages.
-// var name = document.getElementById('name');          // name of message sender
-// var msg = document.getElementById('msg');            // message input field
-
-// "listen" for the [Enter] keypress event to send a message:
-// msg.addEventListener('keypress', function (event) {
-//   console.log('keypress', event);
-//   // if (event.keyCode == 13 && msg.value.length > 0) { // don't sent empty msg.
-//   //   channel.push('shout', { // send the message to the server
-//   //     name: name.value,     // get value of "name" of person sending the message
-//   //     message: msg.value    // get message text (value) from msg input field.
-//   //   });
-//   //   msg.value = '';         // reset the message input field for next message.
-//   // }
-// });
+// borrowed from: https://git.io/v536m
+function div(divid, text) {
+  let div = document.createElement('div');
+  div.id = divid;
+  const txt = document.createTextNode(text);
+  div.appendChild(txt);
+  return div;
+}
