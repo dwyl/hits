@@ -9,12 +9,6 @@ defmodule HitsWeb.HitController do
     if repository =~ ".svg" do
       # insert hit
       count = insert_hit(conn, params)
-      # send hit to connected clients via channel (websocket)
-      IO.inspect("START - - - - - - - - - - ")
-      HitsWeb.Endpoint.broadcast("hit:lobby", "hit",
-        %{"user" => "Alex", "body" => "Testing"})
-        |> IO.inspect()
-      IO.inspect(" - - - - - - - - - - - - - - - END")
       # render badge
       render_badge(conn, count)
     else
@@ -37,21 +31,32 @@ defmodule HitsWeb.HitController do
 
     # remote_ip comes in as a Tuple {192, 168, 1, 42} >> 192.168.1.42 (dot quad)
     ip = Enum.join(Tuple.to_list(conn.remote_ip), ".")
+    # TODO: perform IP Geolocation lookup here so we can insert lat/lon for map!
 
     # insert the useragent:
     useragent_id = Useragent.insert(%Useragent{name: useragent, ip: ip})
 
+    #
+    username = params["user"]
     # insert the user:
-    user_id = User.insert(%User{name: params["user"]})
+    user_id = User.insert(%User{name: username})
 
     # strip ".svg" from repo name and insert:
     repository = params["repository"] |> String.split(".svg") |> List.first()
+
     repository_attrs = %Repository{name: repository, user_id: user_id}
     repository_id = Repository.insert(repository_attrs)
 
     # insert the hit record:
     hit_attrs = %Hit{repo_id: repository_id, useragent_id: useragent_id}
-    Hit.insert(hit_attrs)
+    count = Hit.insert(hit_attrs)
+
+    # send hit to connected clients via channel (websocket)
+    HitsWeb.Endpoint.broadcast("hit:lobby", "hit",
+      %{"user" => username, "repo" => repository, "count" => count})
+
+    # return the count for the badge:
+    count
   end
 
   @doc """

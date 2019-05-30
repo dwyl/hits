@@ -54,7 +54,7 @@
 </p>
 
 <h2 class="mt0 fw5 tc f4 bg-teal white pa2 mt5"><em>Recently</em> Viewed Projects (<em>tracked by Hits</em>)</h2>
-<div class="h5 pl2" id='hits'>
+<div class="h5 pl2" id="hits">
   <div style="display:none">Dummy Child Node for insertBefore to work</div>
 </div>
 
