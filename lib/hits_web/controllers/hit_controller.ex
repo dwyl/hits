@@ -36,7 +36,7 @@ defmodule HitsWeb.HitController do
     # insert the useragent:
     useragent_id = Useragent.insert(%Useragent{name: useragent, ip: ip})
 
-    #
+    # extract GitHub username from params so it can be saved & sent via channel:
     username = params["user"]
     # insert the user:
     user_id = User.insert(%User{name: username})
@@ -51,7 +51,7 @@ defmodule HitsWeb.HitController do
     hit_attrs = %Hit{repo_id: repository_id, useragent_id: useragent_id}
     count = Hit.insert(hit_attrs)
 
-    # send hit to connected clients via channel (websocket)
+    # Send hit to connected clients via channel github.com/dwyl/hits/issues/79
     HitsWeb.Endpoint.broadcast("hit:lobby", "hit",
       %{"user" => username, "repo" => repository, "count" => count})
 
