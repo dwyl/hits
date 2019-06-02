@@ -884,6 +884,30 @@ Open `test/hits_web/controllers/hit_controller_test.exs` in your editor.
 
 -->
 
+## Add Channel
+
+If you are new to Phoenix Channels, please recap:
+https://github.com/dwyl/phoenix-chat-example
+
+In your terminal, run the following command:
+```sh
+mix phx.gen.channel Hit
+```
+You should see the following output:
+
+```
+* creating lib/hits_web/channels/hit_channel.ex
+* creating test/hits_web/channels/hit_channel_test.exs
+
+Add the channel to your `lib/hits_web/channels/user_socket.ex` handler, for example:
+
+    channel "hit:lobby", HitsWeb.HitChannel
+```
+
+> If you want to see the code required
+to render the hits on the homepage in realtime,
+please see: https://github.com/dwyl/hits/pull/80/files
+
 
 ## Research & Background Reading
 
@@ -905,3 +929,5 @@ https://medium.com/@kansi/elixir-plug-unveiled-bf354e364641
 + Building a web framework from scratch in Elixir:
 https://codewords.recurse.com/issues/five/building-a-web-framework-from-scratch-in-elixir
 + Testing Plugs: https://robots.thoughtbot.com/testing-elixir-plugs
++ How to broadcast a message from a Phoenix Controller to a Channel?
+https://stackoverflow.com/questions/33960207/how-to-broadcast-a-message-from-a-phoenix-controller-to-a-channel
