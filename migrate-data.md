@@ -25,7 +25,7 @@ https://unix.stackexchange.com/questions/93139/zip-an-entire-folder-using-gzip
 
 ```sh
 cd hits
-tar -zcvf data.tar.gz logs/
+tar -zcvf logs.tar.gz logs/
 ```
 
 + [x] download the data archive to `localhost`
@@ -42,8 +42,27 @@ scp root@178.79.141.232:hits/logs.tar.gz ./logs.tar.gz
 tar -zxvf logs.tar.gz
 ```
 
-+ [ ] write the script
+> Note: the zip function was not working,
+so I decided to attempt a remote copy:
+
+```sh
+scp -r root@185.3.95.195:/root/hits/logs /Users/n/code/hits/logs
+```
+
+see:
+https://stackoverflow.com/questions/11304895/copy-remote-folder-to-local-using-scp
+
+
++ [x] write the script
   + [ ] insert data into `hits_dev` PostgreSQL on `localhost`
+
+Path.wildcard("logs/*.log")
+
 + [ ] run the script
+
+```sh
+MIX_ENV=dev mix run priv/migrate-data.exs
+```
 + [ ] export the data from `hits_dev` PostgreSQL on `localhost`
+
 + [ ] load the data on the remote server
