@@ -52,8 +52,11 @@ defmodule HitsWeb.HitController do
     count = Hit.insert(hit_attrs)
 
     # Send hit to connected clients via channel github.com/dwyl/hits/issues/79
-    HitsWeb.Endpoint.broadcast("hit:lobby", "hit",
-      %{"user" => username, "repo" => repository, "count" => count})
+    HitsWeb.Endpoint.broadcast("hit:lobby", "hit", %{
+      "user" => username,
+      "repo" => repository,
+      "count" => count
+    })
 
     # return the count for the badge:
     count

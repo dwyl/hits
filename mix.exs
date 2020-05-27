@@ -5,7 +5,7 @@ defmodule Hits.MixProject do
     [
       app: :hits,
       version: "0.1.0",
-      elixir: "~> 1.5",
+      elixir: "~> 1.10.3",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -40,24 +40,24 @@ defmodule Hits.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.4.4"},
-      {:phoenix_pubsub, "~> 1.1"},
-      {:phoenix_ecto, "~> 4.0"},
-      {:ecto_sql, "~> 3.0"},
+      {:phoenix, "~> 1.5.1"},
+      {:phoenix_pubsub, "~> 2.0"},
+      {:phoenix_ecto, "~> 4.1.0"},
+      {:ecto_sql, "~> 3.4.4"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 2.11"},
+      {:phoenix_html, "~> 2.14"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:gettext, "~> 0.11"},
-      {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"},
+      {:gettext, "~> 0.18"},
+      {:jason, "~> 1.2.1"},
+      {:plug_cowboy, "~> 2.2.1"},
 
       # The rest of the dependendencies are for testing/reporting
       # decode .json fixture in test
-      {:poison, "~> 3.1.0"},
+      {:poison, "~> 4.0"},
       # tracking test coverage
-      {:excoveralls, "~> 0.7.0", only: [:test, :dev]},
+      {:excoveralls, "~> 0.13.0", only: [:test, :dev]},
       # to generate documentation
-      {:ex_doc, "~> 0.16.3", only: [:dev, :docs]},
+      {:ex_doc, "~> 0.22.1", only: [:dev, :docs]},
       {:inch_ex, "~> 2.0.0", only: :docs}
     ]
   end
