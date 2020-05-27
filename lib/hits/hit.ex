@@ -18,7 +18,6 @@ defmodule Hits.Hit do
   end
 
   def insert(attrs) do
-    # IO.inspect(attrs, label: "insert(attrs)")
     attrs |> changeset(%{}) |> Hits.Repo.insert()
     repository_id = attrs.repo_id
     # see: github.com/dwyl/hits/issues/71

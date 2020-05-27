@@ -5,7 +5,6 @@ defmodule HitsWeb.HitController do
   alias Hits.{Hit, Repository, User, Useragent}
 
   def index(conn, %{"repository" => repository} = params) do
-    # IO.inspect(params, label: "params")
     if repository =~ ".svg" do
       # insert hit
       count = insert_hit(conn, params)

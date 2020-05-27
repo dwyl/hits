@@ -8,7 +8,6 @@ defmodule HitsWeb.HitControllerTest do
       |> put_req_header("accept-language", "en-GB,en;q=0.5")
       |> get("/totes/amaze.svg")
 
-    # IO.inspect(res.resp_body, label: "res.body")
     assert res.resp_body =~ ~s(1)
   end
 
@@ -18,7 +17,6 @@ defmodule HitsWeb.HitControllerTest do
       |> put_req_header("accept-language", "en-GB,en;q=0.5")
       |> get("/totes/amaze.svg")
 
-    # IO.inspect(res.resp_body, label: "res.body")
     assert res.resp_body =~ ~s(2)
   end
 
@@ -28,13 +26,11 @@ defmodule HitsWeb.HitControllerTest do
       |> put_req_header("accept-language", "en-GB,en;q=0.5")
       |> get("/org/dashboard")
 
-    # IO.inspect(res.resp_body, label: "res.body")
     assert res.resp_body =~ ~s(Graphical dashboard coming soon!)
   end
 
   test "make_badge with default count 1" do
     badge = Hits.make_badge()
-    # |> IO.inspect(label: "badge")
     assert badge =~ ~s(1)
   end
 
@@ -45,7 +41,6 @@ defmodule HitsWeb.HitControllerTest do
       |> put_req_header("accept-language", "en-GB,en;q=0.5")
       |> get("/hhyo/hhyo/Archery.svg")
 
-    # IO.inspect(res.resp_body, label: "res.body")
     assert res.resp_body =~ ~s(1)
   end
 
@@ -56,7 +51,6 @@ defmodule HitsWeb.HitControllerTest do
       |> put_req_header("accept-language", "en-GB,en;q=0.5")
       |> get("/test/user/repo-no-svg")
 
-    # IO.inspect(res.resp_body, label: "res.body")
     assert res.resp_body =~ ~s(404)
   end
 end
