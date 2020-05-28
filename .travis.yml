@@ -1,20 +1,23 @@
 language: elixir
 elixir:
-  - 1.8
-addons: # ensure that Travis-CI provisions a DB for our test:
-  postgresql: '9.5'
+  - 1.10.3
+otp_release:
+  - 22.1.8
+services:
+  - postgresql
 env:
   - MIX_ENV=test
+before_script:
+  - mix ecto.setup
 script:
-  - mix deps.get
-  - mix compile
-  - mix test
-  - mix cover
+  - mix do deps.get, coveralls.json
+# See: github.com/dwyl/repo-badges#documentation
+after_script:
+  - MIX_ENV=docs mix deps.get
+  - MIX_ENV=docs mix inch.report
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-  # - mix deps.get --only docs
-  # - MIX_ENV=docs mix inch.report
 cache:
   directories:
-    - _build
-    - deps
+  - _build
+  - deps

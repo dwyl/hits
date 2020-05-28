@@ -10,6 +10,7 @@ defmodule Hits.Application do
     children = [
       # Start the Ecto repository
       Hits.Repo,
+      {Phoenix.PubSub, name: Hits.PubSub},
       # Start the endpoint when the application starts
       HitsWeb.Endpoint
       # Starts a worker by calling: Hits.Worker.start_link(arg)

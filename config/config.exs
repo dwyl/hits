@@ -15,7 +15,7 @@ config :hits, HitsWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "HIj/88e7R4rzPELEk+0prDvPCVKZqNMsfJAdNxvV555++5GkfPjqxAoiqAmhI9a7",
   render_errors: [view: HitsWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Hits.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub_server: Hits.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,

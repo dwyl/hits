@@ -53,7 +53,6 @@ defmodule Hits do
         k == "user-agent"
       end)
 
-    # IO.inspect(ua, label: "ua")
     ua
   end
 end
