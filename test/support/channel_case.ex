@@ -19,6 +19,7 @@ defmodule HitsWeb.ChannelCase do
     quote do
       # Import conveniences for testing with channels
       import Phoenix.ChannelTest
+
       # The default endpoint for testing
       @endpoint HitsWeb.Endpoint
     end

@@ -15,6 +15,7 @@ defmodule Hits.Application do
       HitsWeb.Endpoint
       # Starts a worker by calling: Hits.Worker.start_link(arg)
       # {Hits.Worker, arg},
+
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
