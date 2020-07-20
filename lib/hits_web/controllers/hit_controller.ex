@@ -5,7 +5,6 @@ defmodule HitsWeb.HitController do
   alias Hits.{Hit, Repository, User, Useragent}
 
   def index(conn, %{"repository" => repository} = params) do
-    # IO.inspect(params, label: "params")
     if repository =~ ".svg" do
       # insert hit
       count = insert_hit(conn, params)
@@ -52,8 +51,11 @@ defmodule HitsWeb.HitController do
     count = Hit.insert(hit_attrs)
 
     # Send hit to connected clients via channel github.com/dwyl/hits/issues/79
-    HitsWeb.Endpoint.broadcast("hit:lobby", "hit",
-      %{"user" => username, "repo" => repository, "count" => count})
+    HitsWeb.Endpoint.broadcast("hit:lobby", "hit", %{
+      "user" => username,
+      "repo" => repository,
+      "count" => count
+    })
 
     # return the count for the badge:
     count

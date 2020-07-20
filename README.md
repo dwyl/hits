@@ -6,7 +6,7 @@
 
 [![Build Status](https://img.shields.io/travis/dwyl/hits/master.svg?style=flat-square)](https://travis-ci.org/dwyl/hits)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hits/master.svg?style=flat-square)](http://codecov.io/github/dwyl/hits?branch=master)
-[![HitCount](http://hits.dwyl.io/dwyl/hits.svg)](https://github.com/dwyl/hits)
+[![HitCount](http://hits.dwyl.com/dwyl/hits.svg)](https://github.com/dwyl/hits)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/hits/issues/74)
 
 <!-- Docs badge not working ... if you have time to help investigate, please do.
@@ -109,7 +109,7 @@ how it's implemented.
 
 > If you simply want to display a "hit count badge"
 in your project's GitHub page, visit:
-http://hits.dwyl.io
+http://hits.dwyl.com
 to get the Markdown!
 
 
@@ -487,8 +487,8 @@ with the markup relevant to the Hits homepage:
 ```html
 <h2 class="bg-teal white h-25 tc ttu f1 lh-title lh-solid mt0 pa2 pb3 mb0 pb0">
   Hits!
-  <a href="http://hits.dwyl.io/" >
-    <img src="http://hits.dwyl.io/dwyl/homepage.svg" alt="Hit Count" class="pa0 ba bw1 b--white">
+  <a href="http://hits.dwyl.com/" >
+    <img src="http://hits.dwyl.com/dwyl/homepage.svg" alt="Hit Count" class="pa0 ba bw1 b--white">
   </a>
 </h2>
 <h4 class="mt0 tc fw5 f5 teal pa2 mb0">
@@ -525,7 +525,7 @@ with the markup relevant to the Hits homepage:
 
 <h3 class="mt3 fw5 tc db f3 bg-teal white pa2">Your Badge <em>Markdown:</em></h3>
 <pre id="badge" class="fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
-  [![HitCount](http://hits.dwyl.io/{username}/{repo}.svg)](http://hits.dwyl.io/{username}/{repo})
+  [![HitCount](http://hits.dwyl.com/{username}/{repo}.svg)](http://hits.dwyl.com/{username}/{repo})
 </pre>
 
 <p class="pl2" id="nojs">

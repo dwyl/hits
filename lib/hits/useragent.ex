@@ -32,11 +32,9 @@ defmodule Hits.Useragent do
       nil ->
         {:ok, useragent} = attrs |> changeset(%{}) |> Hits.Repo.insert()
 
-        # IO.inspect(useragent, label: "INSERTED useragent:")
         useragent.id
 
       useragent ->
-        # IO.inspect(useragent, label: "EXISTING useragent:")
         useragent.id
     end
   end

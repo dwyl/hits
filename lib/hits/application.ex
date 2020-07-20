@@ -10,6 +10,7 @@ defmodule Hits.Application do
     children = [
       # Start the Ecto repository
       Hits.Repo,
+      {Phoenix.PubSub, name: Hits.PubSub},
       # Start the endpoint when the application starts
       {Phoenix.PubSub, name: Hits.PubSub},
       HitsWeb.Endpoint
