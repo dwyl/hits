@@ -1,6 +1,9 @@
+dist: bionic
 language: elixir
 elixir:
   - 1.10
+otp_release:
+  - 23.0
 env:
   - MIX_ENV=test
 script:
