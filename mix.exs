@@ -5,7 +5,7 @@ defmodule Hits.MixProject do
     [
       app: :hits,
       version: "0.1.0",
-      elixir: "~> 1.10",
+      elixir: "~> 1.10.3",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -47,17 +47,18 @@ defmodule Hits.MixProject do
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4.5"},
       {:postgrex, ">= 0.15.0"},
-      {:phoenix_html, "~> 2.13"},
+      {:phoenix_html, "~> 2.14"},
       {:phoenix_live_reload, "~> 1.2.4", only: :dev},
-      {:gettext, "~> 0.11"},
-      {:jason, "~> 1.0"},
+      {:gettext, "~> 0.18"},
+      {:jason, "~> 1.2.1"},
       {:plug_cowboy, "~> 2.3"},
 
       # The rest of the dependendencies are for testing/reporting
       # decode .json fixture in test
       {:poison, "~> 4.0.1"},
+
       # tracking test coverage
-      {:excoveralls, "~> 0.7.0", only: [:test, :dev]},
+      {:excoveralls, "~> 0.13.0", only: [:test, :dev]},
       # to generate documentation
       {:ex_doc, "~> 0.22.1", only: [:dev, :docs]},
       {:inch_ex, "~> 2.0.0", only: :docs}
