@@ -12,7 +12,6 @@ defmodule Hits.Application do
       Hits.Repo,
       {Phoenix.PubSub, name: Hits.PubSub},
       # Start the endpoint when the application starts
-      {Phoenix.PubSub, name: Hits.PubSub},
       HitsWeb.Endpoint
       # Starts a worker by calling: Hits.Worker.start_link(arg)
       # {Hits.Worker, arg},
