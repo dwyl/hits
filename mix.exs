@@ -17,7 +17,9 @@ defmodule Hits.MixProject do
         "coveralls.detail": :test,
         "coveralls.post": :test,
         "coveralls.html": :test
-      ]
+      ],
+      package: package(),
+      description: "Track page views on any GitHub page"
     ]
   end
 
@@ -40,20 +42,20 @@ defmodule Hits.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.1"},
+      {:phoenix, "~> 1.5.3"},
       {:phoenix_pubsub, "~> 2.0"},
-      {:phoenix_ecto, "~> 4.1.0"},
-      {:ecto_sql, "~> 3.4.4"},
-      {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 2.14"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:gettext, "~> 0.18"},
-      {:jason, "~> 1.2.1"},
-      {:plug_cowboy, "~> 2.2.1"},
+      {:phoenix_ecto, "~> 4.1"},
+      {:ecto_sql, "~> 3.4.5"},
+      {:postgrex, ">= 0.15.0"},
+      {:phoenix_html, "~> 2.13"},
+      {:phoenix_live_reload, "~> 1.2.4", only: :dev},
+      {:gettext, "~> 0.11"},
+      {:jason, "~> 1.0"},
+      {:plug_cowboy, "~> 2.3"},
 
       # The rest of the dependendencies are for testing/reporting
       # decode .json fixture in test
-      {:poison, "~> 4.0"},
+      {:poison, "~> 4.0.1"},
       # tracking test coverage
       {:excoveralls, "~> 0.13.0", only: [:test, :dev]},
       # to generate documentation
@@ -75,6 +77,16 @@ defmodule Hits.MixProject do
       test: ["ecto.create --quiet", "ecto.migrate", "test"],
       cover: ["coveralls.json"],
       "cover.html": ["coveralls.html"]
+    ]
+  end
+
+  defp package() do
+    [
+      files: ~w(lib/ LICENSE mix.exs README.md),
+      name: "hits",
+      licenses: ["GNU GPL v2.0"],
+      maintainers: ["dwyl"],
+      links: %{"GitHub" => "https://github.com/dwyl/hits"}
     ]
   end
 end
