@@ -840,7 +840,7 @@ We created the SVG badge template for our MVP
 and it still serves our needs
 so there's no need to change it.
 
-Create a new file `lib/hits_web/templates/hit/badge.svg`
+Create a new file `lib/hits_web/templates/hit/badge_flat_square.svg`
 and paste the following SVG code in it:
 
 ```svg
