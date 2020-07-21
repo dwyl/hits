@@ -39,7 +39,7 @@ defmodule Hits do
 
   Returns the badge XML with the count.
   """
-  def make_badge(count \\ 1, style) do
+  def make_badge(count \\ 1, style \\ "") do
     case style do
       "flat" ->
         String.replace(svg_badge_flat_template(), ~r/{count}/, to_string(count))
