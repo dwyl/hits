@@ -520,12 +520,23 @@ with the markup relevant to the Hits homepage:
         id="repo" name="repo" placeholder="repo/project" maxlength="100">
       </td>
     </tr>
+    <tr class="">
+      <td class="pv2 ph3 w-40">
+        Choose a style for your badge:
+      </td>
+      <td class="pv2 ph3 w-40">
+    <select id="styles">
+      <option value="flat-square" selected>Flat Square</option>
+      <option value="flat">Flat</option>
+    </select>
+      </td>
+    </tr>
   </table>
 </div>
 
 <h3 class="mt3 fw5 tc db f3 bg-teal white pa2">Your Badge <em>Markdown:</em></h3>
 <pre id="badge" class="fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
-  [![HitCount](http://hits.dwyl.com/{username}/{repo}.svg)](http://hits.dwyl.com/{username}/{repo})
+  [![HitCount](http://hits.dwyl.com/{username}/{repo}.svg?style={style})](http://hits.dwyl.com/{username}/{repo})
 </pre>
 
 <p class="pl2" id="nojs">
@@ -591,10 +602,11 @@ var mt = document.getElementById('badge').innerHTML;
 function generate_markdown () {
   var user = document.getElementById("username").value || '{username}';
   var repo = document.getElementById("repo").value || '{project}';
+  var style = document.getElementById("styles").value || '{style}';
   // console.log('user: ', user, 'repo: ', repo);
   user = user.replace(/[.*+?^$<>()|[\]\\]/g, ''); // trim and escape
   repo = repo.replace(/[.*+?^$<>()|[\]\\]/g, '');
-  return mt.replace(/{username}/g, user).replace(/{repo}/g, repo);
+  return mt.replace(/{username}/g, user).replace(/{repo}/g, repo).replace(/{style}/g, style);
 }
 
 function display_badge_markdown () {
@@ -603,15 +615,23 @@ function display_badge_markdown () {
 }
 
 setTimeout(function () {
+  var how = document.getElementById("how");
   // show form if JS available (progressive enhancement)
-  document.getElementById("how").classList.remove('dn');
-  document.getElementById("nojs").classList.add('dn');
-  display_badge_markdown(); // render initial markdown template
-  var get = document.getElementsByTagName('input');
- for (var i = 0; i < get.length; i++) {
-     get[i].addEventListener('keyup', display_badge_markdown, false);
-     get[i].addEventListener('keyup', display_badge_markdown, false);
- }
+  if(how) {
+    document.getElementById("how").classList.remove('dn');
+    document.getElementById("nojs").classList.add('dn');
+    display_badge_markdown(); // render initial markdown template
+    var get = document.getElementsByTagName('input');
+   for (var i = 0; i < get.length; i++) {
+       get[i].addEventListener('keyup', display_badge_markdown, false);
+       get[i].addEventListener('keyup', display_badge_markdown, false);
+   }
+
+    // changing markdown preview whenever an option is selected
+    document.getElementById("styles").onchange = function(e) {
+      display_badge_markdown()
+    }
+  }
 }, 500);
 ```
 
