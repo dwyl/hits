@@ -33,12 +33,23 @@
         id="repo" name="repo" placeholder="repo/project" maxlength="100">
       </td>
     </tr>
+    <tr class="">
+      <td class="pv2 ph3 w-40">
+        Choose a style for your badge:
+      </td>
+      <td class="pv2 ph3 w-40">
+    <select id="styles">
+      <option value="flat-square" selected>Flat Square</option>
+      <option value="flat">Flat</option>
+    </select>
+      </td>
+    </tr>
   </table>
 </div>
 
 <h3 class="mt3 fw5 tc db f3 bg-teal white pa2">Your Badge <em>Markdown:</em></h3>
 <pre id="badge" class="fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
-  [![HitCount](http://hits.dwyl.com/{username}/{repo}.svg)](http://hits.dwyl.com/{username}/{repo})
+  [![HitCount](http://hits.dwyl.com/{username}/{repo}.svg?style={style})](http://hits.dwyl.com/{username}/{repo})
 </pre>
 
 <p class="pl2" id="nojs">

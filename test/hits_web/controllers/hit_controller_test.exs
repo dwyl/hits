@@ -29,9 +29,9 @@ defmodule HitsWeb.HitControllerTest do
     assert res.resp_body =~ ~s(Graphical dashboard coming soon!)
   end
 
-  test "make_badge with default count 1" do
+  test "make_badge with default count 1 and style flat-square" do
     badge = Hits.make_badge()
-    assert badge =~ ~s(1)
+    assert badge =~ ~s(flat-square)
   end
 
   # URL edgecase github.com/dwyl/hits/issues/67#issuecomment-488970053

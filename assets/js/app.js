@@ -21,10 +21,11 @@ var mt = document.getElementById('badge').innerHTML;
 function generate_markdown () {
   var user = document.getElementById("username").value || '{username}';
   var repo = document.getElementById("repo").value || '{project}';
+  var style = document.getElementById("styles").value || '{style}';
   // console.log('user: ', user, 'repo: ', repo);
   user = user.replace(/[.*+?^$<>()|[\]\\]/g, '');
   repo = repo.replace(/[.*+?^$<>()|[\]\\]/g, '');
-  return mt.replace(/{username}/g, user).replace(/{repo}/g, repo);
+  return mt.replace(/{username}/g, user).replace(/{repo}/g, repo).replace(/{style}/g, style);
 }
 
 function display_badge_markdown () {
@@ -44,6 +45,11 @@ setTimeout(function () {
        get[i].addEventListener('keyup', display_badge_markdown, false);
        get[i].addEventListener('keyup', display_badge_markdown, false);
    }
+
+    // changing markdown preview whenever an option is selected
+    document.getElementById("styles").onchange = function(e) {
+      display_badge_markdown()
+    }
   }
 }, 500);
 
