@@ -1,4 +1,9 @@
 defmodule Hits.Import do
+  @moduledoc """
+  This is my work-in-progress import script.
+  It doesn't do anything yet, so please ignore it.
+  """
+
   def import_data do
     IO.puts "Hello World!"
 
