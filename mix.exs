@@ -4,8 +4,8 @@ defmodule Hits.MixProject do
   def project do
     [
       app: :hits,
-      version: "0.1.0",
-      elixir: "~> 1.10.3",
+      version: "1.0.0",
+      elixir: "~> 1.12.3",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -58,10 +58,10 @@ defmodule Hits.MixProject do
       {:poison, "~> 4.0.1"},
 
       # tracking test coverage
-      {:excoveralls, "~> 0.13.0", only: [:test, :dev]},
+      {:excoveralls, "~> 0.14.2", only: [:test, :dev]},
       # to generate documentation
-      {:ex_doc, "~> 0.22.1", only: [:dev, :docs]},
-      {:inch_ex, "~> 2.0.0", only: :docs}
+      {:ex_doc, "~> 0.25.2", only: [:dev, :docs]},
+      {:inch_ex, "~> 2.1.0-rc.1", only: :docs}
     ]
   end
 
