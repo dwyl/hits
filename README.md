@@ -62,6 +62,7 @@ Read:
 https://hbr.org/2014/05/when-scratch-your-own-itch-is-dangerous-advice-for-entrepreneurs
 -->
 
+<br />
 
 ### Why Phoenix (Elixir + PostgreSQL/Ecto)?
 
@@ -81,6 +82,7 @@ For more on "Why Elixir?" see:
 https://github.com/dwyl/learn-elixir/issues/102
 
 
+<br />
 
 ## What?
 
@@ -104,6 +106,7 @@ it's also a step-by-step example/tutorial
 showing you _exactly_
 how it's implemented.
 
+<br />
 
 ## How?
 
