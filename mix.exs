@@ -4,8 +4,8 @@ defmodule Hits.MixProject do
   def project do
     [
       app: :hits,
-      version: "0.1.0",
-      elixir: "~> 1.10.3",
+      version: "1.0.0",
+      elixir: "~> 1.12.3",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -17,7 +17,9 @@ defmodule Hits.MixProject do
         "coveralls.detail": :test,
         "coveralls.post": :test,
         "coveralls.html": :test
-      ]
+      ],
+      package: package(),
+      description: "Track page views on any GitHub page"
     ]
   end
 
@@ -40,25 +42,26 @@ defmodule Hits.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.1"},
+      {:phoenix, "~> 1.5.3"},
       {:phoenix_pubsub, "~> 2.0"},
-      {:phoenix_ecto, "~> 4.1.0"},
-      {:ecto_sql, "~> 3.4.4"},
-      {:postgrex, ">= 0.0.0"},
+      {:phoenix_ecto, "~> 4.1"},
+      {:ecto_sql, "~> 3.4.5"},
+      {:postgrex, ">= 0.15.0"},
       {:phoenix_html, "~> 2.14"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:phoenix_live_reload, "~> 1.2.4", only: :dev},
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2.1"},
-      {:plug_cowboy, "~> 2.2.1"},
+      {:plug_cowboy, "~> 2.3"},
 
       # The rest of the dependendencies are for testing/reporting
       # decode .json fixture in test
-      {:poison, "~> 4.0"},
+      {:poison, "~> 4.0.1"},
+
       # tracking test coverage
-      {:excoveralls, "~> 0.13.0", only: [:test, :dev]},
+      {:excoveralls, "~> 0.14.2", only: [:test, :dev]},
       # to generate documentation
-      {:ex_doc, "~> 0.22.1", only: [:dev, :docs]},
-      {:inch_ex, "~> 2.0.0", only: :docs}
+      {:ex_doc, "~> 0.25.2", only: [:dev, :docs]},
+      {:inch_ex, "~> 2.1.0-rc.1", only: :docs}
     ]
   end
 
@@ -75,6 +78,16 @@ defmodule Hits.MixProject do
       test: ["ecto.create --quiet", "ecto.migrate", "test"],
       cover: ["coveralls.json"],
       "cover.html": ["coveralls.html"]
+    ]
+  end
+
+  defp package() do
+    [
+      files: ~w(lib/ LICENSE mix.exs README.md),
+      name: "hits",
+      licenses: ["GNU GPL v2.0"],
+      maintainers: ["dwyl"],
+      links: %{"GitHub" => "https://github.com/dwyl/hits"}
     ]
   end
 end

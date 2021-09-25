@@ -1,12 +1,22 @@
+dist: bionic
 language: elixir
 elixir:
-  - 1.10.3
+  - 1.12.3
 otp_release:
-  - 22.1.8
+  - 24.0
 services:
   - postgresql
+# https://travis-ci.community/t/test-against-postgres-12/6768
+# addons:
+#   postgresql: '12'
+#   apt:
+#     packages:
+#       - postgresql-12
+#       - postgresql-client-12
 env:
   - MIX_ENV=test
+  # - PGVER=12
+  # - PGPORT=5433
 before_script:
   - mix ecto.setup
 script:

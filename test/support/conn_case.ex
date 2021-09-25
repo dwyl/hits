@@ -20,7 +20,6 @@ defmodule HitsWeb.ConnCase do
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
-
       alias HitsWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing

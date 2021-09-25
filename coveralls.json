@@ -4,6 +4,7 @@
   },
   "skip_files": [
     "test/",
-    "lib/hits_web.ex"
+    "lib/hits_web.ex",
+    "lib/hits_web/channels/user_socket.ex"
   ]
 }
