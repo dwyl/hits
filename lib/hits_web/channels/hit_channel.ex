@@ -1,12 +1,12 @@
 defmodule HitsWeb.HitChannel do
   use HitsWeb, :channel
 
-  def join("hit:lobby", payload, socket) do
-    if authorized?(payload) do
-      {:ok, socket}
-    else
-      {:error, %{reason: "unauthorized"}}
-    end
+  def join("hit:lobby", _payload, socket) do
+    # if authorized?(payload) do
+    {:ok, socket}
+    # else
+    #   {:error, %{reason: "unauthorized"}}
+    # end
   end
 
   # Channels can be used in a request/response fashion
@@ -22,8 +22,9 @@ defmodule HitsWeb.HitChannel do
     {:noreply, socket}
   end
 
+  # Commenting out this function as "true" is meaningless!
   # Add authorization logic here as required.
-  defp authorized?(_payload) do
-    true
-  end
+  # defp authorized?(_payload) do
+  #   true
+  # end
 end
