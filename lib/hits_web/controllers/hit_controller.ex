@@ -8,8 +8,9 @@ defmodule HitsWeb.HitController do
     if repository =~ ".svg" do
       # insert hit
       count = insert_hit(conn, params)
+
       # render badge
-      render_badge(conn, count)
+      render_badge(conn, count, params["style"])
     else
       render(conn, "index.html", params)
     end
@@ -71,10 +72,10 @@ defmodule HitsWeb.HitController do
 
   Returns Http response to end-user's browser with the svg (XML) of the badge.
   """
-  def render_badge(conn, count) do
+  def render_badge(conn, count, style) do
     conn
     |> put_resp_content_type("image/svg+xml")
-    |> send_resp(200, Hits.make_badge(count))
+    |> send_resp(200, Hits.make_badge(count, style))
   end
 
   @doc """
@@ -97,7 +98,7 @@ defmodule HitsWeb.HitController do
     else
       conn
       |> put_resp_content_type("image/svg+xml")
-      |> send_resp(404, Hits.make_badge(404))
+      |> send_resp(404, Hits.make_badge(404, params["style"]))
     end
   end
 end

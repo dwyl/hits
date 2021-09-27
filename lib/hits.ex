@@ -8,29 +8,50 @@ defmodule Hits do
   """
 
   @doc """
-  svg_badge_template/0 opens the SVG template file.
+  svg_badge_flat_square_template/0 opens the SVG template file for the flat square style.
   the function is single-purpose so that the template is cached.
 
   returns String of template.
   """
-  def svg_badge_template do
-    # Want to help optimse this? See: https://github.com/dwyl/hits/issues/70
-    File.read!("./lib/hits_web/templates/hit/badge.svg")
+  def svg_badge_flat_square_template do
+    # Want to help optimize this? See: https://github.com/dwyl/hits/issues/70
+    File.read!("./lib/hits_web/templates/hit/badge_flat_square.svg")
   end
 
   @doc """
-  make_badge/1 from svg template substituting the count value
+  svg_badge_flat_template/0 opens the SVG template file for the flat style.
+  the function is single-purpose so that the template is cached.
+
+  returns String of template.
+  """
+  def svg_badge_flat_template do
+    # Want to help optimize this? See: https://github.com/dwyl/hits/issues/70
+    File.read!("./lib/hits_web/templates/hit/badge_flat.svg")
+  end
+
+  @doc """
+  make_badge/1 from a given svg template style, substituting the count value. Default style is 'flat-square'
 
   ## Parameters
 
   - count: Number the view/hit count to be displayed in the badge.
+  - style: The style wanted (can choose between 'flat' and 'flat-square')
 
   Returns the badge XML with the count.
   """
-  def make_badge(count \\ 1) do
-    String.replace(svg_badge_template(), ~r/{count}/, to_string(count))
-    # stackoverflow.com/a/1084759
-    |> String.replace(~r/<!--(.*?)-->/, "")
+  def make_badge(count \\ 1, style \\ "") do
+    case style do
+      "flat" ->
+        String.replace(svg_badge_flat_template(), ~r/{count}/, to_string(count))
+        |> String.replace(~r/<!--(.*?)-->/, "")
+
+      _ ->
+        String.replace(svg_badge_flat_square_template(), ~r/{count}/, to_string(count))
+        # stackoverflow.com/a/1084759
+        |> String.replace(~r/<!--(.*?)-->/, "")
+    end
+
+
   end
 
   @doc """
