@@ -20,7 +20,7 @@
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "uglifyjs-webpack-plugin": "^1.2.4",
     "terser-webpack-plugin": "^2.3.2",
-    "webpack": "4.41.5",
+    "webpack": "4.44.1",
     "webpack-cli": "^3.3.2"
   }
 }
