@@ -2,7 +2,7 @@
 
 app = "hits"
 
-kill_signal = "SIGINT"
+kill_signal = "SIGTERM"
 kill_timeout = 5
 processes = []
 
@@ -11,13 +11,18 @@ processes = []
 
 [env]
 
+[deploy]
+  release_command = "/app/bin/hits eval Hits.Release.migrate"
+
+
+
 [experimental]
   allowed_public_ports = []
   auto_rollback = true
 
 [[services]]
   http_checks = []
-  internal_port = 8080
+  internal_port = 4000
   processes = ["app"]
   protocol = "tcp"
   script_checks = []
@@ -25,7 +30,7 @@ processes = []
   [services.concurrency]
     hard_limit = 25
     soft_limit = 20
-    type = "connections"
+    # type = "connections"
 
   [[services.ports]]
     handlers = ["http"]
@@ -36,7 +41,7 @@ processes = []
     port = 443
 
   [[services.tcp_checks]]
-    grace_period = "1s"
+    grace_period = "30s"
     interval = "15s"
-    restart_limit = 0
+    restart_limit = 6
     timeout = "2s"
