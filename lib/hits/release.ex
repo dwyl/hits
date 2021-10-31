@@ -3,7 +3,7 @@ defmodule Hits.Release do
   Used for executing DB release tasks when run in production without Mix
   installed.
   """
-  @app :hello_elixir
+  @app :hits
 
   def migrate do
     load_app()
