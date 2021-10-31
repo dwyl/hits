@@ -4,28 +4,26 @@ app = "hits"
 
 kill_signal = "SIGTERM"
 kill_timeout = 5
-processes = []
+# processes = []
 
-[build]
-  image = "flyio/hellofly:latest"
+# [build]
+#   image = "flyio/hellofly:latest"
 
 [env]
 
 [deploy]
   release_command = "/app/bin/hits eval Hits.Release.migrate"
 
-
-
-[experimental]
-  allowed_public_ports = []
-  auto_rollback = true
+# [experimental]
+#   allowed_public_ports = []
+#   auto_rollback = true
 
 [[services]]
-  http_checks = []
+  # http_checks = []
   internal_port = 4000
-  processes = ["app"]
+  # processes = ["app"]
   protocol = "tcp"
-  script_checks = []
+  # script_checks = []
 
   [services.concurrency]
     hard_limit = 25
