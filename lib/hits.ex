@@ -15,7 +15,19 @@ defmodule Hits do
   """
   def svg_badge_flat_square_template do
     # Want to help optimize this? See: https://github.com/dwyl/hits/issues/70
-    File.read!("./lib/hits_web/templates/hit/badge_flat_square.svg")
+    # File.read!("./lib/hits_web/templates/hit/badge_flat_square.svg")
+    """
+    <?xml version="1.0"?> <!-- SVG container is 80 x 20 pixel rectangle -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="80" height="20" id="flat-square">
+        <rect width="30" height="20" fill="#555"/> <!-- grey rectangle 30px width -->
+        <rect x="30" width="50" height="20" fill="#4c1"/> <!-- green rect 30px -->
+        <g fill="#fff" text-anchor="middle" font-size="11"
+          font-family="DejaVu Sans,Verdana,Geneva,sans-serif"> <!-- group & font -->
+            <text x="15" y="14">hits</text> <!-- "hits" label -->
+            <text x="54" y="14">{count}</text>  <!-- count is replaced with number -->
+        </g>
+      </svg> <!-- that's it! pretty simple, right? :-) Any questions? Ask! -->
+    """
   end
 
   @doc """
@@ -26,7 +38,35 @@ defmodule Hits do
   """
   def svg_badge_flat_template do
     # Want to help optimize this? See: https://github.com/dwyl/hits/issues/70
-    File.read!("./lib/hits_web/templates/hit/badge_flat.svg")
+    # File.read!("./lib/hits_web/templates/hit/badge_flat.svg")
+    """
+    <?xml version="1.0"?>
+    <svg xmlns="http://www.w3.org/2000/svg" width="86" height="20" id="flat">
+        <linearGradient id="s" x2="0" y2="100%">
+            <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
+            <stop offset="1" stop-opacity=".1"/>
+        </linearGradient>
+        <clipPath id="r">
+            <rect width="86" height="20" rx="3" fill="#fff"/>
+        </clipPath>
+        <g clip-path="url(#r)">
+            <rect width="31" height="20" fill="#555"/>
+            <rect x="31" width="55" height="20" fill="#4c1"/>
+            <rect width="86" height="20" fill="url(#s)"/>
+        </g>
+        <g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif"
+            font-size="110">
+            <text aria-hidden="true" x="165" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)"
+                  textLength="210">hits
+            </text>
+            <text x="165" y="140" transform="scale(.1)" fill="#fff" textLength="210">hits</text>
+            <text aria-hidden="true" x="575" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)"
+                  >{count}
+            </text>
+            <text x="575" y="140" transform="scale(.1)" fill="#fff" >{count}</text>
+        </g>
+    </svg>
+    """
   end
 
   @doc """
