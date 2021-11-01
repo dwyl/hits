@@ -14,6 +14,6 @@
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p> -->
       <%= @inner_content %>
     </main>
-    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/assets/app.js") %>"></script>
   </body>
 </html>
