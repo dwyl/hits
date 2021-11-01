@@ -38,3 +38,7 @@ npm-debug.log
 /priv/static/
 logs.tar.gz
 _logs/
+
+
+id_rsa_fly
+id_rsa_fly-cert.pub

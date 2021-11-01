@@ -4,8 +4,8 @@ defmodule Hits.MixProject do
   def project do
     [
       app: :hits,
-      version: "1.0.0",
-      elixir: "~> 1.12.3",
+      version: "1.6.2",
+      elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -42,16 +42,23 @@ defmodule Hits.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.3"},
-      {:phoenix_pubsub, "~> 2.0"},
-      {:phoenix_ecto, "~> 4.1"},
-      {:ecto_sql, "~> 3.4.5"},
-      {:postgrex, ">= 0.15.0"},
-      {:phoenix_html, "~> 2.14"},
+      {:phoenix, "~> 1.6.2"},
+      # {:phoenix_pubsub, "~> 2.0"},
+      {:phoenix_ecto, "~> 4.4"},
+      {:ecto_sql, "~> 3.7.0"},
+      {:postgrex, ">= 0.15.13"},
+
+      {:phoenix_html, "~> 3.0"},
+      {:phoenix_live_view, "~> 0.16.4"},
+      {:phoenix_live_dashboard, "~> 0.5"},
+      {:telemetry_metrics, "~> 0.6"},
+      {:telemetry_poller, "~> 0.5"},
+
       {:phoenix_live_reload, "~> 1.2.4", only: :dev},
-      {:gettext, "~> 0.18"},
-      {:jason, "~> 1.2.1"},
-      {:plug_cowboy, "~> 2.3"},
+      {:gettext, "~> 0.18.2"},
+      {:jason, "~> 1.2.2"},
+      {:plug_cowboy, "~> 2.5.2"},
+      {:plug_crypto, "~> 1.2.2"},
 
       # The rest of the dependendencies are for testing/reporting
       # decode .json fixture in test
@@ -61,7 +68,9 @@ defmodule Hits.MixProject do
       {:excoveralls, "~> 0.14.2", only: [:test, :dev]},
       # to generate documentation
       {:ex_doc, "~> 0.25.2", only: [:dev, :docs]},
-      {:inch_ex, "~> 2.1.0-rc.1", only: :docs}
+      {:inch_ex, "~> 2.1.0-rc.1", only: :docs},
+
+      {:esbuild, "~> 0.3.4", runtime: Mix.env() == :dev},
     ]
   end
 
@@ -77,7 +86,8 @@ defmodule Hits.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"],
       cover: ["coveralls.json"],
-      "cover.html": ["coveralls.html"]
+      "cover.html": ["coveralls.html"],
+      "assets.deploy": ["esbuild default --minify", "phx.digest"]
     ]
   end
 
