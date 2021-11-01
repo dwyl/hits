@@ -38,7 +38,7 @@ RUN mix assets.deploy
 RUN mix phx.digest
 
 COPY priv priv
-# COPY assets assets
+COPY assets assets
 
 # NOTE: If using TailwindCSS, it uses a special "purge" step and that requires
 # the code in `lib` to see what is being used. Uncomment that here before
