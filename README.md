@@ -95,6 +95,8 @@ But we haven't seen one that gives a "***hit counter***"
 of the number of times a GitHub page has been viewed ... <br />
 So, in today's mini project we're going to _create_ a _basic **Web Counter**_.
 https://en.wikipedia.org/wiki/Web_counter
+The counter is incremented only when the user agent or the ip addres is different.
+When testing the counter you can open a new browser to see the badge changed.
 
 #### A Fully Working Production Phoenix App _And_ Step-by-Step Tutorial?
 

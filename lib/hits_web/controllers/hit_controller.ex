@@ -5,10 +5,9 @@ defmodule HitsWeb.HitController do
   alias Hits.{Hit, Repository, User, Useragent}
 
   def index(conn, %{"user" => user, "repository" => repository} = params) do
-    filter_count = conn.query_params["filter"]
     if repository =~ ".svg" do
       # insert hit
-      count = insert_hit(conn, user, repository, filter_count)
+      count = insert_hit(conn, user, repository)
 
       # render badge
       render_badge(conn, count, params["style"])
@@ -29,7 +28,7 @@ defmodule HitsWeb.HitController do
 
   Returns count.
   """
-  def insert_hit(conn, username, repository, filter_count) do
+  def insert_hit(conn, username, repository) do
     useragent = Hits.get_user_agent_string(conn)
 
     # remote_ip comes in as a Tuple {192, 168, 1, 42} >> 192.168.1.42 (dot quad)
@@ -50,7 +49,7 @@ defmodule HitsWeb.HitController do
 
     # insert the hit record:
     hit_attrs = %Hit{repo_id: repository_id, useragent_id: useragent_id}
-    count = Hit.insert(hit_attrs, filter_count)
+    count = Hit.insert(hit_attrs)
 
     # Send hit to connected clients via channel github.com/dwyl/hits/issues/79
     HitsWeb.Endpoint.broadcast("hit:lobby", "hit", %{
