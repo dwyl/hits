@@ -20,6 +20,15 @@ defmodule HitsWeb.HitControllerTest do
     assert res.resp_body =~ ~s(2)
   end
 
+  test "test counter filter today! GET /totes/amaze.svg", %{conn: conn} do
+    res =
+      put_req_header(conn, "user-agent", "Hackintosh")
+      |> put_req_header("accept-language", "en-GB,en;q=0.5")
+      |> get("/totes/amaze.svg?filter=today")
+
+    assert res.resp_body =~ ~s(1)
+  end
+
   test "GET /org/dashboard", %{conn: conn} do
     res =
       put_req_header(conn, "user-agent", "Hackintosh")
