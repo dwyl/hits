@@ -4,10 +4,10 @@ defmodule HitsWeb.HitController do
   # import Ecto.Query
   alias Hits.{Hit, Repository, User, Useragent}
 
-  def index(conn, %{"repository" => repository} = params) do
+  def index(conn, %{"user" => user, "repository" => repository} = params) do
     if repository =~ ".svg" do
       # insert hit
-      count = insert_hit(conn, params)
+      count = insert_hit(conn, user, repository)
 
       # render badge
       render_badge(conn, count, params["style"])
@@ -17,16 +17,18 @@ defmodule HitsWeb.HitController do
   end
 
   @doc """
-  insert_hit/2 inserts the hit and other requred records
+  insert_hit/3 inserts the hit and other required records
 
   ## Parameters
 
   - conn: Map the standard Plug.Conn info see: hexdocs.pm/plug/Plug.Conn.html
-  - params: Struct supplied by router should include respository and user.
+  - username: The Github user
+  - repository: The Github repository
+  - filter_count: define filter for count result
 
   Returns count.
   """
-  def insert_hit(conn, params) do
+  def insert_hit(conn, username, repository) do
     useragent = Hits.get_user_agent_string(conn)
 
     # remote_ip comes in as a Tuple {192, 168, 1, 42} >> 192.168.1.42 (dot quad)
@@ -36,13 +38,11 @@ defmodule HitsWeb.HitController do
     # insert the useragent:
     useragent_id = Useragent.insert(%Useragent{name: useragent, ip: ip})
 
-    # extract GitHub username from params so it can be saved & sent via channel:
-    username = params["user"]
     # insert the user:
     user_id = User.insert(%User{name: username})
 
     # strip ".svg" from repo name and insert:
-    repository = params["repository"] |> String.split(".svg") |> List.first()
+    repository = repository |> String.split(".svg") |> List.first()
 
     repository_attrs = %Repository{name: repository, user_id: user_id}
     repository_id = Repository.insert(repository_attrs)
