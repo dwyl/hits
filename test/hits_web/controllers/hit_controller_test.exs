@@ -1,5 +1,6 @@
 defmodule HitsWeb.HitControllerTest do
   use HitsWeb.ConnCase
+
   # import HitsWeb.HitController
 
   test "GET /totes/amaze.svg", %{conn: conn} do
@@ -8,25 +9,35 @@ defmodule HitsWeb.HitControllerTest do
       |> put_req_header("accept-language", "en-GB,en;q=0.5")
       |> get("/totes/amaze.svg")
 
-    assert res.resp_body =~ ~s(1)
+    assert res.resp_body =~ Hits.make_badge(1)
   end
 
   test "test counter increments! GET /totes/amaze.svg", %{conn: conn} do
-    res =
-      put_req_header(conn, "user-agent", "Hackintosh")
+    put_req_header(conn, "user-agent", "Hackintosh")
+    |> put_req_header("accept-language", "en-GB,en;q=0.5")
+    |> get("/totes/amaze.svg")
+
+    put_req_header(conn, "user-agent", "Hackintosh1")
+    |> put_req_header("accept-language", "en-GB,en;q=0.5")
+    |> get("/totes/amaze.svg")
+
+    res3 =
+      put_req_header(conn, "user-agent", "Hackintosh2")
       |> put_req_header("accept-language", "en-GB,en;q=0.5")
       |> get("/totes/amaze.svg")
 
-    assert res.resp_body =~ ~s(2)
+    assert res3.resp_body =~ Hits.make_badge(3)
   end
 
-  test "test counter filter today! GET /totes/amaze.svg", %{conn: conn} do
-    res =
-      put_req_header(conn, "user-agent", "Hackintosh")
-      |> put_req_header("accept-language", "en-GB,en;q=0.5")
-      |> get("/totes/amaze.svg?filter=today")
+  test "test counter unique user agent GET /totes/amaze.svg", %{conn: conn} do
+    put_req_header(conn, "user-agent", "Hackintosh")
+    |> put_req_header("accept-language", "en-GB,en;q=0.5")
+    |> get("/user/repo.svg")
 
-    assert res.resp_body =~ ~s(1)
+    res = put_req_header(conn, "user-agent", "Hackintosh")
+    |> put_req_header("accept-language", "en-GB,en;q=0.5")
+    |> get("/user/repo.svg")
+    assert res.resp_body =~ Hits.make_badge(1)
   end
 
   test "GET /org/dashboard", %{conn: conn} do
@@ -50,7 +61,7 @@ defmodule HitsWeb.HitControllerTest do
       |> put_req_header("accept-language", "en-GB,en;q=0.5")
       |> get("/hhyo/hhyo/Archery.svg")
 
-    assert res.resp_body =~ ~s(1)
+    assert res.resp_body =~ Hits.make_badge(1)
   end
 
   # edge case where the person forgets to request an .svg file!
