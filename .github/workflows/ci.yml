@@ -45,6 +45,8 @@ jobs:
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1 
 
+  # Continuous Deployment to Fly.io
+  # https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/
   deploy:
     name: Deploy app
     runs-on: ubuntu-latest
