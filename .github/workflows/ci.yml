@@ -44,3 +44,14 @@ jobs:
         MIX_ENV: test
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1 
+
+  deploy:
+    name: Deploy app
+    runs-on: ubuntu-latest
+    env:
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: superfly/flyctl-actions@1.1
+        with:
+          args: "deploy"
