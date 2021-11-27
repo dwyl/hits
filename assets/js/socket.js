@@ -9,7 +9,7 @@
 import {Socket} from "phoenix"
 
 console.log('attempting to connect to socket ...')
-let socket = new Socket("/socket") // , {params: {token: window.userToken}})
+let socket = new Socket("/socket")
 
 // Connect to the socket:
 socket.connect()
