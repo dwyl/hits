@@ -2,6 +2,8 @@ defmodule HitsWeb.PageController do
   use HitsWeb, :controller
 
   def index(conn, _params) do
-    render(conn, "index.html")
+    conn
+    # |>
+    |> render("index.html")
   end
 end
