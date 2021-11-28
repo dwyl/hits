@@ -6,6 +6,7 @@ defmodule Hits.Useragent do
     field(:ip, :string)
     field(:name, :string)
 
+    many_to_many(:repositories, Hits.Repository, join_through: "hits")
     timestamps()
   end
 

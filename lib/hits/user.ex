@@ -4,6 +4,7 @@ defmodule Hits.User do
 
   schema "users" do
     field(:name, :string)
+    has_many(:repositories, Hits.Repository)
 
     timestamps()
   end

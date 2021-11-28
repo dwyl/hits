@@ -4,8 +4,9 @@ defmodule Hits.Repository do
 
   schema "repositories" do
     field(:name, :string)
-    field(:user_id, :id)
+    belongs_to(:user, Hits.User)
 
+    many_to_many(:useragents, Hits.Useragent, join_through: "hits")
     timestamps()
   end
 
