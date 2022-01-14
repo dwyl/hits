@@ -16,20 +16,23 @@ import socket from "./socket"
 
 // Get Markdown Template from HTML:
 var mt = document.getElementById('badge').innerHTML;
+var mtu = document.getElementById('badge-unique').innerHTML;
 
-function generate_markdown () {
+function generate_markdown (template) {
   var user = document.getElementById("username").value || '{username}';
   var repo = document.getElementById("repo").value || '{project}';
   var style = document.getElementById("styles").value || '{style}';
   // console.log('user: ', user, 'repo: ', repo);
   user = user.replace(/[.*+?^$<>()|[\]\\]/g, '');
   repo = repo.replace(/[.*+?^$<>()|[\]\\]/g, '');
-  return mt.replace(/{username}/g, user).replace(/{repo}/g, repo).replace(/{style}/g, style);
+  return template.replace(/{username}/g, user).replace(/{repo}/g, repo).replace(/{style}/g, style);
 }
 
 function display_badge_markdown () {
-  var md = generate_markdown()
+  var md = generate_markdown(mt)
+  var mdu = generate_markdown(mtu) 
   var pre = document.getElementById("badge").innerHTML = md;
+  var pre = document.getElementById("badge-unique").innerHTML = mdu;
 }
 
 setTimeout(function () {
