@@ -7,7 +7,21 @@ defmodule HitsWeb.HitController do
   def index(conn, %{"user" => user, "repository" => repository} = params) do
     if repository =~ ".svg" do
       # insert hit
-      count = insert_hit(conn, user, repository)
+      hit = insert_hit(conn, user, repository)
+
+      count =
+        if params["show"] == "unique" do
+          Hit.count_unique_hits(hit.repo_id)
+        else
+          Hit.count_hits(hit.repo_id)
+        end
+
+      # Send hit to connected clients via channel github.com/dwyl/hits/issues/79
+      HitsWeb.Endpoint.broadcast("hit:lobby", "hit", %{
+        "user" => user,
+        "repo" => repository,
+        "count" => count
+      })
 
       # render badge
       render_badge(conn, count, params["style"])
@@ -49,17 +63,7 @@ defmodule HitsWeb.HitController do
 
     # insert the hit record:
     hit_attrs = %Hit{repo_id: repository_id, useragent_id: useragent_id}
-    count = Hit.insert(hit_attrs)
-
-    # Send hit to connected clients via channel github.com/dwyl/hits/issues/79
-    HitsWeb.Endpoint.broadcast("hit:lobby", "hit", %{
-      "user" => username,
-      "repo" => repository,
-      "count" => count
-    })
-
-    # return the count for the badge:
-    count
+    Hit.insert(hit_attrs)
   end
 
   @doc """
