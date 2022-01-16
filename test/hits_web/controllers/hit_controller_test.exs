@@ -29,14 +29,16 @@ defmodule HitsWeb.HitControllerTest do
     assert res3.resp_body =~ Hits.make_badge(3)
   end
 
-  test "test counter unique user agent GET /totes/amaze.svg", %{conn: conn} do
+  test "test counter unique user agent GET /totes/amaze.svg?show=unique", %{conn: conn} do
     put_req_header(conn, "user-agent", "Hackintosh")
     |> put_req_header("accept-language", "en-GB,en;q=0.5")
-    |> get("/user/repo.svg")
+    |> get("/user/repo.svg?show=unique")
 
-    res = put_req_header(conn, "user-agent", "Hackintosh")
-    |> put_req_header("accept-language", "en-GB,en;q=0.5")
-    |> get("/user/repo.svg")
+    res =
+      put_req_header(conn, "user-agent", "Hackintosh")
+      |> put_req_header("accept-language", "en-GB,en;q=0.5")
+      |> get("/user/repo.svg?show=unique")
+
     assert res.resp_body =~ Hits.make_badge(1)
   end
 

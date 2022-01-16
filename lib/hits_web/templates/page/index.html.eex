@@ -64,6 +64,14 @@
   to start tracking the view count on your GitHub project!
 </p>
 
+<p class="pl2 ml2">
+ If you want to display the unique count, use the following markdown:
+</p>
+
+<pre id="badge-unique" class="fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
+  [![HitCount](http://hits.dwyl.com/{username}/{repo}.svg?style={style}&show=unique)](http://hits.dwyl.com/{username}/{repo})
+</pre>
+
 <h2 class="mt0 fw5 tc f4 bg-teal white pa2 mt5"><em>Recently</em> Viewed Projects (<em>tracked by Hits</em>)</h2>
 <div class="h5 pl2" id="hits">
   <div>Updates will appear here when WebSockets are working ...</div>
