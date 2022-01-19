@@ -18,16 +18,31 @@ defmodule Hits.Hit do
   end
 
   def insert(attrs) do
-    attrs |> changeset(%{}) |> Hits.Repo.insert()
+    attrs |> changeset(%{}) |> Hits.Repo.insert!()
+  end
+
+  def count_unique_hits(repository_id) do
     # see: github.com/dwyl/hits/issues/71
-    attrs.repo_id
+    repository_id
+    |> get_aggregate_query_unique_hits()
+    |> Repo.aggregate(:count, :id)
+  end
+
+  def count_hits(repository_id) do
+    repository_id
     |> get_aggregate_query()
     |> Repo.aggregate(:count, :id)
   end
 
-  defp get_aggregate_query(repository_id) do
+  defp get_aggregate_query_unique_hits(repository_id) do
     from(h in __MODULE__,
       distinct: h.useragent_id,
+      where: h.repo_id == ^repository_id
+    )
+  end
+
+  defp get_aggregate_query(repository_id) do
+    from(h in __MODULE__,
       where: h.repo_id == ^repository_id
     )
   end
