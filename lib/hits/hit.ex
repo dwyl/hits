@@ -4,8 +4,8 @@ defmodule Hits.Hit do
   alias Hits.Repo
 
   schema "hits" do
-    field(:repo_id, :id)
-    field(:useragent_id, :id)
+    belongs_to(:repo, Hits.Repository)
+    belongs_to(:useragent, Hits.Useragent)
 
     timestamps()
   end
