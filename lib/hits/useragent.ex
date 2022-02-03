@@ -31,6 +31,8 @@ defmodule Hits.Useragent do
     case Hits.Repo.get_by(__MODULE__, name: attrs.name, ip: attrs.ip) do
       # Agent not found, insert!
       nil ->
+        # attrs is already a Useragent schema, the second argument is an empty Map
+        # So the changeset doesn't run the cast and validate_required functions on the empty map
         {:ok, useragent} = attrs |> changeset(%{}) |> Hits.Repo.insert()
 
         useragent.id
