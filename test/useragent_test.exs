@@ -10,7 +10,7 @@ defmodule UseragentTest do
   test "Useragent.insert" do
     useragent = "Mozilla/5.0 (Windows; Windows NT 5.0; rv:1.1) Gecko/20020826"
     ip = "127.0.0.1"
-    attrs = %Useragent{name: useragent, ip: ip}
+    attrs = %{"name" => useragent, "ip" => ip}
     useragent_id = Useragent.insert(attrs)
     assert useragent_id > 0
 

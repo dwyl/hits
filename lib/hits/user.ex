@@ -1,9 +1,11 @@
 defmodule Hits.User do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Hits.Repo
 
   schema "users" do
     field(:name, :string)
+    has_many(:repositories, Hits.Repository)
 
     timestamps()
   end
@@ -26,16 +28,13 @@ defmodule Hits.User do
   """
   def insert(attrs) do
     #  TODO: sanitise user string using github.com/dwyl/fields/issues/19
-    # check if user exists
-    case Hits.Repo.get_by(__MODULE__, name: attrs.name) do
-      # User not found, insert!
-      nil ->
-        {:ok, user} = attrs |> changeset(%{}) |> Hits.Repo.insert()
+    cs =
+      %__MODULE__{}
+      |> changeset(attrs)
 
-        user.id
-
-      user ->
-        user.id
-    end
+    Repo.insert!(cs,
+      on_conflict: [set: [name: cs.changes.name]],
+      conflict_target: [:name]
+    )
   end
 end

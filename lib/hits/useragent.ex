@@ -1,10 +1,16 @@
 defmodule Hits.Useragent do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Hits.Repo
 
   schema "useragents" do
     field(:ip, :string)
     field(:name, :string)
+
+    many_to_many(:repositories, Hits.Repository,
+      join_through: Hits.Hit,
+      join_keys: [useragent_id: :id, repo_id: :id]
+    )
 
     timestamps()
   end
@@ -26,16 +32,13 @@ defmodule Hits.Useragent do
   returns Int useragent.id
   """
   def insert(attrs) do
-    # check if useragent exists by Name && IP Address
-    case Hits.Repo.get_by(__MODULE__, name: attrs.name, ip: attrs.ip) do
-      # Agent not found, insert!
-      nil ->
-        {:ok, useragent} = attrs |> changeset(%{}) |> Hits.Repo.insert()
+    cs =
+      %__MODULE__{}
+      |> changeset(attrs)
 
-        useragent.id
-
-      useragent ->
-        useragent.id
-    end
+    Repo.insert!(cs,
+      on_conflict: [set: [ip: cs.changes.ip, name: cs.changes.name]],
+      conflict_target: [:ip, :name]
+    )
   end
 end

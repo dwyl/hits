@@ -1,10 +1,17 @@
 defmodule Hits.Repository do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Hits.Repo
 
   schema "repositories" do
     field(:name, :string)
-    field(:user_id, :id)
+    belongs_to(:user, Hits.User)
+
+    many_to_many(:useragents, Hits.Useragent,
+      # see https://elixirforum.com/t/ecto-many-to-many-timestamps/13791
+      join_through: Hits.Hit,
+      join_keys: [repo_id: :id, useragent_id: :id]
+    )
 
     timestamps()
   end
@@ -25,18 +32,14 @@ defmodule Hits.Repository do
 
   returns Int user.id
   """
-  def insert(attrs) do
-    #  TODO: sanitise user string using github.com/dwyl/fields/issues/19
+  def insert(repository, attrs) do
+    #  TODO: sanitise repository string using github.com/dwyl/fields/issues/19
     # check if user exists
-    case Hits.Repo.get_by(__MODULE__, name: attrs.name, user_id: attrs.user_id) do
-      # repo not found, insert!
-      nil ->
-        {:ok, repo} = attrs |> changeset(%{}) |> Hits.Repo.insert()
+    cs = changeset(repository, attrs)
 
-        repo.id
-
-      repo ->
-        repo.id
-    end
+    Repo.insert!(cs,
+      on_conflict: [set: [name: cs.changes.name]],
+      conflict_target: [:name, :user_id]
+    )
   end
 end
