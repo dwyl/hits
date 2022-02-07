@@ -834,16 +834,25 @@ unique
   end
 ```
 
-This unique indexes insure that no duplicates are created at the database level.
+These unique indexes insure that no duplicates are created at the database level.
 
 
 We can now use the `upsert` Ecto/Postgres feature to only create new items
-or updating the items if they do already exist in Postgres. This is done with the
-`on_conflict` option:
+or updating the existing items.
 
 
+For example with useragent:
 ```elixir
+    Repo.insert!(changeset,
+      on_conflict: [set: [ip: changeset.changes.ip, name: changeset.changes.name]],
+      conflict_target: [:ip, :name]
+    )
 ```
+
+- `conflict_target`: Define which fields to check for existing entry
+- `on_conflict`: Define what to do when there is a conflict. In our case
+we update the ip and name values.
+
 
 #### View the Entity Relationship (ER) Diagram
 
