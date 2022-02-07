@@ -8,7 +8,7 @@ defmodule UserTest do
   end
 
   test "User.insert" do
-    attrs = %User{name: "jimmy"}
+    attrs = %{"name" => "jimmy"}
     user_id = User.insert(attrs)
     assert user_id > 0
 
