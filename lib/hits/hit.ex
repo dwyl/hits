@@ -1,6 +1,6 @@
 defmodule Hits.Hit do
   use Ecto.Schema
-  import Ecto.{Changeset, Query}
+  import Ecto.Query
   alias Hits.Repo
 
   schema "hits" do
@@ -8,17 +8,6 @@ defmodule Hits.Hit do
     belongs_to(:useragent, Hits.Useragent)
 
     timestamps()
-  end
-
-  @doc false
-  def changeset(hit, attrs) do
-    hit
-    |> cast(attrs, [])
-    |> validate_required([])
-  end
-
-  def insert(attrs) do
-    attrs |> changeset(%{}) |> Hits.Repo.insert!()
   end
 
   def count_unique_hits(repository_id) do

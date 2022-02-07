@@ -7,13 +7,13 @@ defmodule HitsWeb.HitController do
   def index(conn, %{"user" => user, "repository" => repository} = params) do
     if repository =~ ".svg" do
       # insert hit
-      hit = insert_hit(conn, user, repository)
+      {_user_schema, _useragent_schema, repo} = insert_hit(conn, user, repository)
 
       count =
         if params["show"] == "unique" do
-          Hit.count_unique_hits(hit.repo_id)
+          Hit.count_unique_hits(repo.id)
         else
-          Hit.count_hits(hit.repo_id)
+          Hit.count_hits(repo.id)
         end
 
       # Send hit to connected clients via channel github.com/dwyl/hits/issues/79
@@ -31,7 +31,8 @@ defmodule HitsWeb.HitController do
   end
 
   @doc """
-  insert_hit/3 inserts the hit and other required records
+  insert_hit/3 inserts user, useragent, repository and the
+  hit entry which link the useragent to the repository
 
   ## Parameters
 
@@ -40,7 +41,7 @@ defmodule HitsWeb.HitController do
   - repository: The Github repository
   - filter_count: define filter for count result
 
-  Returns count.
+  Returns tuple {user, useragent, repository}.
   """
   def insert_hit(conn, username, repository) do
     useragent = Hits.get_user_agent_string(conn)
@@ -50,20 +51,22 @@ defmodule HitsWeb.HitController do
     # TODO: perform IP Geolocation lookup here so we can insert lat/lon for map!
 
     # insert the useragent:
-    useragent_id = Useragent.insert(%Useragent{name: useragent, ip: ip})
+    useragent = Useragent.insert(%{"name" => useragent, "ip" => ip})
 
     # insert the user:
-    user_id = User.insert(%User{name: username})
+    user = User.insert(%{"name" => username})
 
     # strip ".svg" from repo name and insert:
-    repository = repository |> String.split(".svg") |> List.first()
+    repository_name = repository |> String.split(".svg") |> List.first()
 
-    repository_attrs = %Repository{name: repository, user_id: user_id}
-    repository_id = Repository.insert(repository_attrs)
+    repository =
+      Ecto.build_assoc(user, :repositories)
+      |> Ecto.Changeset.change()
+      # link useragent to repository to create hit entry
+      |> Ecto.Changeset.put_assoc(:useragents, [useragent])
+      |> Repository.insert(%{"name" => repository_name})
 
-    # insert the hit record:
-    hit_attrs = %Hit{repo_id: repository_id, useragent_id: useragent_id}
-    Hit.insert(hit_attrs)
+    {user, useragent, repository}
   end
 
   @doc """

@@ -807,6 +807,44 @@ in the format **`YYYYMMDDHHMMSS`**.
 This is helpful for knowing when the database schemas/fields
 were created or updated._
 
+To make sure users, useragents and repositories are unique,
+three more migrations are created to add `unique_index`:
+
+For users we want the name to be unique
+```elixir
+  def change do
+    create unique_index(:users, [:name])
+  end
+```
+
+For useragents, we want the name and the ip address unique
+
+```elixir
+  def change do
+    create unique_index(:useragents, [:name, :ip])
+  end
+```
+
+Finally for repositories we want the name and the relation to the user to be
+unique
+
+```elixir
+  def change do
+    create unique_index(:repositories, [:name, :user_id])
+  end
+```
+
+This unique indexes insure that no duplicates are created at the database level.
+
+
+We can now use the `upsert` Ecto/Postgres feature to only create new items
+or updating the items if they do already exist in Postgres. This is done with the
+`on_conflict` option:
+
+
+```elixir
+```
+
 #### View the Entity Relationship (ER) Diagram
 
 Now that the Postgres database tables have been created,
