@@ -5,7 +5,7 @@ defmodule HitsWeb.HitController do
   alias Hits.{Hit, Repository, User, Useragent}
 
   def index(conn, %{"user" => user, "repository" => repository} = params) do
-    if repository =~ ".svg" do
+    if String.ends_with?(repository, ".svg") do
       # insert hit
       {_user_schema, _useragent_schema, repo} = insert_hit(conn, user, repository)
 
