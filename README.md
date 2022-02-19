@@ -5,12 +5,12 @@
 <div align="center">
 
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/dwyl/hits/Elixir%20CI?label=build&style=flat-square)](https://github.com/dwyl/hits/actions/workflows/ci.yml)
-[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hits/master.svg?style=flat-square)](http://codecov.io/github/dwyl/hits?branch=master)
-[![HitCount](http://hits.dwyl.com/dwyl/hits.svg)](https://github.com/dwyl/hits)
+[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hits/master.svg?style=flat-square)](https://codecov.io/github/dwyl/hits?branch=master)
+[![HitCount](https://hits.dwyl.com/dwyl/hits.svg)](https://github.com/dwyl/hits)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/hits/issues/74)
 
 <!-- Docs badge not working ... if you have time to help investigate, please do.
-[![Inline docs](http://inch-ci.org/github/dwyl/hits.svg?style=flat-square)](http://inch-ci.org/github/dwyl/hits)
+[![Inline docs](https://inch-ci.org/github/dwyl/hits.svg?style=flat-square)](https://inch-ci.org/github/dwyl/hits)
 -->
 
 </div>
@@ -73,7 +73,7 @@ That worked quite well to test the idea while writing minimal code.
 We decided to re-write in `Elixir`/`Phoenix` because we want
 the reliability and fault tolerance of `Erlang`,
 built-in application monitoring
-([`supervisor`](http://erlang.org/doc/man/supervisor.html))
+([`supervisor`](https://erlang.org/doc/man/supervisor.html))
 and metrics ([`telemetry`](https://github.com/beam-telemetry/telemetry))
 and the built-in support for _highly_ scalable WebSockets
 that will allow us to build an _awesome_ real-time UX!
@@ -114,7 +114,7 @@ how it's implemented.
 
 > If you simply want to display a "hit count badge"
 in your project's GitHub page, visit:
-http://hits.dwyl.com
+https://hits.dwyl.com
 to get the Markdown!
 
 
@@ -378,7 +378,7 @@ in your text editor. It should look like this:
             <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
           </ul>
         </nav>
-        <a href="http://phoenixframework.org/" class="phx-logo">
+        <a href="https://phoenixframework.org/" class="phx-logo">
           <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
         </a>
       </section>
@@ -492,8 +492,8 @@ with the markup relevant to the Hits homepage:
 ```html
 <h2 class="bg-teal white h-25 tc ttu f1 lh-title lh-solid mt0 pa2 pb3 mb0 pb0">
   Hits!
-  <a href="http://hits.dwyl.com/" >
-    <img src="http://hits.dwyl.com/dwyl/homepage.svg" alt="Hit Count" class="pa0 ba bw1 b--white">
+  <a href="https://hits.dwyl.com/" >
+    <img src="https://hits.dwyl.com/dwyl/homepage.svg" alt="Hit Count" class="pa0 ba bw1 b--white">
   </a>
 </h2>
 <h4 class="mt0 tc fw5 f5 teal pa2 mb0">
@@ -541,7 +541,7 @@ with the markup relevant to the Hits homepage:
 
 <h3 class="mt3 fw5 tc db f3 bg-teal white pa2">Your Badge <em>Markdown:</em></h3>
 <pre id="badge" class="fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
-  [![HitCount](http://hits.dwyl.com/{username}/{repo}.svg?style={style})](http://hits.dwyl.com/{username}/{repo})
+  [![HitCount](https://hits.dwyl.com/{username}/{repo}.svg?style={style})](https://hits.dwyl.com/{username}/{repo})
 </pre>
 
 <p class="pl2" id="nojs">
@@ -994,7 +994,7 @@ https://hexdocs.pm/plug/Plug.Conn.html
 + Elixir School Plug:
 https://elixirschool.com/en/lessons/specifics/plug/
 + Getting started with Plug in Elixir:
-http://www.brianstorti.com/getting-started-with-plug-elixir
+https://www.brianstorti.com/getting-started-with-plug-elixir
 (_has a good/simple example of "Plug.Builder"_)
 + Elixir Plug unveiled:
 https://medium.com/@kansi/elixir-plug-unveiled-bf354e364641
