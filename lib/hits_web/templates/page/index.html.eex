@@ -1,7 +1,7 @@
 <h2 class="bg-teal white h-25 tc ttu f1 lh-title lh-solid mt0 pa2 pb3 mb0 pb0">
   Hits!
-  <a href="http://hits.dwyl.com/" >
-    <img src="http://hits.dwyl.com/hits/homepage.svg" alt="Hit Count" class="pa0 ba bw1 b--white">
+  <a href="https://hits.dwyl.com/" >
+    <img src="https://hits.dwyl.com/hits/homepage.svg" alt="Hit Count" class="pa0 ba bw1 b--white">
   </a>
 </h2>
 <h4 class="mt0 tc fw5 f5 teal pa2 mb0">
@@ -49,7 +49,7 @@
 
 <h3 class="mt3 fw5 tc db f3 bg-teal white pa2">Your Badge <em>Markdown:</em></h3>
 <pre id="badge" class="fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
-  [![HitCount](http://hits.dwyl.com/{username}/{repo}.svg?style={style})](http://hits.dwyl.com/{username}/{repo})
+  [![HitCount](https://hits.dwyl.com/{username}/{repo}.svg?style={style})](http://hits.dwyl.com/{username}/{repo})
 </pre>
 
 <p class="pl2" id="nojs">
@@ -69,7 +69,7 @@
 </p>
 
 <pre id="badge-unique" class="fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
-  [![HitCount](http://hits.dwyl.com/{username}/{repo}.svg?style={style}&show=unique)](http://hits.dwyl.com/{username}/{repo})
+  [![HitCount](https://hits.dwyl.com/{username}/{repo}.svg?style={style}&show=unique)](http://hits.dwyl.com/{username}/{repo})
 </pre>
 
 <h2 class="mt0 fw5 tc f4 bg-teal white pa2 mt5"><em>Recently</em> Viewed Projects (<em>tracked by Hits</em>)</h2>
