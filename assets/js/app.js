@@ -78,6 +78,10 @@ function append_hit (data) {
   const time = DATE.toUTCString().replace('GMT', '');
   const text = time + ' /' + data.user + '/' + data.repo + ' ' + data.count
   root.insertBefore(div(date, text), previous);
+  // remove default message if displayed
+  // see https://github.com/dwyl/hits/issues/149
+  const defaultMsg = document.getElementById('default-websockets-msg');
+  defaultMsg && defaultMsg.remove();
 }
 
 // borrowed from: https://git.io/v536m
