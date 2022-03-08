@@ -981,7 +981,11 @@ to render the hits on the homepage in realtime,
 please see: https://github.com/dwyl/hits/pull/80/files
 
 
+
+
 ## Research & Background Reading
+
+If you found this repository useful, please ⭐️ it so we (and others) know you liked it!
 
 We found the following links/articles/posts _useful_
 when learning how to build this mini-project:
