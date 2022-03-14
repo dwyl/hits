@@ -6,25 +6,29 @@ defmodule HitsWeb.HitController do
 
   def index(conn, %{"user" => user, "repository" => repository} = params) do
     if String.ends_with?(repository, ".svg") do
-      # insert hit
-      {_user_schema, _useragent_schema, repo} = insert_hit(conn, user, repository)
+      if user_valid?(user) and repository_valid?(repository) do
+        # insert hit
+        {_user_schema, _useragent_schema, repo} = insert_hit(conn, user, repository)
 
-      count =
-        if params["show"] == "unique" do
-          Hit.count_unique_hits(repo.id)
-        else
-          Hit.count_hits(repo.id)
-        end
+        count =
+          if params["show"] == "unique" do
+            Hit.count_unique_hits(repo.id)
+          else
+            Hit.count_hits(repo.id)
+          end
 
-      # Send hit to connected clients via channel github.com/dwyl/hits/issues/79
-      HitsWeb.Endpoint.broadcast("hit:lobby", "hit", %{
-        "user" => user,
-        "repo" => repository,
-        "count" => count
-      })
+        # Send hit to connected clients via channel github.com/dwyl/hits/issues/79
+        HitsWeb.Endpoint.broadcast("hit:lobby", "hit", %{
+          "user" => user,
+          "repo" => repository,
+          "count" => count
+        })
 
-      # render badge
-      render_badge(conn, count, params["style"])
+        # render badge
+        render_badge(conn, count, params["style"])
+      else
+        render_invalid_badge(conn)
+      end
     else
       render(conn, "index.html", params)
     end
@@ -85,6 +89,12 @@ defmodule HitsWeb.HitController do
     |> send_resp(200, Hits.make_badge(count, style))
   end
 
+  def render_invalid_badge(conn) do
+    conn
+    |> put_resp_content_type("image/svg+xml")
+    |> send_resp(404, Hits.svg_invalid_badge())
+  end
+
   @doc """
   edgecase/2 handles the case where people did not follow the instructions
   for creating their badge ... 🙄  see: https://github.com/dwyl/hits/issues/67
@@ -108,4 +118,12 @@ defmodule HitsWeb.HitController do
       |> send_resp(404, Hits.make_badge(404, params["style"]))
     end
   end
+
+  # see issue https://github.com/dwyl/hits/issues/154
+  # alphanumeric follow by one or zeor "-" or just alphanumerics
+  defp user_valid?(user), do: String.match?(user, ~r/^([[:alnum:]]+-)*[[:alnum:]]+$/)
+
+  #  ^[[:alnum:]-_.]+$ means the name is composed of one or multiple alphanumeric character
+  #  or "-_." characters
+  defp repository_valid?(repo), do: String.match?(repo, ~r/^[[:alnum:]-_.]+$/)
 end
