@@ -69,6 +69,23 @@ defmodule Hits do
     """
   end
 
+  def svg_invalid_badge do
+    """
+    <?xml version="1.0"?>
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="96" height="20" role="img" aria-label="hits: invalid url">
+      <title>hits: invalid url</title>
+      <g shape-rendering="crispEdges"><rect width="31" height="20" fill="#555"/>
+        <rect x="31" width="65" height="20" fill="#e05d44"/>
+      </g>
+      <g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif"
+        text-rendering="geometricPrecision" font-size="110">
+        <text x="165" y="140" transform="scale(.1)" fill="#fff" textLength="210">hits</text>
+        <text x="625" y="140" transform="scale(.1)" fill="#fff" textLength="550">invalid url</text>
+      </g>
+    </svg>
+    """
+  end
+
   @doc """
   make_badge/1 from a given svg template style, substituting the count value. Default style is 'flat-square'
 
@@ -90,8 +107,6 @@ defmodule Hits do
         # stackoverflow.com/a/1084759
         |> String.replace(~r/<!--(.*?)-->/, "")
     end
-
-
   end
 
   @doc """

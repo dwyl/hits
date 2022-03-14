@@ -18,6 +18,7 @@ defmodule HitsWeb.Router do
     pipe_through(:browser)
 
     get("/", PageController, :index)
+    get("/error/:user/:repository", PageController, :error)
 
     get("/:user/:repository", HitController, :index)
     get("/:etc/:user/:repository", HitController, :edgecase)
