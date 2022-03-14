@@ -47,7 +47,7 @@ defmodule HitsWeb.HitController do
     useragent = Hits.get_user_agent_string(conn)
 
     # remote_ip comes in as a Tuple {192, 168, 1, 42} >> 192.168.1.42 (dot quad)
-    ip = Enum.join(Tuple.to_list(conn.remote_ip), ".")
+    ip = Hits.get_user_ip_address(conn)
     # TODO: perform IP Geolocation lookup here so we can insert lat/lon for map!
 
     # insert the useragent:

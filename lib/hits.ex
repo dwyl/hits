@@ -90,8 +90,6 @@ defmodule Hits do
         # stackoverflow.com/a/1084759
         |> String.replace(~r/<!--(.*?)-->/, "")
     end
-
-
   end
 
   @doc """
@@ -115,5 +113,9 @@ defmodule Hits do
       end)
 
     ua
+  end
+
+  def get_user_ip_address(conn) do
+    Enum.join(Tuple.to_list(conn.remote_ip), ".")
   end
 end
