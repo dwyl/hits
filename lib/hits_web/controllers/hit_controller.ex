@@ -30,7 +30,11 @@ defmodule HitsWeb.HitController do
         render_invalid_badge(conn)
       end
     else
-      render(conn, "index.html", params)
+      if user_valid?(user) and repository_valid?(repository) do
+        render(conn, "index.html", params)
+      else
+        redirect(conn, to: "/error/#{user}/#{repository}")
+      end
     end
   end
 
