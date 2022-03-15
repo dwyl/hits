@@ -4,7 +4,7 @@ defmodule Hits.MixProject do
   def project do
     [
       app: :hits,
-      version: "1.6.2",
+      version: "1.6.3",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),

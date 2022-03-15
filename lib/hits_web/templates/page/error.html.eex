@@ -1,0 +1,26 @@
+<h2 class="bg-teal white h-25 tc ttu f1 lh-title lh-solid mt0 pa2 pb3 mb0 pb0">
+  Validation Error!
+</h2>
+
+<div class="pa3">
+    <p>Please make sure the username and the repository values are valid:</p>
+
+    <ul>
+      <li><strong><%=@user%></strong> - username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen</li> 
+      <li><strong><%=@repository%></strong> - repository may contain alphanumeric values and the following characters: "-", "_" "."</li>
+    </ul>
+    
+    <%= link "Create a new badge", to: "/", class: "f6 link dim br2 ph3 pv2 mb2 dib white bg-teal" %>
+</div>
+
+<style>
+  .teal {
+    color: #4DB6AC;
+  }
+  .bg-teal {
+    background: #4DB6AC;
+  }
+  body { /* dwyl font */
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+</style>
