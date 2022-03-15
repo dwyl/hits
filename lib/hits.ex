@@ -133,6 +133,9 @@ defmodule Hits do
   end
 
   def get_user_ip_address(conn) do
+    IO.inspect("############ GET IP ADDRESS ##############")
+    IO.inspect(conn.req_headers)
+    IO.inspect("##########################################")
     Enum.join(Tuple.to_list(conn.remote_ip), ".")
   end
 end
