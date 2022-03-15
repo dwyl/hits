@@ -5,7 +5,7 @@ defmodule HitsWeb.PageController do
     render(conn, "index.html")
   end
 
-  def error(conn, %{"user" => user, "repository" => repository} = params) do
+  def error(conn, %{"user" => user, "repository" => repository}) do
     render(conn, "error.html", user: user, repository: repository)
   end
 end

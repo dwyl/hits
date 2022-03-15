@@ -131,4 +131,24 @@ defmodule Hits do
 
     ua
   end
+
+  def get_user_ip_address(conn) do
+    get_x_forwarded_for_ip(conn.req_headers) ||
+      Enum.join(Tuple.to_list(conn.remote_ip), ".")
+  end
+
+  defp get_x_forwarded_for_ip(headers) do
+    case Enum.find(headers, fn {k, _} -> k == "x-forwarded-for" end) do
+      # header doesn't exist
+      nil ->
+        nil
+
+      # header exists and can contains multiple ips
+      {_, ips} ->
+        ips
+        |> String.split(",")
+        |> List.first()
+        |> String.trim()
+    end
+  end
 end
