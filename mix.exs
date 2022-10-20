@@ -64,7 +64,7 @@ defmodule Hits.MixProject do
       # tracking test coverage
       {:excoveralls, "~> 0.15.0", only: [:test, :dev]},
       # to generate documentation
-      {:ex_doc, "~> 0.28.0", only: [:dev, :docs]},
+      {:ex_doc, "~> 0.29.0", only: [:dev, :docs]},
       {:inch_ex, "~> 2.1.0-rc.1", only: :docs},
       {:esbuild, "~> 0.5.0", runtime: Mix.env() == :dev}
     ]
