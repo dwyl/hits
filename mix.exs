@@ -56,6 +56,7 @@ defmodule Hits.MixProject do
       {:jason, "~> 1.4.0"},
       {:plug_cowboy, "~> 2.5.2"},
       {:plug_crypto, "~> 1.2.2"},
+      {:content, "~> 1.3.0"},
 
       # The rest of the dependendencies are for testing/reporting
       # decode .json fixture in test

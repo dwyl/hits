@@ -24,10 +24,19 @@ defmodule HitsWeb.HitController do
           "count" => count
         })
 
-        # render badge
-        render_badge(conn, count, params["style"])
+        # Render badge or json
+        if Content.get_accept_header(conn) =~ "json" do
+          render_json(conn)
+        else
+          render_badge(conn, count, params["style"])
+        end
       else
-        render_invalid_badge(conn)
+        # Render badge or json
+        if Content.get_accept_header(conn) =~ "json" do
+          render_invalid_json(conn)
+        else
+          render_invalid_badge(conn)
+        end
       end
     else
       if user_valid?(user) and repository_valid?(repository) do
@@ -75,6 +84,48 @@ defmodule HitsWeb.HitController do
       |> Repository.insert(%{"name" => repository_name})
 
     {user, useragent, repository}
+  end
+
+
+  @doc """
+  render_json/1 outputs an encoded json related to a badge.
+
+  ## Parameters
+
+  - conn: Map the standard Plug.Conn info see: hexdocs.pm/plug/Plug.Conn.html
+
+  Returns an encoded json that can be used with `shields.io` URL.
+  See https://shields.io/endpoint
+  """
+  def render_json(conn) do
+    json_response = %{
+      "schemaVersion" => "1",
+      "label" => "hits",
+      "message" => "420",
+      "color" => "brightgreen"
+    }
+    encoded_json = Jason.encode!(json_response)
+    json(conn, encoded_json)
+  end
+
+  @doc """
+  render_invalid_json/1 outputs an encoded json related to an invalid badge.
+
+  ## Parameters
+
+  - conn: Map the standard Plug.Conn info see: hexdocs.pm/plug/Plug.Conn.html
+
+  Returns an encoded json that can be used with `shields.io` URL.
+  See https://shields.io/endpoint
+  """
+  def render_invalid_json(conn) do
+    json_response = %{
+      "schemaVersion" => "1",
+      "label" => "hits",
+      "message" => "invalid url",
+    }
+    encoded_json = Jason.encode!(json_response)
+    json(conn, encoded_json)
   end
 
   @doc """
