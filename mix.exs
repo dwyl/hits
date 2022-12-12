@@ -56,7 +56,12 @@ defmodule Hits.MixProject do
       {:jason, "~> 1.4.0"},
       {:plug_cowboy, "~> 2.5.2"},
       {:plug_crypto, "~> 1.2.2"},
+
+      # For content negotiation
       {:content, "~> 1.3.0"},
+
+      # Query param schema validation
+      {:params, "~> 2.0"},
 
       # The rest of the dependendencies are for testing/reporting
       # decode .json fixture in test

@@ -4,8 +4,27 @@ defmodule HitsWeb.HitController do
   # import Ecto.Query
   alias Hits.{Hit, Repository, User, Useragent}
 
+  use Params
+
+  @doc """
+  Schema validator.
+  The possible URL and query parameters are defined here and checked for validity.
+  """
+  defparams schema_validator %{
+    user!: :string,
+    repository!: :string,
+    style: :string,
+    color: [field: :string, default: "lightgrey"],
+    show: :string,
+  }
+
   def index(conn, %{"user" => user, "repository" => repository} = params) do
-    if String.ends_with?(repository, ".svg") do
+
+    # Schema validation
+    schema = schema_validator(params)
+    params = Params.data(schema)
+
+    if schema.valid? and String.ends_with?(repository, ".svg") do
       if user_valid?(user) and repository_valid?(repository) do
         # insert hit
         {_user_schema, _useragent_schema, repo} = insert_hit(conn, user, repository)
