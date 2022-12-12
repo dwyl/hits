@@ -22,8 +22,10 @@ defmodule HitsWeb.HitController do
   def index(conn, %{"user" => user, "repository" => repository} = params) do
 
     # Schema validation
+    # Check https://github.com/vic/params#usage
     schema = schema_validator(params)
     params = Params.data(schema)
+    params_map = Params.to_map(schema)
 
     if schema.valid? and String.ends_with?(repository, ".svg") do
       if user_valid?(user) and repository_valid?(repository) do
@@ -48,7 +50,7 @@ defmodule HitsWeb.HitController do
         if Content.get_accept_header(conn) =~ "json" do
           render_json(conn, count, params)
         else
-          render_badge(conn, count, params["style"])
+          render_badge(conn, count, params.style)
         end
       else
         # Render badge or json
@@ -63,7 +65,7 @@ defmodule HitsWeb.HitController do
         render_invalid_json(conn)
       else
         if user_valid?(user) and repository_valid?(repository) do
-          render(conn, "index.html", params)
+          render(conn, "index.html", params_map)
         else
           redirect(conn, to: "/error/#{user}/#{repository}")
         end
