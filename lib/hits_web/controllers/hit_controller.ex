@@ -131,8 +131,7 @@ defmodule HitsWeb.HitController do
       "message" => count,
       "color" => params.color
     }
-    encoded_json = Jason.encode!(json_response)
-    json(conn, encoded_json)
+    json(conn, json_response)
   end
 
   @doc """
@@ -151,8 +150,7 @@ defmodule HitsWeb.HitController do
       "label" => "hits",
       "message" => "invalid url",
     }
-    encoded_json = Jason.encode!(json_response)
-    json(conn, encoded_json)
+    json(conn, json_response)
   end
 
   @doc """
