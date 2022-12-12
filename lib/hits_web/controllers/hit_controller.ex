@@ -9,13 +9,14 @@ defmodule HitsWeb.HitController do
   @doc """
   Schema validator.
   The possible URL and query parameters are defined here and checked for validity.
+  The possible values are fetched from https://shields.io/endpoint
   """
   defparams schema_validator %{
     user!: :string,
     repository!: :string,
-    style: :string,
+    style: [field: Ecto.Enum, values: [plastic: "plastic", flat: "flat", flatSquare: "flat-square", forTheBadge: "for-the-badge", social: "social"], default: :flat],
     color: [field: :string, default: "lightgrey"],
-    show: :string,
+    show: [field: :string, default: nil],
   }
 
   def index(conn, %{"user" => user, "repository" => repository} = params) do
@@ -30,7 +31,7 @@ defmodule HitsWeb.HitController do
         {_user_schema, _useragent_schema, repo} = insert_hit(conn, user, repository)
 
         count =
-          if params["show"] == "unique" do
+          if params.show == "unique" do
             Hit.count_unique_hits(repo.id)
           else
             Hit.count_hits(repo.id)
@@ -45,7 +46,7 @@ defmodule HitsWeb.HitController do
 
         # Render badge or json
         if Content.get_accept_header(conn) =~ "json" do
-          render_json(conn)
+          render_json(conn, count, params)
         else
           render_badge(conn, count, params["style"])
         end
@@ -58,10 +59,14 @@ defmodule HitsWeb.HitController do
         end
       end
     else
-      if user_valid?(user) and repository_valid?(repository) do
-        render(conn, "index.html", params)
+      if Content.get_accept_header(conn) =~ "json" do
+        render_invalid_json(conn)
       else
-        redirect(conn, to: "/error/#{user}/#{repository}")
+        if user_valid?(user) and repository_valid?(repository) do
+          render(conn, "index.html", params)
+        else
+          redirect(conn, to: "/error/#{user}/#{repository}")
+        end
       end
     end
   end
@@ -116,12 +121,13 @@ defmodule HitsWeb.HitController do
   Returns an encoded json that can be used with `shields.io` URL.
   See https://shields.io/endpoint
   """
-  def render_json(conn) do
+  def render_json(conn, count, params) do
     json_response = %{
       "schemaVersion" => "1",
       "label" => "hits",
-      "message" => "420",
-      "color" => "brightgreen"
+      "style" => params.style,
+      "message" => count,
+      "color" => params.color
     }
     encoded_json = Jason.encode!(json_response)
     json(conn, encoded_json)
