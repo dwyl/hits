@@ -905,7 +905,7 @@ and our previous tests are unaffected.
 
 <br />
 
-### SVG Badge Template
+## SVG Badge Template
 
 We created the SVG badge template for our MVP
 [`template.svg`](https://github.com/dwyl/hits-nodejs/blob/master/lib/template.svg)
@@ -930,6 +930,130 @@ and paste the following SVG code in it:
 The comments are there for beginner-friendliness,
 they are stripped out before sending the badge to the client
 to conserve bandwidth.
+
+## Adding JSON content negotiation
+Shields.io [provides an endpoint](https://shields.io/endpoint)
+that allows full badge customization.
+(you can find the complete list
+of customization options inside https://shields.io/)
+
+For this, we need to *pass an endpoint*
+that returns a **JSON** object with the customization needed.
+We can make it so `hits` returns this JSON
+according to what the user wants. 
+Let's add this feature 😀
+
+### Installing `params` and `content`
+We are using [`params`](https://github.com/vic/params)
+to validate the query parameters
+and [`content`](https://github.com/dwyl/content)
+to add content negotiation on our endpoints.
+
+Let's install these.
+
+```elixir
+  defp deps do
+    [
+      # For content negotiation
+      {:content, "~> 1.3.0"},
+
+      # Query param schema validation
+      {:params, "~> 2.0"},
+    ]
+  end
+```
+
+### Defining validation schema
+The schema **must be compatible 
+with shield.io.
+We make use of a `schema validator` 
+so we know that the parameters
+passed by the users are valid.
+
+The possible values of each field
+were determined according to
+https://shields.io/endpoint.
+
+Here is the validation schema,
+which follows the possible configurations
+of the previous link.
+
+```elixir
+  defparams schema_validator %{
+    user!: :string,
+    repository!: :string,
+    style: [field: Ecto.Enum, values: [plastic: "plastic", flat: "flat", flatSquare: "flat-square", forTheBadge: "for-the-badge", social: "social"], default: :flat],
+    color: [field: :string, default: "lightgrey"],
+    show: [field: :string, default: nil],
+  }
+```
+
+By default, each badge is `lightgrey`
+and has a `flat` style.
+
+You can find the snippet of code used
+in https://github.com/dwyl/hits/blob/37d3a91022f4aad25558f4c6f3e2bd01c933d63a/lib/hits_web/controllers/hit_controller.ex#L14-L20
+
+### Content negotiation
+Luckily, the `content` package 
+makes it relatively easy to differenciate
+HTTP and JSON requests.
+
+The way we implement different behaviours
+for JSON and HTTP requests is made through
+the following template.
+
+```elixir
+  if Content.get_accept_header(conn) =~ "json" do
+    # return json 
+  else
+    # render page
+  end
+```
+
+You will notice this behaviour 
+in the file https://github.com/dwyl/hits/blob/37d3a91022f4aad25558f4c6f3e2bd01c933d63a/lib/hits_web/controllers/hit_controller.ex#L50-L54.
+
+After correct setup,
+the returned JSON object
+depends on the parameters the user defines.
+
+```elixir
+  def render_json(conn, count, params) do
+    json_response = %{
+      "schemaVersion" => "1",
+      "label" => "hits",
+      "style" => params.style,
+      "message" => count,
+      "color" => params.color
+    }
+    json(conn, json_response)
+  end
+```
+
+### Expected JSON response
+If you run `mix phx.server`
+and open a separate terminal session, 
+paste the following and run.
+
+```sh
+curl -H "Accept: application/json" http://localhost:4000/user/repo.svg\?color=blue
+```
+
+The output will be the following.
+
+```sh
+{"color":"blue","label":"hits","message":20,"schemaVersion":"1","style":"flat"}%
+```
+
+However, if you open the same link
+in a browser, rendering 
+still works properly. 
+We are just making an HTTP request,
+after all 🙂.
+
+<img width="686" alt="browser" src="https://user-images.githubusercontent.com/17494745/207122795-52276959-c5e5-4b3f-9b16-58797b8597e2.png">
+
 
 # tl;dr
 
