@@ -17,6 +17,7 @@ import socket from "./socket"
 // Get Markdown Template from HTML:
 var mt = document.getElementById('badge').innerHTML;
 var mtu = document.getElementById('badge-unique').innerHTML;
+var mtendpoint = document.getElementById('badge-endpoint').innerHTML;
 
 function generate_markdown (template) {
   var user = document.getElementById("username").value || '{username}';
@@ -31,8 +32,10 @@ function generate_markdown (template) {
 function display_badge_markdown () {
   var md = generate_markdown(mt)
   var mdu = generate_markdown(mtu) 
+  var mdendpoint = generate_markdown(mtendpoint) 
   var pre = document.getElementById("badge").innerHTML = md;
   var pre = document.getElementById("badge-unique").innerHTML = mdu;
+  var pre = document.getElementById("badge-endpoint").innerHTML = mdendpoint;
 }
 
 setTimeout(function () {
