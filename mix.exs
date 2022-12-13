@@ -66,7 +66,7 @@ defmodule Hits.MixProject do
       # to generate documentation
       {:ex_doc, "~> 0.29.0", only: [:dev, :docs]},
       {:inch_ex, "~> 2.1.0-rc.1", only: :docs},
-      {:esbuild, "~> 0.5.0", runtime: Mix.env() == :dev}
+      {:esbuild, "~> 0.6.0", runtime: Mix.env() == :dev}
     ]
   end
 
