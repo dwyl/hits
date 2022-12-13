@@ -934,14 +934,19 @@ to conserve bandwidth.
 ## Adding JSON content negotiation
 Shields.io [provides an endpoint](https://shields.io/endpoint)
 that allows full badge customization.
-(you can find the complete list
-of customization options inside https://shields.io/)
+You may find the complete list
+of customization options inside https://shields.io/).
 
 For this, we need to *pass an endpoint*
 that returns a **JSON** object with the customization needed.
 We can make it so `hits` returns this JSON
 according to what the user wants. 
-Let's add this feature 😀
+
+We'll go over the basics
+of adding this feature. 
+We'll give an **overview**
+and we won't delve into much detail.
+
 
 ### Installing `params` and `content`
 We are using [`params`](https://github.com/vic/params)
@@ -965,7 +970,7 @@ Let's install these.
 
 ### Defining validation schema
 The schema **must be compatible 
-with shield.io.
+with shield.io**.
 We make use of a `schema validator` 
 so we know that the parameters
 passed by the users are valid.
@@ -1031,6 +1036,12 @@ depends on the parameters the user defines.
   end
 ```
 
+This function effectively makes it so
+the endpoint *returns* a JSON object
+following Shields.io schema convention
+which can later be used in 
+https://shields.io/endpoint.
+
 ### Expected JSON response
 If you run `mix phx.server`
 and open a separate terminal session, 
@@ -1053,6 +1064,12 @@ We are just making an HTTP request,
 after all 🙂.
 
 <img width="686" alt="browser" src="https://user-images.githubusercontent.com/17494745/207122795-52276959-c5e5-4b3f-9b16-58797b8597e2.png">
+
+So, the **same endpoint** is used
+for both normal HTTP requests
+but also outputs a JSON object
+if we want to
+(by adding an `Accept` header with `application/json`).
 
 
 # tl;dr
