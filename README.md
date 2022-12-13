@@ -996,8 +996,11 @@ of the previous link.
 By default, each badge is `lightgrey`
 and has a `flat` style.
 
-You can find the snippet of code used
-in https://github.com/dwyl/hits/blob/37d3a91022f4aad25558f4c6f3e2bd01c933d63a/lib/hits_web/controllers/hit_controller.ex#L14-L20
+You can find 
+the snippet of code used
+in the `/lib/hits_web/controllers/hit_controller.ex` file.
+
+ https://github.com/dwyl/hits/blob/37d3a91022f4aad25558f4c6f3e2bd01c933d63a/lib/hits_web/controllers/hit_controller.ex#L14-L20
 
 ### Content negotiation
 Luckily, the `content` package 
@@ -1017,7 +1020,9 @@ the following template.
 ```
 
 You will notice this behaviour 
-in the file https://github.com/dwyl/hits/blob/37d3a91022f4aad25558f4c6f3e2bd01c933d63a/lib/hits_web/controllers/hit_controller.ex#L50-L54.
+in `lib/hits_web/controllers/hit_controller.ex`.
+
+https://github.com/dwyl/hits/blob/37d3a91022f4aad25558f4c6f3e2bd01c933d63a/lib/hits_web/controllers/hit_controller.ex#L50-L54
 
 After correct setup,
 the returned JSON object
