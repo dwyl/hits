@@ -14,7 +14,17 @@ defmodule HitsWeb.HitController do
   defparams schema_validator %{
     user!: :string,
     repository!: :string,
-    style: [field: Ecto.Enum, values: [plastic: "plastic", flat: "flat", flatSquare: "flat-square", forTheBadge: "for-the-badge", social: "social"], default: :flat],
+    style: [
+      field: Ecto.Enum,
+      values: [
+        plastic: "plastic",
+        flat: "flat",
+        flatSquare: "flat-square",
+        forTheBadge: "for-the-badge",
+        social: "social"
+      ],
+      default: :flat
+    ],
     color: [field: :string, default: "lightgrey"],
     show: [field: :string, default: nil],
   }
@@ -27,48 +37,41 @@ defmodule HitsWeb.HitController do
     params = Params.data(schema)
     params_map = Params.to_map(schema)
 
-    if schema.valid? and String.ends_with?(repository, ".svg") do
-      if user_valid?(user) and repository_valid?(repository) do
-        # insert hit
-        {_user_schema, _useragent_schema, repo} = insert_hit(conn, user, repository)
+    if schema.valid? and user_valid?(user) and repository_valid?(repository) do
+      # insert hit
+      {_user_schema, _useragent_schema, repo} = insert_hit(conn, user, repository)
 
-        count =
-          if params.show == "unique" do
-            Hit.count_unique_hits(repo.id)
-          else
-            Hit.count_hits(repo.id)
-          end
+      count =
+        if params.show == "unique" do
+          Hit.count_unique_hits(repo.id)
+        else
+          Hit.count_hits(repo.id)
+        end
 
-        # Send hit to connected clients via channel github.com/dwyl/hits/issues/79
-        HitsWeb.Endpoint.broadcast("hit:lobby", "hit", %{
-          "user" => user,
-          "repo" => repository,
-          "count" => count
-        })
+      # Send hit to connected clients via channel github.com/dwyl/hits/issues/79
+      HitsWeb.Endpoint.broadcast("hit:lobby", "hit", %{
+        "user" => user,
+        "repo" => repository,
+        "count" => count
+      })
 
-        # Render badge or json
-        if Content.get_accept_header(conn) =~ "json" do
+      # Render json object, html page or svg badge
+      cond do
+        Content.get_accept_header(conn) =~ "json" ->
           render_json(conn, count, params)
-        else
+        String.ends_with?(repository, ".svg") ->
           render_badge(conn, count, params.style)
-        end
-      else
-        # Render badge or json
-        if Content.get_accept_header(conn) =~ "json" do
-          render_invalid_json(conn)
-        else
-          render_invalid_badge(conn)
-        end
+        true ->
+          render(conn, "index.html", params_map)
       end
     else
-      if Content.get_accept_header(conn) =~ "json" do
-        render_invalid_json(conn)
-      else
-        if user_valid?(user) and repository_valid?(repository) do
-          render(conn, "index.html", params_map)
-        else
+      cond do
+        Content.get_accept_header(conn) =~ "json" ->
+          render_invalid_json(conn)
+        String.ends_with?(repository, ".svg") ->
+          render_invalid_badge(conn)
+        true ->
           redirect(conn, to: "/error/#{user}/#{repository}")
-        end
       end
     end
   end
@@ -199,11 +202,12 @@ defmodule HitsWeb.HitController do
     end
   end
 
-  # see issue https://github.com/dwyl/hits/issues/154
-  # alphanumeric follow by one or zeor "-" or just alphanumerics
+  # see: https://github.com/dwyl/hits/issues/154
+  # alphanumeric follow by one or zero "-" or just alphanumerics
   defp user_valid?(user), do: String.match?(user, ~r/^([[:alnum:]]+-)*[[:alnum:]]+$/)
 
-  #  ^[[:alnum:]-_.]+$ means the name is composed of one or multiple alphanumeric character
-  #  or "-_." characters
+  # ^[[:alnum:]-_.]+$ means the name is composed of
+  # one or multiple alphanumeric character
+  # or "-_." characters
   defp repository_valid?(repo), do: String.match?(repo, ~r/^[[:alnum:]-_.]+$/)
 end
