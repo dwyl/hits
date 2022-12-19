@@ -27,49 +27,73 @@ defmodule HitsWeb.HitController do
     params = Params.data(schema)
     params_map = Params.to_map(schema)
 
-    if schema.valid? and String.ends_with?(repository, ".svg") do
-      if user_valid?(user) and repository_valid?(repository) do
-        # insert hit
-        {_user_schema, _useragent_schema, repo} = insert_hit(conn, user, repository)
+    case Content.get_accept_header(conn) =~ "json" do
 
-        count =
-          if params.show == "unique" do
-            Hit.count_unique_hits(repo.id)
+      # JSON content negotiation
+      true ->
+        if schema.valid? do
+          if user_valid?(user) and repository_valid?(repository) do
+
+            # insert hit
+            {_user_schema, _useragent_schema, repo} = insert_hit(conn, user, repository)
+
+            # get number of hits
+            count =
+              if params.show == "unique" do
+                Hit.count_unique_hits(repo.id)
+              else
+                Hit.count_hits(repo.id)
+              end
+
+            # Send hit to connected clients via channel github.com/dwyl/hits/issues/79
+            HitsWeb.Endpoint.broadcast("hit:lobby", "hit", %{
+              "user" => user,
+              "repo" => repository,
+              "count" => count
+            })
+
+            # Return JSON
+            render_json(conn, count, params)
           else
-            Hit.count_hits(repo.id)
+            render_invalid_json(conn)
           end
-
-        # Send hit to connected clients via channel github.com/dwyl/hits/issues/79
-        HitsWeb.Endpoint.broadcast("hit:lobby", "hit", %{
-          "user" => user,
-          "repo" => repository,
-          "count" => count
-        })
-
-        # Render badge or json
-        if Content.get_accept_header(conn) =~ "json" do
-          render_json(conn, count, params)
         else
-          render_badge(conn, count, params.style)
-        end
-      else
-        # Render badge or json
-        if Content.get_accept_header(conn) =~ "json" do
           render_invalid_json(conn)
-        else
-          render_invalid_badge(conn)
         end
-      end
-    else
-      if Content.get_accept_header(conn) =~ "json" do
-        render_invalid_json(conn)
-      else
-        if user_valid?(user) and repository_valid?(repository) do
-          render(conn, "index.html", params_map)
+
+      # Badge content negotiation
+      false ->
+        if schema.valid? and String.ends_with?(repository, ".svg") do
+          if user_valid?(user) and repository_valid?(repository) do
+            # insert hit
+            {_user_schema, _useragent_schema, repo} = insert_hit(conn, user, repository)
+
+            count =
+              if params.show == "unique" do
+                Hit.count_unique_hits(repo.id)
+              else
+                Hit.count_hits(repo.id)
+              end
+
+            # Send hit to connected clients via channel github.com/dwyl/hits/issues/79
+            HitsWeb.Endpoint.broadcast("hit:lobby", "hit", %{
+              "user" => user,
+              "repo" => repository,
+              "count" => count
+            })
+
+            # Render badge
+            render_badge(conn, count, params.style)
+          else
+            render_invalid_badge(conn)
+          end
         else
-          redirect(conn, to: "/error/#{user}/#{repository}")
+          if user_valid?(user) and repository_valid?(repository) do
+            render(conn, "index.html", params_map)
+          else
+            redirect(conn, to: "/error/#{user}/#{repository}")
+          end
         end
-      end
     end
   end
 

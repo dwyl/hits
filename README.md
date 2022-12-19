@@ -1053,7 +1053,7 @@ and open a separate terminal session,
 paste the following and run.
 
 ```sh
-curl -H "Accept: application/json" http://localhost:4000/user/repo.svg\?color=blue
+curl -H "Accept: application/json" http://localhost:4000/user/repo\?color=blue
 ```
 
 The output will be the following.
