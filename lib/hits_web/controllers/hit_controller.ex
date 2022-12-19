@@ -59,7 +59,7 @@ defmodule HitsWeb.HitController do
 
       # Render json object, html page or svg badge
       cond do
-        Content.get_accept_header(conn) =~ "json" ->
+        Content.get_accept_header(conn) =~ "json" or String.ends_with?(repository, ".json") ->
           render_json(conn, count, params)
         String.ends_with?(repository, ".svg") ->
           render_badge(conn, count, params.style)
@@ -68,7 +68,7 @@ defmodule HitsWeb.HitController do
       end
     else
       cond do
-        Content.get_accept_header(conn) =~ "json" ->
+        Content.get_accept_header(conn) =~ "json" or String.ends_with?(repository, ".json")  ->
           render_invalid_json(conn)
         String.ends_with?(repository, ".svg") ->
           render_invalid_badge(conn)
@@ -130,10 +130,10 @@ defmodule HitsWeb.HitController do
   """
   def render_json(conn, count, params) do
     json_response = %{
-      "schemaVersion" => "1",
+      "schemaVersion" => 1,
       "label" => "hits",
       "style" => params.style,
-      "message" => count,
+      "message" => "#{count}",
       "color" => params.color
     }
     json(conn, json_response)
@@ -151,7 +151,7 @@ defmodule HitsWeb.HitController do
   """
   def render_invalid_json(conn) do
     json_response = %{
-      "schemaVersion" => "1",
+      "schemaVersion" => 1,
       "label" => "hits",
       "message" => "invalid url",
     }

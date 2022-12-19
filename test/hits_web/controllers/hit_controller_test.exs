@@ -31,10 +31,10 @@ defmodule HitsWeb.HitControllerTest do
       |> get("/user1/repo1")
 
     expected = %{
-      "schemaVersion" => "1",
+      "schemaVersion" => 1,
       "label" => "hits",
       "style" => "flat",
-      "message" => 1,
+      "message" => "1",
       "color" => "lightgrey"
     }
 
@@ -50,10 +50,10 @@ defmodule HitsWeb.HitControllerTest do
       |> get("/user1/repo1?show=unique")
 
     expected = %{
-      "schemaVersion" => "1",
+      "schemaVersion" => 1,
       "label" => "hits",
       "style" => "flat",
-      "message" => 1,
+      "message" => "1",
       "color" => "lightgrey"
     }
 
@@ -141,7 +141,7 @@ defmodule HitsWeb.HitControllerTest do
       |> get("/-user/repo")
 
     expected = %{
-      "schemaVersion" => "1",
+      "schemaVersion" => 1,
       "label" => "hits",
       "message" => "invalid url",
     }
@@ -157,7 +157,7 @@ defmodule HitsWeb.HitControllerTest do
       |> get("/-user/rep?style=invalid")
 
     expected = %{
-      "schemaVersion" => "1",
+      "schemaVersion" => 1,
       "label" => "hits",
       "message" => "invalid url",
     }

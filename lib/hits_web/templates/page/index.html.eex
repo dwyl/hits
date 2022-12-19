@@ -93,7 +93,7 @@
 
 
 <pre id="badge-endpoint" class="fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
-   curl -H "Accept: application/json" https://hits.dwyl.com/{username}/{repo}.svg?style={style}&show=unique?color=orange
+   curl -H "Accept: application/json" https://hits.dwyl.com/{username}/{repo}.json?style={style}&show=unique?color=orange
 </pre>
 
 

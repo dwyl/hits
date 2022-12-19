@@ -1071,7 +1071,7 @@ curl -H "Accept: application/json" http://localhost:4000/user/repo\?color=blue
 The output will be the following.
 
 ```sh
-{"color":"blue","label":"hits","message":20,"schemaVersion":"1","style":"flat"}%
+{"color":"blue","label":"hits","message":6,"schemaVersion":"1","style":"flat"}%
 ```
 
 You can easily check the `JSON` in a web browser too.
@@ -1094,7 +1094,7 @@ Now for the fun part!!
 
 ## Using Shields to Create _Any_ Style of Button!
 
-https://img.shields.io/endpoint?url
+https://img.shields.io/endpoint?url=https://hits.dwyl.com/nelson/test.json?style=flat-square&show=unique?color=orange
 
 
 
