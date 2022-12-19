@@ -30,16 +30,18 @@ defmodule HitsWeb.HitController do
   }
 
   def index(conn, %{"user" => user, "repository" => repository} = params) do
-
+    repo = String.replace_suffix(repository, ".svg", "")
+      |> String.replace_suffix(".json", "")
+      |> String.replace_suffix(".html", "")
     # Schema validation
     # Check https://github.com/vic/params#usage
     schema = schema_validator(params)
     params = Params.data(schema)
     params_map = Params.to_map(schema)
 
-    if schema.valid? and user_valid?(user) and repository_valid?(repository) do
-      # insert hit
-      {_user_schema, _useragent_schema, repo} = insert_hit(conn, user, repository)
+    if schema.valid? and user_valid?(user) and repository_valid?(repo) do
+      # insert hit. Note: the .svg is for legacy reasons 🙄
+      {_user_schema, _useragent_schema, repo} = insert_hit(conn, user, "#{repo}.svg")
 
       count =
         if params.show == "unique" do
