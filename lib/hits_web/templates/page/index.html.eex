@@ -71,6 +71,39 @@
   [![HitCount](https://hits.dwyl.com/{username}/{repo}.svg?style={style}&show=unique)](http://hits.dwyl.com/{username}/{repo})
 </pre>
 
+<h3 class="mt3 fw5 tc db f3 bg-teal white pa2">JSON Endpoint</h3>
+<p class="pl2 ml2">
+ <a href="https://shields.io/">shields.io</a>
+ provides a way for you to have other badge designs via 
+ <a href="https://shields.io/endpoint">shields.io/endpoint</a>.
+</p>
+
+<p class="pl2 ml2">
+ You can fully customise your badge by copying the following <b>JSON URL</b>:
+</p>
+
+<pre id="badge-endpoint" class="fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
+   https://hits.dwyl.com/{username}/{repo}.json
+</pre>
+
+<p class="pl2 ml2">And pasting it into the <b>url</b> field at:
+ <a href="https://shields.io/endpoint">shields.io/endpoint</a> to get your custom badge.
+
+<p class="pl2 ml2">
+  For example:
+
+  <pre id="badge-shields" class="fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
+  https://img.shields.io/endpoint?url=https%3A%2F%2Fhits.dwyl.com%2F{username}%2F{repo}.json%3Fcolor%3Dpink
+  </pre>
+
+  Will give you:
+
+  <img style="margin-left: 10px;" id="badge-shields-svg" 
+    src="https://img.shields.io/endpoint?url=https%s3A%2F%2Fhits.dwyl.com%2Ftest%2Ftest.json%3Fcolor%3Dpink"/>
+</p>
+
+
+
 <h2 class="mt0 fw5 tc f4 bg-teal white pa2 mt5"><em>Recently</em> Viewed Projects (<em>tracked by Hits</em>)</h2>
 <div class="h5 pl2" id="hits">
   <div id="default-websockets-msg">Updates will appear here when WebSockets are working ...</div>
@@ -85,5 +118,8 @@
   }
   body { /* dwyl font */
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  a {
+    width: 100%;
   }
 </style>

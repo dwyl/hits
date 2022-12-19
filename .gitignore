@@ -42,3 +42,4 @@ _logs/
 
 id_rsa_fly
 id_rsa_fly-cert.pub
+.vscode

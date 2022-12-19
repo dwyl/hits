@@ -7,12 +7,13 @@ defmodule Hits.MixProject do
       version: "1.6.3",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
+        c: :test,
         coveralls: :test,
         "coveralls.detail": :test,
         "coveralls.post": :test,
@@ -57,6 +58,12 @@ defmodule Hits.MixProject do
       {:plug_cowboy, "~> 2.6.0"},
       {:plug_crypto, "~> 1.2.2"},
 
+      # For content negotiation
+      {:content, "~> 1.3.0"},
+
+      # Query param schema validation
+      {:params, "~> 2.0"},
+
       # The rest of the dependendencies are for testing/reporting
       # decode .json fixture in test
       {:poison, "~> 5.0.0"},
@@ -78,12 +85,15 @@ defmodule Hits.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-      "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate", "test"],
+      "assets.deploy": ["esbuild default --minify", "phx.digest"],
       cover: ["coveralls.json"],
       "cover.html": ["coveralls.html"],
-      "assets.deploy": ["esbuild default --minify", "phx.digest"]
+      c: ["coveralls.html"],
+      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.reset": ["ecto.drop", "ecto.setup"],
+      s: ["phx.server"],
+      t: ["test"],
+      test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
 

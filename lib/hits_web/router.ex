@@ -1,12 +1,14 @@
 defmodule HitsWeb.Router do
   use HitsWeb, :router
 
-  pipeline :browser do
-    plug(:accepts, ["html"])
-    plug(:fetch_session)
-    plug(:fetch_flash)
-    plug(:protect_from_forgery)
-    plug(:put_secure_browser_headers)
+  pipeline :any do
+    plug :accepts, ["html", "json"]
+    plug Content, %{html_plugs: [
+      &fetch_session/2,
+      &fetch_flash/2,
+      &protect_from_forgery/2,
+      &put_secure_browser_headers/2
+    ]}
   end
 
   # temporarily comment out API endpoint till we need it!
@@ -15,7 +17,7 @@ defmodule HitsWeb.Router do
   # end
 
   scope "/", HitsWeb do
-    pipe_through(:browser)
+    pipe_through(:any)
 
     get("/", PageController, :index)
     get("/error/:user/:repository", PageController, :error)

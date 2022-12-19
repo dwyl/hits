@@ -4,7 +4,7 @@
 
 <div align="center">
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/dwyl/hits/Elixir%20CI?label=build&style=flat-square)](https://github.com/dwyl/hits/actions/workflows/ci.yml)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/hits/ci.yml?label=build&style=flat-square&branch=main)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hits/master.svg?style=flat-square)](https://codecov.io/github/dwyl/hits?branch=master)
 [![HitCount](https://hits.dwyl.com/dwyl/hits.svg)](https://github.com/dwyl/hits)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/hits/issues/74)
@@ -905,7 +905,7 @@ and our previous tests are unaffected.
 
 <br />
 
-### SVG Badge Template
+## SVG Badge Template
 
 We created the SVG badge template for our MVP
 [`template.svg`](https://github.com/dwyl/hits-nodejs/blob/master/lib/template.svg)
@@ -930,6 +930,185 @@ and paste the following SVG code in it:
 The comments are there for beginner-friendliness,
 they are stripped out before sending the badge to the client
 to conserve bandwidth.
+
+# Alternative Badge Formats 🌈
+
+Several people have requested
+an alternative badge format.
+Rather than spend a lot of time
+customizing the badges ourselves,
+we are going to use 
+[shields.io/endpoint](https://shields.io/endpoint)
+that allows full badge customization.
+## Adding `JSON` Content Negotiation
+
+First thing we need to do 
+is add the ability to return `JSON`
+instead of `SVG`.
+In `HTTP` this is referred to as 
+Content Negotiation:
+[wikipedia.org/wiki/Content_negotiation](https://en.wikipedia.org/wiki/Content_negotiation)
+
+### Installing `params` and `content`
+
+We are using 
+[`params`](https://github.com/vic/params)
+to validate the query parameters
+and 
+[`content`](https://github.com/dwyl/content)
+to add content negotiation on our endpoints.
+
+Let's install these
+by adding them to the `deps`
+section `mix.exs`:
+
+```elixir
+  defp deps do
+    [
+      # For content negotiation
+      {:content, "~> 1.3.0"},
+
+      # Query param schema validation
+      {:params, "~> 2.0"},
+    ]
+  end
+```
+
+### Defining Validation Schema
+
+The schema **must be compatible with `shield.io`**.
+We make use of a `schema validator` 
+so we know that the parameters
+passed by the users are valid.
+
+The possible values of each field
+were determined according to
+[shields.io/endpoint](https://shields.io/endpoint)
+
+The valid parameters are:
+
+```elixir
+defparams schema_validator %{
+  user!: :string,
+  repository!: :string,
+  style: [
+    field: Ecto.Enum, 
+    values: [
+      plastic: "plastic", 
+      flat: "flat", 
+      flatSquare: "flat-square", 
+      forTheBadge: "for-the-badge", 
+      social: "social"
+    ], 
+    default: :flat
+  ],
+  color: [field: :string, default: "lightgrey"],
+  show: [field: :string, default: nil],
+}
+```
+
+By default, each badge is `lightgrey`
+and has a `flat` style.
+
+This `defparams` defintion is in the
+`/lib/hits_web/controllers/hit_controller.ex` 
+file.
+
+### Content negotiation
+
+Luckily, the `content` package 
+makes it relatively easy to differentiate
+`HTTP` and `JSON` requests.
+
+The way we implement different behaviours
+for `JSON` requests is made through
+the following template:
+
+```elixir
+  if Content.get_accept_header(conn) =~ "json" do
+    # return json 
+  else
+    # render page
+  end
+```
+
+You will notice this behaviour in 
+[`lib/hits_web/controllers/hit_controller.ex`](https://github.com/dwyl/hits/blob/37d3a91022f4aad25558f4c6f3e2bd01c933d63a/lib/hits_web/controllers/hit_controller.ex#L50-L54)
+
+After correct setup,
+the returned JSON object
+depends on the parameters the user defines.
+
+```elixir
+  def render_json(conn, count, params) do
+    json_response = %{
+      "schemaVersion" => "1",
+      "label" => "hits",
+      "style" => params.style,
+      "message" => count,
+      "color" => params.color
+    }
+    json(conn, json_response)
+  end
+```
+
+This function effectively makes it so
+the endpoint *returns* a `JSON` object
+following Shields.io schema convention
+which can later be used in 
+[shields.io/endpoint](https://shields.io/endpoint)
+
+### Expected `JSON` response
+
+If you run `mix phx.server`
+and open a separate terminal session, 
+paste the following `cURL` command and run:
+
+```sh
+curl -H "Accept: application/json" http://localhost:4000/user/repo\?color=blue
+```
+
+The output will be the following.
+
+```sh
+{"color":"blue","label":"hits","message":6,"schemaVersion":"1","style":"flat"}%
+```
+
+You can easily check the `JSON` in a web browser too.
+Simply open Firefox and visit the URL:
+http://localhost:4000/user/repo.json?color=blue
+
+![json-in-browser](https://user-images.githubusercontent.com/194400/208438106-e2fc8528-d9d5-4906-9fa1-6f588d9d5b3e.png)
+
+And if you replace the `.json` in the URL with `.svg`
+you will see the badge as expected:
+http://localhost:4000/user/repo.svg
+
+![svg-in-browser](https://user-images.githubusercontent.com/194400/208438454-0645cf7b-62f8-4b3d-9153-c6e66747456b.png)
+
+The **same endpoint** is used
+for both `HTTP` requests
+and also outputs a `JSON` object.
+
+Now for the fun part!!
+
+## Using Shields to Create _Any_ Style of Button!
+
+```md
+https://img.shields.io/endpoint?url=https://hits.dwyl.com/dwyl/hits.json?style=flat-square&show=unique?color=orange
+```
+
+Fully customizable:
+
+![fully-custom](https://user-images.githubusercontent.com/194400/208462345-fdfa1dc4-561e-437a-9727-5e92f5853cca.png)
+
+![Custom badge](https://img.shields.io/endpoint?color=red&label=amaze&logo=ducati&logoColor=pink&url=https%3A%2F%2Fhits.dwyl.com%2Fnelson%2Fhello.json%3Fstyle%3Dflat-square%26show%3Dunique%26color%3Dpink)
+![Custom badge](https://img.shields.io/endpoint?color=blue&label=amaze&logo=ducati&logoColor=blue&style=for-the-badge&url=https%3A%2F%2Fhits.dwyl.com%2Fnelson%2Fhello.json%3Fstyle%3Dflat-square%26show%3Dunique%26color%3Dpink)
+![Custom badge](https://img.shields.io/endpoint?color=%23ff00bf&label=amaze&logo=elixir&logoColor=%23ff00bf&style=for-the-badge&url=https%3A%2F%2Fhits.dwyl.com%2Fdwyl%2Fhits.json%3Fstyle%3Dflat-square%26show%3Dunique%26color%3Dpink)
+
+Plenty of logos to chose from at:
+https://simpleicons.org
+
 
 # tl;dr
 

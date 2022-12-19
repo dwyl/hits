@@ -4,36 +4,76 @@ defmodule HitsWeb.HitController do
   # import Ecto.Query
   alias Hits.{Hit, Repository, User, Useragent}
 
+  use Params
+
+  @doc """
+  Schema validator.
+  The possible URL and query parameters are defined here and checked for validity.
+  The possible values are fetched from https://shields.io/endpoint
+  """
+  defparams schema_validator %{
+    user!: :string,
+    repository!: :string,
+    style: [
+      field: Ecto.Enum,
+      values: [
+        plastic: "plastic",
+        flat: "flat",
+        flatSquare: "flat-square",
+        forTheBadge: "for-the-badge",
+        social: "social"
+      ],
+      default: :flat
+    ],
+    color: [field: :string, default: "lightgrey"],
+    show: [field: :string, default: nil],
+  }
+
   def index(conn, %{"user" => user, "repository" => repository} = params) do
-    if String.ends_with?(repository, ".svg") do
-      if user_valid?(user) and repository_valid?(repository) do
-        # insert hit
-        {_user_schema, _useragent_schema, repo} = insert_hit(conn, user, repository)
+    repo = String.replace_suffix(repository, ".svg", "")
+      |> String.replace_suffix(".json", "")
+      |> String.replace_suffix(".html", "")
+    # Schema validation
+    # Check https://github.com/vic/params#usage
+    schema = schema_validator(params)
+    params = Params.data(schema)
+    params_map = Params.to_map(schema)
 
-        count =
-          if params["show"] == "unique" do
-            Hit.count_unique_hits(repo.id)
-          else
-            Hit.count_hits(repo.id)
-          end
+    if schema.valid? and user_valid?(user) and repository_valid?(repo) do
+      # insert hit. Note: the .svg is for legacy reasons 🙄
+      {_user_schema, _useragent_schema, repo} = insert_hit(conn, user, "#{repo}.svg")
 
-        # Send hit to connected clients via channel github.com/dwyl/hits/issues/79
-        HitsWeb.Endpoint.broadcast("hit:lobby", "hit", %{
-          "user" => user,
-          "repo" => repository,
-          "count" => count
-        })
+      count =
+        if params.show == "unique" do
+          Hit.count_unique_hits(repo.id)
+        else
+          Hit.count_hits(repo.id)
+        end
 
-        # render badge
-        render_badge(conn, count, params["style"])
-      else
-        render_invalid_badge(conn)
+      # Send hit to connected clients via channel github.com/dwyl/hits/issues/79
+      HitsWeb.Endpoint.broadcast("hit:lobby", "hit", %{
+        "user" => user,
+        "repo" => repository,
+        "count" => count
+      })
+
+      # Render json object, html page or svg badge
+      cond do
+        Content.get_accept_header(conn) =~ "json" or String.ends_with?(repository, ".json") ->
+          render_json(conn, count, params)
+        String.ends_with?(repository, ".svg") ->
+          render_badge(conn, count, params.style)
+        true ->
+          render(conn, "index.html", params_map)
       end
     else
-      if user_valid?(user) and repository_valid?(repository) do
-        render(conn, "index.html", params)
-      else
-        redirect(conn, to: "/error/#{user}/#{repository}")
+      cond do
+        Content.get_accept_header(conn) =~ "json" or String.ends_with?(repository, ".json")  ->
+          render_invalid_json(conn)
+        String.ends_with?(repository, ".svg") ->
+          render_invalid_badge(conn)
+        true ->
+          redirect(conn, to: "/error/#{user}/#{repository}")
       end
     end
   end
@@ -75,6 +115,47 @@ defmodule HitsWeb.HitController do
       |> Repository.insert(%{"name" => repository_name})
 
     {user, useragent, repository}
+  end
+
+
+  @doc """
+  render_json/1 outputs an encoded json related to a badge.
+
+  ## Parameters
+
+  - conn: Map the standard Plug.Conn info see: hexdocs.pm/plug/Plug.Conn.html
+
+  Returns an encoded json that can be used with `shields.io` URL.
+  See https://shields.io/endpoint
+  """
+  def render_json(conn, count, params) do
+    json_response = %{
+      "schemaVersion" => 1,
+      "label" => "hits",
+      "style" => params.style,
+      "message" => "#{count}",
+      "color" => params.color
+    }
+    json(conn, json_response)
+  end
+
+  @doc """
+  render_invalid_json/1 outputs an encoded json related to an invalid badge.
+
+  ## Parameters
+
+  - conn: Map the standard Plug.Conn info see: hexdocs.pm/plug/Plug.Conn.html
+
+  Returns an encoded json that can be used with `shields.io` URL.
+  See https://shields.io/endpoint
+  """
+  def render_invalid_json(conn) do
+    json_response = %{
+      "schemaVersion" => 1,
+      "label" => "hits",
+      "message" => "invalid url",
+    }
+    json(conn, json_response)
   end
 
   @doc """
@@ -123,11 +204,12 @@ defmodule HitsWeb.HitController do
     end
   end
 
-  # see issue https://github.com/dwyl/hits/issues/154
-  # alphanumeric follow by one or zeor "-" or just alphanumerics
+  # see: https://github.com/dwyl/hits/issues/154
+  # alphanumeric follow by one or zero "-" or just alphanumerics
   defp user_valid?(user), do: String.match?(user, ~r/^([[:alnum:]]+-)*[[:alnum:]]+$/)
 
-  #  ^[[:alnum:]-_.]+$ means the name is composed of one or multiple alphanumeric character
-  #  or "-_." characters
+  # ^[[:alnum:]-_.]+$ means the name is composed of
+  # one or multiple alphanumeric character
+  # or "-_." characters
   defp repository_valid?(repo), do: String.match?(repo, ~r/^[[:alnum:]-_.]+$/)
 end

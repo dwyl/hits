@@ -22,6 +22,44 @@ defmodule HitsWeb.HitControllerTest do
     assert res.resp_body =~ Hits.make_badge(1)
   end
 
+  test "GET /user1/repo1 with json return", %{conn: conn} do
+    res =
+      put_req_header(conn, "user-agent", "Hackintosh")
+      |> put_req_header("x-forwarded-for", "127.0.0.1, 127.0.0.2")
+      |> put_req_header("accept-language", "en-GB,en;q=0.5")
+      |> put_req_header("accept", "application/json")
+      |> get("/user1/repo1")
+
+    expected = %{
+      "schemaVersion" => 1,
+      "label" => "hits",
+      "style" => "flat",
+      "message" => "1",
+      "color" => "lightgrey"
+    }
+
+    assert Jason.decode!(res.resp_body) == expected
+  end
+
+  test "GET /user1/repo1 unique hits with json return", %{conn: conn} do
+    res =
+      put_req_header(conn, "user-agent", "Hackintosh")
+      |> put_req_header("x-forwarded-for", "127.0.0.1, 127.0.0.2")
+      |> put_req_header("accept-language", "en-GB,en;q=0.5")
+      |> put_req_header("accept", "application/json")
+      |> get("/user1/repo1?show=unique")
+
+    expected = %{
+      "schemaVersion" => 1,
+      "label" => "hits",
+      "style" => "flat",
+      "message" => "1",
+      "color" => "lightgrey"
+    }
+
+    assert Jason.decode!(res.resp_body) == expected
+  end
+
   test "test counter increments! GET /totes/amaze.svg", %{conn: conn} do
     put_req_header(conn, "user-agent", "Hackintosh")
     |> put_req_header("accept-language", "en-GB,en;q=0.5")
@@ -93,6 +131,38 @@ defmodule HitsWeb.HitControllerTest do
       |> get("/-user/repo.svg")
 
     assert res.resp_body =~ Hits.svg_invalid_badge()
+  end
+
+  test "GET /-user/repo.svg invalid user with json response", %{conn: conn} do
+    res =
+      put_req_header(conn, "user-agent", "Hackintosh")
+      |> put_req_header("accept-language", "en-GB,en;q=0.5")
+      |> put_req_header("accept", "application/json")
+      |> get("/-user/repo")
+
+    expected = %{
+      "schemaVersion" => 1,
+      "label" => "hits",
+      "message" => "invalid url",
+    }
+
+    assert Jason.decode!(res.resp_body) == expected
+  end
+
+  test "GET /-user/invalidrepo invalid user with json response", %{conn: conn} do
+    res =
+      put_req_header(conn, "user-agent", "Hackintosh")
+      |> put_req_header("accept-language", "en-GB,en;q=0.5")
+      |> put_req_header("accept", "application/json")
+      |> get("/-user/rep?style=invalid")
+
+    expected = %{
+      "schemaVersion" => 1,
+      "label" => "hits",
+      "message" => "invalid url",
+    }
+
+    assert Jason.decode!(res.resp_body) == expected
   end
 
   test "GET /user/repo{}!!.svg invalid repository", %{conn: conn} do
