@@ -93,8 +93,13 @@
 
 
 <pre id="badge-endpoint" class="fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
-   curl -H "Accept: application/json" https://hits.dwyl.com/{username}/{repo}.json?style={style}&show=unique?color=orange
+   curl -H "Accept: application/json" https://hits.dwyl.com/{username}/{repo}.json?style={style}&show=unique&color=orange
 </pre>
+
+<p class="pl2 ml2">
+For example:
+
+</p>
 
 
 
@@ -112,5 +117,8 @@
   }
   body { /* dwyl font */
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  a {
+    width: 100%;
   }
 </style>

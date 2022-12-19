@@ -76,22 +76,38 @@ channel.on('hit', function (payload) { // listen to the 'shout' event
 const root = document.getElementById("hits");
 function append_hit (data) {
   const previous = root.childNodes[0];
-  const DATE = new Date();
-  const date = Date.now();
-  const time = DATE.toUTCString().replace('GMT', '');
-  const text = time + ' /' + data.user + '/' + data.repo + ' ' + data.count
-  root.insertBefore(div(date, text), previous);
+  root.insertBefore(div(data), previous);
   // remove default message if displayed
   // see https://github.com/dwyl/hits/issues/149
   const defaultMsg = document.getElementById('default-websockets-msg');
   defaultMsg && defaultMsg.remove();
 }
 
+function link (data) {
+  const a = document.createElement('a');
+  const repo = data.repo.split('.svg')[0]
+  const text = "/" + data.user + '/' + repo;
+  const linkText = document.createTextNode(text);
+  a.appendChild(linkText);
+  a.title = text;
+  a.href = "https://github.com/" + data.user + '/' + repo;
+  return a;
+}
+
 // borrowed from: https://git.io/v536m
-function div(divid, text) {
+function div(data) {
   let div = document.createElement('div');
-  div.id = divid;
-  const txt = document.createTextNode(text);
-  div.appendChild(txt);
+  div.id = Date.now();
+  div.appendChild(date_as_text())
+  div.appendChild(link(data));
+  div.appendChild(document.createTextNode(" " + data.count))
   return div;
 }
+
+function date_as_text() {
+  const DATE = new Date();
+  const time = DATE.toUTCString().replace('GMT', '');
+  return document.createTextNode(time);
+}
+
+
