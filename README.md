@@ -1094,11 +1094,20 @@ Now for the fun part!!
 
 ## Using Shields to Create _Any_ Style of Button!
 
-https://img.shields.io/endpoint?url=https://hits.dwyl.com/nelson/test.json?style=flat-square&show=unique?color=orange
+```md
+https://img.shields.io/endpoint?url=https://hits.dwyl.com/dwyl/hits.json?style=flat-square&show=unique?color=orange
+```
 
+Fully customizable:
 
+![fully-custom](https://user-images.githubusercontent.com/194400/208462345-fdfa1dc4-561e-437a-9727-5e92f5853cca.png)
 
+![Custom badge](https://img.shields.io/endpoint?color=red&label=amaze&logo=ducati&logoColor=pink&url=https%3A%2F%2Fhits.dwyl.com%2Fnelson%2Fhello.json%3Fstyle%3Dflat-square%26show%3Dunique%26color%3Dpink)
+![Custom badge](https://img.shields.io/endpoint?color=blue&label=amaze&logo=ducati&logoColor=blue&style=for-the-badge&url=https%3A%2F%2Fhits.dwyl.com%2Fnelson%2Fhello.json%3Fstyle%3Dflat-square%26show%3Dunique%26color%3Dpink)
+![Custom badge](https://img.shields.io/endpoint?color=%23ff00bf&label=amaze&logo=elixir&logoColor=%23ff00bf&style=for-the-badge&url=https%3A%2F%2Fhits.dwyl.com%2Fdwyl%2Fhits.json%3Fstyle%3Dflat-square%26show%3Dunique%26color%3Dpink)
 
+Plenty of logos to chose from at:
+https://simpleicons.org
 
 
 # tl;dr

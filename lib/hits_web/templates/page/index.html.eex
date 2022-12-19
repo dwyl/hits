@@ -71,34 +71,34 @@
   [![HitCount](https://hits.dwyl.com/{username}/{repo}.svg?style={style}&show=unique)](http://hits.dwyl.com/{username}/{repo})
 </pre>
 
-<h3 class="mt3 fw5 tc db f3 bg-teal white pa2">Endpoint</h3>
+<h3 class="mt3 fw5 tc db f3 bg-teal white pa2">JSON Endpoint</h3>
 <p class="pl2 ml2">
- Shields.io provides a way for you to have other badge designs via <a href="https://shields.io/endpoint">Shields Endpoint</a>.
+ <a href="https://shields.io/">shields.io</a>
+ provides a way for you to have other badge designs via 
+ <a href="https://shields.io/endpoint">shields.io/endpoint</a>.
 </p>
 
 <p class="pl2 ml2">
- If you want further customization on your badge, we offer you an endpoint that can later be used on <a href="https://shields.io/endpoint">Shield.io's</a>
- to render your desired badge. Check the link for the possible customization possible.
+ You can fully customise your badge by copying the following <b>JSON URL</b>:
 </p>
-
-<p class="pl2 ml2">
- You can currently only edit the <b>style</b> and <b>color</b> of the badge with our tool.
-</p>
-
-<p class="pl2 ml2">
- If you run the following command, you can verify that a <b>JSON object is returned</b>. This will render an orange badge with the chosen style 
- (you can choose whatever style or color you want, check <a href="https://shields.io/">shields.io</a> for more options).
- You can leverage this and use the endpoint on <a href="https://shields.io/endpoint">https://shields.io/endpoint</a> to get your badge.
-</p>
-
 
 <pre id="badge-endpoint" class="fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
-   curl -H "Accept: application/json" https://hits.dwyl.com/{username}/{repo}.json?style={style}&show=unique&color=orange
+   https://hits.dwyl.com/{username}/{repo}.json?style={style}&show=unique&color=orange
 </pre>
 
-<p class="pl2 ml2">
-For example:
+<p class="pl2 ml2">And pasting it into the <b>url</b> field at:
+ <a href="https://shields.io/endpoint">shields.io/endpoint</a> to get your custom badge.
 
+<p class="pl2 ml2">
+  For example:
+
+  <pre id="badge-shields" class="fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
+  https://img.shields.io/endpoint?url=https%3A%2F%2Fhits.dwyl.com%2F{username}%2F{repo}.json%3Fcolor%3Dorange
+  </pre>
+
+  Will give you:
+
+  <img style="margin-left: 10px;" id="badge-shields-svg" src="https://img.shields.io/endpoint?url=https%s3A%2F%2Fhits.dwyl.com%2Ftest%2Ftest.json%3Fcolor%3Dorange"/>
 </p>
 
 

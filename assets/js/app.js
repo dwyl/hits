@@ -18,6 +18,7 @@ import socket from "./socket"
 var mt = document.getElementById('badge').innerHTML;
 var mtu = document.getElementById('badge-unique').innerHTML;
 var mtendpoint = document.getElementById('badge-endpoint').innerHTML;
+var mtsheilds = document.getElementById('badge-shields').innerHTML;
 
 function generate_markdown (template) {
   var user = document.getElementById("username").value || '{username}';
@@ -33,9 +34,14 @@ function display_badge_markdown () {
   var md = generate_markdown(mt)
   var mdu = generate_markdown(mtu) 
   var mdendpoint = generate_markdown(mtendpoint) 
-  var pre = document.getElementById("badge").innerHTML = md;
-  var pre = document.getElementById("badge-unique").innerHTML = mdu;
-  var pre = document.getElementById("badge-endpoint").innerHTML = mdendpoint;
+  var mdshields = generate_markdown(mtsheilds) 
+  
+  document.getElementById("badge").innerHTML = md;
+  document.getElementById("badge-unique").innerHTML = mdu;
+  document.getElementById("badge-endpoint").innerHTML = mdendpoint;
+  document.getElementById("badge-shields").innerHTML = mdshields;
+  document.getElementById("badge-shields-svg").src = mdshields;
+  
 }
 
 setTimeout(function () {
