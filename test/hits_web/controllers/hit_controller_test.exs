@@ -22,13 +22,32 @@ defmodule HitsWeb.HitControllerTest do
     assert res.resp_body =~ Hits.make_badge(1)
   end
 
-  test "GET /user1/repo1.svg with json return", %{conn: conn} do
+  test "GET /user1/repo1 with json return", %{conn: conn} do
     res =
       put_req_header(conn, "user-agent", "Hackintosh")
       |> put_req_header("x-forwarded-for", "127.0.0.1, 127.0.0.2")
       |> put_req_header("accept-language", "en-GB,en;q=0.5")
       |> put_req_header("accept", "application/json")
-      |> get("/user1/repo1.svg")
+      |> get("/user1/repo1")
+
+    expected = %{
+      "schemaVersion" => "1",
+      "label" => "hits",
+      "style" => "flat",
+      "message" => 1,
+      "color" => "lightgrey"
+    }
+
+    assert Jason.decode!(res.resp_body) == expected
+  end
+
+  test "GET /user1/repo1 unique hits with json return", %{conn: conn} do
+    res =
+      put_req_header(conn, "user-agent", "Hackintosh")
+      |> put_req_header("x-forwarded-for", "127.0.0.1, 127.0.0.2")
+      |> put_req_header("accept-language", "en-GB,en;q=0.5")
+      |> put_req_header("accept", "application/json")
+      |> get("/user1/repo1?show=unique")
 
     expected = %{
       "schemaVersion" => "1",
@@ -119,7 +138,7 @@ defmodule HitsWeb.HitControllerTest do
       put_req_header(conn, "user-agent", "Hackintosh")
       |> put_req_header("accept-language", "en-GB,en;q=0.5")
       |> put_req_header("accept", "application/json")
-      |> get("/-user/repo.svg")
+      |> get("/-user/repo")
 
     expected = %{
       "schemaVersion" => "1",
@@ -130,12 +149,12 @@ defmodule HitsWeb.HitControllerTest do
     assert Jason.decode!(res.resp_body) == expected
   end
 
-  test "GET /-user/invalidrepo invalid user and missing `.svg` with json response", %{conn: conn} do
+  test "GET /-user/invalidrepo invalid user with json response", %{conn: conn} do
     res =
       put_req_header(conn, "user-agent", "Hackintosh")
       |> put_req_header("accept-language", "en-GB,en;q=0.5")
       |> put_req_header("accept", "application/json")
-      |> get("/-user/invalidrep")
+      |> get("/-user/rep?style=invalid")
 
     expected = %{
       "schemaVersion" => "1",
