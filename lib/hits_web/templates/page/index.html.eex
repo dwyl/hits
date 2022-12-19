@@ -83,7 +83,7 @@
 </p>
 
 <pre id="badge-endpoint" class="fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
-   https://hits.dwyl.com/{username}/{repo}.json?style={style}&show=unique&color=orange
+   https://hits.dwyl.com/{username}/{repo}.json
 </pre>
 
 <p class="pl2 ml2">And pasting it into the <b>url</b> field at:
@@ -93,12 +93,13 @@
   For example:
 
   <pre id="badge-shields" class="fw4 ba bw1 pa3 ma2" style="white-space: pre-wrap; word-break: keep-all;">
-  https://img.shields.io/endpoint?url=https%3A%2F%2Fhits.dwyl.com%2F{username}%2F{repo}.json%3Fcolor%3Dorange
+  https://img.shields.io/endpoint?url=https%3A%2F%2Fhits.dwyl.com%2F{username}%2F{repo}.json%3Fcolor%3Dpink
   </pre>
 
   Will give you:
 
-  <img style="margin-left: 10px;" id="badge-shields-svg" src="https://img.shields.io/endpoint?url=https%s3A%2F%2Fhits.dwyl.com%2Ftest%2Ftest.json%3Fcolor%3Dorange"/>
+  <img style="margin-left: 10px;" id="badge-shields-svg" 
+    src="https://img.shields.io/endpoint?url=https%s3A%2F%2Fhits.dwyl.com%2Ftest%2Ftest.json%3Fcolor%3Dpink"/>
 </p>
 
 
