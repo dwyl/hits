@@ -6,11 +6,6 @@ defmodule HitsWeb.PageControllerTest do
     assert html_response(conn, 200) =~ "Hits!"
   end
 
-  test "GET /user/repo", %{conn: conn} do
-    conn = get(conn, "/user/repo")
-    assert html_response(conn, 200) =~ "dashboard"
-  end
-
   test "GET /--user/repo$", %{conn: conn} do
     conn = get(conn, "/--user/repo$")
     assert html_response(conn, 302)
