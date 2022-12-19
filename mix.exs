@@ -52,10 +52,10 @@ defmodule Hits.MixProject do
       {:phoenix_live_dashboard, "~> 0.6"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
-      {:phoenix_live_reload, "~> 1.3.3", only: :dev},
+      {:phoenix_live_reload, "~> 1.4.0", only: :dev},
       {:gettext, "~> 0.20.0"},
       {:jason, "~> 1.4.0"},
-      {:plug_cowboy, "~> 2.5.2"},
+      {:plug_cowboy, "~> 2.6.0"},
       {:plug_crypto, "~> 1.2.2"},
 
       # For content negotiation
@@ -71,9 +71,9 @@ defmodule Hits.MixProject do
       # tracking test coverage
       {:excoveralls, "~> 0.15.0", only: [:test, :dev]},
       # to generate documentation
-      {:ex_doc, "~> 0.28.0", only: [:dev, :docs]},
+      {:ex_doc, "~> 0.29.0", only: [:dev, :docs]},
       {:inch_ex, "~> 2.1.0-rc.1", only: :docs},
-      {:esbuild, "~> 0.5.0", runtime: Mix.env() == :dev}
+      {:esbuild, "~> 0.6.0", runtime: Mix.env() == :dev}
     ]
   end
 
