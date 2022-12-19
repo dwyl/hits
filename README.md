@@ -4,7 +4,7 @@
 
 <div align="center">
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/dwyl/hits/Elixir%20CI?label=build&style=flat-square)](https://github.com/dwyl/hits/actions/workflows/ci.yml)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/hits/ci.yml?label=build&style=flat-square&branch=main)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hits/master.svg?style=flat-square)](https://codecov.io/github/dwyl/hits?branch=master)
 [![HitCount](https://hits.dwyl.com/dwyl/hits.svg)](https://github.com/dwyl/hits)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/hits/issues/74)
@@ -931,30 +931,36 @@ The comments are there for beginner-friendliness,
 they are stripped out before sending the badge to the client
 to conserve bandwidth.
 
-## Adding JSON content negotiation
-Shields.io [provides an endpoint](https://shields.io/endpoint)
+# Alternative Badge Formats 🌈
+
+Several people have requested
+an alternative badge format.
+Rather than spend a lot of time
+customizing the badges ourselves,
+we are going to use 
+[shields.io/endpoint](https://shields.io/endpoint)
 that allows full badge customization.
-You may find the complete list
-of customization options inside https://shields.io/).
+## Adding `JSON` Content Negotiation
 
-For this, we need to *pass an endpoint*
-that returns a **JSON** object with the customization needed.
-We can make it so `hits` returns this JSON
-according to what the user wants. 
-
-We'll go over the basics
-of adding this feature. 
-We'll give an **overview**
-and we won't delve into much detail.
-
+First thing we need to do 
+is add the ability to return `JSON`
+instead of `SVG`.
+In `HTTP` this is referred to as 
+Content Negotiation:
+[wikipedia.org/wiki/Content_negotiation](https://en.wikipedia.org/wiki/Content_negotiation)
 
 ### Installing `params` and `content`
-We are using [`params`](https://github.com/vic/params)
+
+We are using 
+[`params`](https://github.com/vic/params)
 to validate the query parameters
-and [`content`](https://github.com/dwyl/content)
+and 
+[`content`](https://github.com/dwyl/content)
 to add content negotiation on our endpoints.
 
-Let's install these.
+Let's install these
+by adding them to the `deps`
+section `mix.exs`:
 
 ```elixir
   defp deps do
@@ -968,48 +974,55 @@ Let's install these.
   end
 ```
 
-### Defining validation schema
-The schema **must be compatible 
-with shield.io**.
+### Defining Validation Schema
+
+The schema **must be compatible with `shield.io`**.
 We make use of a `schema validator` 
 so we know that the parameters
 passed by the users are valid.
 
 The possible values of each field
 were determined according to
-https://shields.io/endpoint.
+[shields.io/endpoint](https://shields.io/endpoint)
 
-Here is the validation schema,
-which follows the possible configurations
-of the previous link.
+The valid parameters are:
 
 ```elixir
-  defparams schema_validator %{
-    user!: :string,
-    repository!: :string,
-    style: [field: Ecto.Enum, values: [plastic: "plastic", flat: "flat", flatSquare: "flat-square", forTheBadge: "for-the-badge", social: "social"], default: :flat],
-    color: [field: :string, default: "lightgrey"],
-    show: [field: :string, default: nil],
-  }
+defparams schema_validator %{
+  user!: :string,
+  repository!: :string,
+  style: [
+    field: Ecto.Enum, 
+    values: [
+      plastic: "plastic", 
+      flat: "flat", 
+      flatSquare: "flat-square", 
+      forTheBadge: "for-the-badge", 
+      social: "social"
+    ], 
+    default: :flat
+  ],
+  color: [field: :string, default: "lightgrey"],
+  show: [field: :string, default: nil],
+}
 ```
 
 By default, each badge is `lightgrey`
 and has a `flat` style.
 
-You can find 
-the snippet of code used
-in the `/lib/hits_web/controllers/hit_controller.ex` file.
-
- https://github.com/dwyl/hits/blob/37d3a91022f4aad25558f4c6f3e2bd01c933d63a/lib/hits_web/controllers/hit_controller.ex#L14-L20
+This `defparams` defintion is in the
+`/lib/hits_web/controllers/hit_controller.ex` 
+file.
 
 ### Content negotiation
+
 Luckily, the `content` package 
-makes it relatively easy to differenciate
-HTTP and JSON requests.
+makes it relatively easy to differentiate
+`HTTP` and `JSON` requests.
 
 The way we implement different behaviours
-for JSON and HTTP requests is made through
-the following template.
+for `JSON` requests is made through
+the following template:
 
 ```elixir
   if Content.get_accept_header(conn) =~ "json" do
@@ -1019,10 +1032,8 @@ the following template.
   end
 ```
 
-You will notice this behaviour 
-in `lib/hits_web/controllers/hit_controller.ex`.
-
-https://github.com/dwyl/hits/blob/37d3a91022f4aad25558f4c6f3e2bd01c933d63a/lib/hits_web/controllers/hit_controller.ex#L50-L54
+You will notice this behaviour in 
+[`lib/hits_web/controllers/hit_controller.ex`](https://github.com/dwyl/hits/blob/37d3a91022f4aad25558f4c6f3e2bd01c933d63a/lib/hits_web/controllers/hit_controller.ex#L50-L54)
 
 After correct setup,
 the returned JSON object
@@ -1042,18 +1053,19 @@ depends on the parameters the user defines.
 ```
 
 This function effectively makes it so
-the endpoint *returns* a JSON object
+the endpoint *returns* a `JSON` object
 following Shields.io schema convention
 which can later be used in 
-https://shields.io/endpoint.
+[shields.io/endpoint](https://shields.io/endpoint)
 
-### Expected JSON response
+### Expected `JSON` response
+
 If you run `mix phx.server`
 and open a separate terminal session, 
-paste the following and run.
+paste the following `cURL` command and run:
 
 ```sh
-curl -H "Accept: application/json" http://localhost:4000/user/repo.svg\?color=blue
+curl -H "Accept: application/json" http://localhost:4000/user/repo\?color=blue
 ```
 
 The output will be the following.
@@ -1062,19 +1074,31 @@ The output will be the following.
 {"color":"blue","label":"hits","message":20,"schemaVersion":"1","style":"flat"}%
 ```
 
-However, if you open the same link
-in a browser, rendering 
-still works properly. 
-We are just making an HTTP request,
-after all 🙂.
+You can easily check the `JSON` in a web browser too.
+Simply open Firefox and visit the URL:
+http://localhost:4000/user/repo.json?color=blue
 
-<img width="686" alt="browser" src="https://user-images.githubusercontent.com/17494745/207122795-52276959-c5e5-4b3f-9b16-58797b8597e2.png">
+![json-in-browser](https://user-images.githubusercontent.com/194400/208438106-e2fc8528-d9d5-4906-9fa1-6f588d9d5b3e.png)
 
-So, the **same endpoint** is used
-for both normal HTTP requests
-but also outputs a JSON object
-if we want to
-(by adding an `Accept` header with `application/json`).
+And if you replace the `.json` in the URL with `.svg`
+you will see the badge as expected:
+http://localhost:4000/user/repo.svg
+
+![svg-in-browser](https://user-images.githubusercontent.com/194400/208438454-0645cf7b-62f8-4b3d-9153-c6e66747456b.png)
+
+The **same endpoint** is used
+for both `HTTP` requests
+and also outputs a `JSON` object.
+
+Now for the fun part!!
+
+## Using Shields to Create _Any_ Style of Button!
+
+https://img.shields.io/endpoint?url
+
+
+
+
 
 
 # tl;dr
