@@ -4,10 +4,10 @@ defmodule Hits.MixProject do
   def project do
     [
       app: :hits,
-      version: "1.6.3",
-      elixir: "~> 1.12",
+      version: "1.7.1",
+      elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix] ++ Mix.compilers(),
+      compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
@@ -43,12 +43,14 @@ defmodule Hits.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.6.2"},
+      {:phoenix, "~> 1.7.1"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.9.0"},
       {:postgrex, ">= 0.15.13"},
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_view, "~> 0.17.5"},
+      # Required for Phoenix 1.7
+      {:phoenix_view, "~> 2.0"},
       {:phoenix_live_dashboard, "~> 0.6"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
