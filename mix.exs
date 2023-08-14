@@ -71,7 +71,7 @@ defmodule Hits.MixProject do
       {:poison, "~> 5.0.0"},
 
       # tracking test coverage
-      {:excoveralls, "~> 0.16.0", only: [:test, :dev]},
+      {:excoveralls, "~> 0.17.0", only: [:test, :dev]},
       # to generate documentation
       {:ex_doc, "~> 0.30.1", only: [:dev, :docs]},
       {:inch_ex, "~> 2.1.0-rc.1", only: :docs},
