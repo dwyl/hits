@@ -58,7 +58,7 @@ defmodule Hits.MixProject do
       {:gettext, "~> 0.23.0"},
       {:jason, "~> 1.4.0"},
       {:plug_cowboy, "~> 2.6.0"},
-      {:plug_crypto, "~> 1.2.2"},
+      {:plug_crypto, "~> 2.0.0"},
 
       # For content negotiation
       {:content, "~> 1.3.0"},
