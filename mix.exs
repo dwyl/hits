@@ -68,7 +68,7 @@ defmodule Hits.MixProject do
 
       # The rest of the dependendencies are for testing/reporting
       # decode .json fixture in test
-      {:poison, "~> 5.0.0"},
+      {:poison, "~> 6.0.0"},
 
       # tracking test coverage
       {:excoveralls, "~> 0.18.0", only: [:test, :dev]},
