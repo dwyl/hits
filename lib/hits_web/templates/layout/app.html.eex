@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Hits</title>
     <link rel="stylesheet" href="https://unpkg.com/tachyons@4.8.0/css/tachyons.min.css"/>
+    <%= render("icons.html") %>
   </head>
   <body class="">
     <main role="main"">
