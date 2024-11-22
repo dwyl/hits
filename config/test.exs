@@ -15,7 +15,7 @@ config :hits, HitsWeb.Endpoint,
   server: false
 
 # Print only warnings and errors during test
-config :logger, level: :warn
+config :logger, level: :warning
 
 # https://gist.github.com/chrismccord/2ab350f154235ad4a4d0f4de6decba7b#gistcomment-3944918
 # Initialize plugs at runtime for faster test compilation
