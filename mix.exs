@@ -73,7 +73,7 @@ defmodule Hits.MixProject do
       # track test coverage: hex.pm/packages/excoveralls
       {:excoveralls, "~> 0.18.3", only: [:test, :dev]},
       # generate docs: hex.pm/packages/ex_doc
-      {:ex_doc, "~> 0.37.1", only: [:dev, :docs]},
+      {:ex_doc, "~> 0.38.1", only: [:dev, :docs]},
 
       {:inch_ex, "~> 2.1.0-rc.1", only: :docs},
       {:esbuild, "~> 0.9.0", runtime: Mix.env() == :dev}
