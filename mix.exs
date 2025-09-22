@@ -55,7 +55,7 @@ defmodule Hits.MixProject do
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:phoenix_live_reload, "~> 1.6.0", only: :dev},
-      {:gettext, "~> 0.26.1"},
+      {:gettext, "~> 1.0.0"},
       {:jason, "~> 1.4.0"},
       {:plug_cowboy, "~> 2.7.0"},
       {:plug_crypto, "~> 2.1.0"},
