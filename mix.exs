@@ -57,7 +57,7 @@ defmodule Hits.MixProject do
       {:phoenix_live_reload, "~> 1.6.0", only: :dev},
       {:gettext, "~> 1.0.0"},
       {:jason, "~> 1.4.0"},
-      {:plug_cowboy, "~> 2.7.0"},
+      {:plug_cowboy, "~> 2.8.0"},
       {:plug_crypto, "~> 2.1.0"},
 
       # For content negotiation
