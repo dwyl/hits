@@ -12,15 +12,21 @@ defmodule Hits.MixProject do
       aliases: aliases(),
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [
+      package: package(),
+      description: "Track page views on any GitHub page"
+    ]
+  end
+
+  def cli do
+    [
+      preferred_envs: [
         c: :test,
         coveralls: :test,
         "coveralls.detail": :test,
         "coveralls.post": :test,
-        "coveralls.html": :test
-      ],
-      package: package(),
-      description: "Track page views on any GitHub page"
+        "coveralls.html": :test,
+        docs: :docs
+      ]
     ]
   end
 
@@ -57,7 +63,7 @@ defmodule Hits.MixProject do
       {:phoenix_live_reload, "~> 1.6.0", only: :dev},
       {:gettext, "~> 1.0.0"},
       {:jason, "~> 1.4.0"},
-      {:plug_cowboy, "~> 2.7.0"},
+      {:plug_cowboy, "~> 2.8.0"},
       {:plug_crypto, "~> 2.1.0"},
 
       # For content negotiation

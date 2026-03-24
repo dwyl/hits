@@ -4,7 +4,7 @@
 
 <div align="center">
 
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/hits/ci.yml?label=build&style=flat-square&branch=main)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/hits/ci.yml?label=build&style=flat-square&branch=main)](https://github.com/dwyl/hits/actions/workflows/ci.yml)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hits/master.svg?style=flat-square)](https://codecov.io/github/dwyl/hits?branch=master)
 [![HitCount](https://hits.dwyl.com/dwyl/hits.svg)](https://github.com/dwyl/hits)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/hits/issues/74)

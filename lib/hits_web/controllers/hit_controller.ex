@@ -2,7 +2,7 @@ defmodule HitsWeb.HitController do
   use HitsWeb, :controller
   # use Phoenix.Channel
   # import Ecto.Query
-  alias Hits.{Hit, Repository, User, Useragent}
+  alias Hits.{Hit, Repository, User, Useragent, Validate}
 
   use Params
 
@@ -39,9 +39,11 @@ defmodule HitsWeb.HitController do
     params = Params.data(schema)
     params_map = Params.to_map(schema)
 
-    if schema.valid? and user_valid?(user) and repository_valid?(repo) do
+    if schema.valid?
+      and Validate.user_valid?(user)
+      and Validate.repository_valid?(repo) do
       # insert hit. Note: the .svg is for legacy reasons 🙄
-      {_user_schema, _useragent_schema, repo} = insert_hit(conn, user, "#{repo}.svg")
+      {_user_schema, _ua_schema, repo} = insert_hit(conn, user, "#{repo}.svg")
 
       count =
         if params.show == "unique" do
@@ -203,13 +205,4 @@ defmodule HitsWeb.HitController do
       |> send_resp(404, Hits.make_badge(404, params["style"]))
     end
   end
-
-  # see: https://github.com/dwyl/hits/issues/154
-  # alphanumeric follow by one or zero "-" or just alphanumerics
-  defp user_valid?(user), do: String.match?(user, ~r/^([[:alnum:]]+-)*[[:alnum:]]+$/)
-
-  # ^[[:alnum:]-_.]+$ means the name is composed of
-  # one or multiple alphanumeric character
-  # or "-_." characters
-  defp repository_valid?(repo), do: String.match?(repo, ~r/^[[:alnum:]-_.]+$/)
 end
