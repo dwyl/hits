@@ -44,3 +44,4 @@ id_rsa_fly
 id_rsa_fly-cert.pub
 .vscode
 backup.sql
+backup.sql.zip
