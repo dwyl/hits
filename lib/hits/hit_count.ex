@@ -29,24 +29,22 @@ defmodule Hits.HitCount do
   """
   def insert_hit_count(repo_id) do
     current_count = get_hit_count(repo_id)
-    cs =
-      %__MODULE__{}
-      |> changeset(%{repo_id: repo_id, count: current_count + 1})
 
     {:ok, result } = if current_count == 0 do
-      Repo.insert(cs)
+      %__MODULE__{}
+      |> changeset(%{repo_id: repo_id, count: current_count + 1})
+      |> Repo.insert()
     else
       get_hit_count_record(repo_id)
       |> change(count: current_count + 1)
       |> Repo.update()
     end
-    # dbg(result)
     result.count
   end
 
-  # The integer value
+  # Returns just the hit_count.count integer value
   defp get_hit_count(repo_id) do
-    count = from(h in __MODULE__,
+    count = from(h in HitCount,
       where: h.repo_id == ^repo_id,
       select: h.count
     )
@@ -55,6 +53,7 @@ defmodule Hits.HitCount do
     if count == nil, do: 0, else: count
   end
 
+  # Returns the whole hit_count record
   defp get_hit_count_record(repo_id) do
     HitCount
     |> where(repo_id: ^repo_id)
