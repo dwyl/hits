@@ -15,7 +15,6 @@
 
 </div>
 
-
 ## Why?
 
 @dwyl we have a _few_ projects on GitHub ... <br />
@@ -1159,6 +1158,11 @@ Add the channel to your `lib/hits_web/channels/user_socket.ex` handler, for exam
 to render the hits on the homepage in realtime,
 please see: https://github.com/dwyl/hits/pull/80/files
 
+## Add `hit_count` Table
+
+```sh
+mix phx.gen.schema Hit_Count hit_count repo_id:references:repositories count:integer
+```
 
 
 

@@ -1,6 +1,6 @@
 <h2 class="bg-teal white h-25 tc ttu f1 lh-title lh-solid mt0 pa2 pb3 mb0 pb0">
   Hits!
-  <a href="https://hits.dwyl.com/"><img src="https://hits.dwyl.com/hits/homepage.svg" alt="Hit Count" class="pa0 ba bw1 b--white"></a>
+  <a href="https://hits.dwyl.com/"><img src="./hits/homepage.svg" alt="Hit Count" class="pa0 ba bw1 b--white"></a>
   <iframe src="https://ghbtns.com/github-btn.html?user=dwyl&repo=hits&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
 </h2>
 <h4 class="mt0 tc fw5 f5 teal pa2 mb0">
@@ -74,7 +74,7 @@
 <h3 class="mt3 fw5 tc db f3 bg-teal white pa2">JSON Endpoint</h3>
 <p class="pl2 ml2">
  <a href="https://shields.io/">shields.io</a>
- provides a way for you to have other badge designs via 
+ provides a way for you to have other badge designs via
  <a href="https://shields.io/endpoint">shields.io/endpoint</a>.
 </p>
 
@@ -98,7 +98,7 @@
 
   Will give you:
 
-  <img style="margin-left: 10px;" id="badge-shields-svg" 
+  <img style="margin-left: 10px;" id="badge-shields-svg"
     src="https://img.shields.io/endpoint?url=https%s3A%2F%2Fhits.dwyl.com%2Ftest%2Ftest.json%3Fcolor%3Dpink"/>
 </p>
 

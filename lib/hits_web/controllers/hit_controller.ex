@@ -61,8 +61,9 @@ defmodule HitsWeb.HitController do
 
       # Render json object, html page or svg badge
       cond do
-        Content.get_accept_header(conn) =~ "json" or String.ends_with?(repository, ".json") ->
-          render_json(conn, count, params)
+        Content.get_accept_header(conn) =~ "json"
+          or String.ends_with?(repository, ".json") ->
+            render_json(conn, count, params)
         String.ends_with?(repository, ".svg") ->
           render_badge(conn, count, params.style)
         true ->
