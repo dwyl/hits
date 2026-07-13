@@ -1,2 +1,7 @@
 assets/node_modules/
 deps/
+*.zip
+*.sql
+*.git/
+.elixir_ls/
+_build/
