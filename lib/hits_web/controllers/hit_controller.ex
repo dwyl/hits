@@ -2,7 +2,7 @@ defmodule HitsWeb.HitController do
   use HitsWeb, :controller
   # use Phoenix.Channel
   # import Ecto.Query
-  alias Hits.{Hit, Repository, User, Useragent, Validate}
+  alias Hits.{HitCount, Repository, User, Useragent, Validate}
 
   use Params
 
@@ -33,8 +33,7 @@ defmodule HitsWeb.HitController do
     repo = String.replace_suffix(repository, ".svg", "")
       |> String.replace_suffix(".json", "")
       |> String.replace_suffix(".html", "")
-    # Schema validation
-    # Check https://github.com/vic/params#usage
+    # Schema validation: github.com/vic/params#usage
     schema = schema_validator(params)
     params = Params.data(schema)
     params_map = Params.to_map(schema)
@@ -45,14 +44,10 @@ defmodule HitsWeb.HitController do
       # insert hit. Note: the .svg is for legacy reasons 🙄
       {_user_schema, _ua_schema, repo} = insert_hit(conn, user, "#{repo}.svg")
 
-      count =
-        if params.show == "unique" do
-          Hit.count_unique_hits(repo.id)
-        else
-          Hit.count_hits(repo.id)
-        end
+      # Fast hit count query using hit_count #355
+      count = HitCount.insert_hit_count(repo.id)
 
-      # Send hit to connected clients via channel github.com/dwyl/hits/issues/79
+      # Send hit to connected clients via channel #79
       HitsWeb.Endpoint.broadcast("hit:lobby", "hit", %{
         "user" => user,
         "repo" => repository,
@@ -61,8 +56,9 @@ defmodule HitsWeb.HitController do
 
       # Render json object, html page or svg badge
       cond do
-        Content.get_accept_header(conn) =~ "json" or String.ends_with?(repository, ".json") ->
-          render_json(conn, count, params)
+        Content.get_accept_header(conn) =~ "json"
+          or String.ends_with?(repository, ".json") ->
+            render_json(conn, count, params)
         String.ends_with?(repository, ".svg") ->
           render_badge(conn, count, params.style)
         true ->

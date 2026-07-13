@@ -16,4 +16,6 @@ defmodule HitsTest do
     badge = Hits.make_badge(1, "invalid_style")
     assert badge =~ ~s(flat-square)
   end
+
+
 end
