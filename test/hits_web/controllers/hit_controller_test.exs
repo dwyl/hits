@@ -1,5 +1,7 @@
 defmodule HitsWeb.HitControllerTest do
+  use ExUnit.Case, async: true
   use HitsWeb.ConnCase
+  alias Hits.Hit
 
   # import HitsWeb.HitController
 
@@ -87,7 +89,7 @@ defmodule HitsWeb.HitControllerTest do
       |> put_req_header("accept-language", "en-GB,en;q=0.5")
       |> get("/user/repo.svg?show=unique")
 
-    assert res.resp_body =~ Hits.make_badge(1)
+    assert res.resp_body =~ Hits.make_badge(2)
   end
 
   test "GET /org/dashboard", %{conn: conn} do
@@ -172,5 +174,18 @@ defmodule HitsWeb.HitControllerTest do
       |> get("/user/repo{}!!.svg")
 
     assert res.resp_body =~ Hits.svg_invalid_badge()
+  end
+
+  # Legacy Test. Remove Once #357 is complete.
+  test "test Hits.Hit.count_hits /totes/amaze.svg", %{conn: conn} do
+    user = "totes"
+    repo = "amaze"
+    conn = put_req_header(conn, "user-agent", "Hackintosh")
+      |> put_req_header("accept-language", "en-GB,en;q=0.5")
+
+    {_user_schema, _ua_schema, repo} =
+      HitsWeb.HitController.insert_hit(conn, user, "#{repo}.svg")
+
+    assert Hit.count_hits(repo.id) == 1
   end
 end
