@@ -4,7 +4,7 @@ The Node.js MVP saves data to the filesystem
 because that was the _simplest_ way
 of storing data without having to manage a database.
 See: [hits-nodejs/lib/db_filesystem.js#L26-L68](https://github.com/dwyl/hits-nodejs/blob/d896b0c1aae5f99054be67726c6186b4ff662cd3/lib/db_filesystem.js#L26-L68)
-https://github.com/dwyl/hits/issues/81
+[dwyl/hits#81](https://github.com/dwyl/hits/issues/81)
 
 + [x] Log-in to the Linode instance and inspect how many directories have been created
   (_this is the number of people - GitHub usernames - using the hits badge_)
@@ -69,15 +69,17 @@ bash: /usr/bin/rsync: Argument list too long
 
 
 + [x] write the script
-  + [ ] insert data into `hits_dev` PostgreSQL on `localhost`
+  + [x] insert data into `hits_dev` PostgreSQL on `localhost`
 
 Path.wildcard("logs/*.log")
 
-+ [ ] run the script
++ [x] run the script
 
 ```sh
 MIX_ENV=dev mix run priv/migrate-data.exs
 ```
-+ [ ] export the data from `hits_dev` PostgreSQL on `localhost`
+See: [`priv/migrate-data.exs`](https://github.com/dwyl/hits/blob/a741c5ce8045b6e0b6d7409c67ecce5d08319efd/priv/migrate-data.exs)
 
-+ [ ] load the data on the remote server
++ [x] export the data from `hits_dev` `PostgreSQL` on `localhost`
+
++ [x] load the data on the remote server
