@@ -1,7 +1,7 @@
 defmodule Hits.Import do
   @moduledoc """
-  This is my work-in-progress import script.
-  It doesn't do anything yet, so please ignore it.
+  Quick-and-dirty but functional import script.
+  See: /migrate-data.md for steps to use this.
   """
 
   def import_data do
@@ -13,7 +13,6 @@ defmodule Hits.Import do
     files = Path.wildcard(base <> "*.log")
 
     first = files |> Enum.at(0) |> IO.inspect(label: "first")
-
 
     # lines |> Enum.at(1) |> IO.inspect
     Enum.each(files, fn(file) ->
