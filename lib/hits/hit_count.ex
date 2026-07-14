@@ -42,6 +42,13 @@ defmodule Hits.HitCount do
     result.count
   end
 
+  def update_hit_count(record, count) do
+    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+    changeset(record, %{count: count})
+    |> put_change(:inserted_at, now)
+    |> Repo.update()
+  end
+
   # Returns just the hit_count.count integer value
   defp get_hit_count(repo_id) do
     count = from(h in HitCount,

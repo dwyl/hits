@@ -1,5 +1,5 @@
 defmodule HitCountTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   alias Hits.{HitCount, User, Repository}
 
   setup do

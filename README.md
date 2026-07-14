@@ -36,6 +36,11 @@ _Manually_ checking who has viewed a
 project is _exceptionally_ tedious when you have
 more than a _handful_ of projects.
 
+### Please Star ⭐️🙏
+
+Please **star** this repo on `GitHub`
+to thank us for building/deploying/maintaining it. ⭐️🙏⬆️
+
 <!--
 ### Scratch Your Own Itch?
 
@@ -115,8 +120,6 @@ how it's implemented.
 in your project's GitHub page, visit:
 https://hits.dwyl.com
 to get the Markdown!
-
-
 
 ### _Run_ the App on `localhost`
 
@@ -1137,7 +1140,7 @@ Open `test/hits_web/controllers/hit_controller_test.exs` in your editor.
 ## Add Channel
 
 If you are new to Phoenix Channels, please recap:
-https://github.com/dwyl/phoenix-chat-example
+[dwyl/**phoenix-chat-example**](https://github.com/dwyl/phoenix-chat-example)
 
 In your terminal, run the following command:
 ```sh
@@ -1160,15 +1163,17 @@ please see: https://github.com/dwyl/hits/pull/80/files
 
 ## Add `hit_count` Table
 
+We discovered the hard way that our **aggregation** query
+ground to a halt (**`2 minutes+`**)
+
 ```sh
 mix phx.gen.schema Hit_Count hit_count repo_id:references:repositories count:integer
 ```
 
-
-
 ## Research & Background Reading
 
-If you found this repository useful, please ⭐️ it so we (and others) know you liked it!
+If you found this repository useful,
+please ⭐️ it so we (and others) know you liked it!
 
 We found the following links/articles/posts _useful_
 when learning how to build this mini-project:

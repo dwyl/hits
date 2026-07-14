@@ -12,10 +12,10 @@ defmodule Hits.Application do
       Hits.Repo,
       {Phoenix.PubSub, name: Hits.PubSub},
       # Start the endpoint when the application starts
-      HitsWeb.Endpoint
+      HitsWeb.Endpoint,
       # Starts a worker by calling: Hits.Worker.start_link(arg)
       # {Hits.Worker, arg},
-
+      Hits.Cron #357
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

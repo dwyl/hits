@@ -4,7 +4,7 @@ defmodule Hits.MixProject do
   def project do
     [
       app: :hits,
-      version: "1.7.1",
+      version: "1.7.14",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: Mix.compilers(),
@@ -82,7 +82,10 @@ defmodule Hits.MixProject do
       {:ex_doc, "~> 0.40.0", only: [:dev, :docs]},
 
       {:inch_ex, "~> 2.1.0-rc.1", only: :docs},
-      {:esbuild, "~> 0.10.0", runtime: Mix.env() == :dev}
+      {:esbuild, "~> 0.10.0", runtime: Mix.env() == :dev},
+
+      # Temporary Data Aggregation/Migration Dependency:
+      {:quantum, "~> 3.0"}
     ]
   end
 

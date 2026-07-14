@@ -38,3 +38,9 @@ config :esbuild,
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
+
+config :hits, Hits.Cron,
+  jobs: [
+    # Every minute
+    {"* * * * *", fn -> Hits.Cron.update_hit_count end }
+  ]
