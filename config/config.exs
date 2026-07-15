@@ -41,6 +41,9 @@ config :esbuild,
 
 config :hits, Hits.Cron,
   jobs: [
-    # Every minute
-    {"* * * * *", fn -> Hits.Cron.update_hit_count end }
+    phoenix_job: [
+      # Every minute
+      schedule: "* * * * *",
+      task: {Hits.Cron, :update_hit_count, []}
+    ]
   ]
