@@ -42,5 +42,5 @@ config :esbuild,
 config :hits, Hits.Cron,
   jobs: [
     # Every minute
-    {"* * * * *", fn -> Hits.Cron.update_hit_count end }
+    {"* * * * *", fn -> Hits.Cron.update_hit_count() end }
   ]
